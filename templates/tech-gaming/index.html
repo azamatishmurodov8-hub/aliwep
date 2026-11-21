@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neon Cyber Gaming & Gear Hub — aliWep 3D Master Showcase</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            royal: ['"Cinzel"', 'serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"Space Grotesk"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background: #07070A; color: #F3F4F6; overflow-x: hidden; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.3s ease; }
+    .glass-card:hover { border-color: rgba(212, 175, 55, 0.4); transform: translateY(-4px); }
+    .glow-gold { box-shadow: 0 0 40px -10px rgba(212, 175, 55, 0.25); }
+  </style>
+</head>
+<body class="min-h-screen relative selection:bg-amber-500 selection:text-black pt-16">
+  
+    <nav class="fixed top-3 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 sm:gap-3 px-4 py-2 rounded-full bg-black/85 backdrop-blur-md border border-white/20 shadow-2xl text-[11px] sm:text-xs font-mono">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="text-white font-bold tracking-tight">Neon Cyber Gaming & Gear Hub</span>
+      <span class="px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 font-bold border border-amber-400/30">18.000 ₺</span>
+      <a href="https://t.me/aliWep_code_Bot?start=secim_tech-gaming" target="_blank" class="px-3 py-1 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 text-black font-bold hover:scale-105 transition-transform flex items-center gap-1">
+        ⚡️ Bu Tasarımı Al
+      </a>
+      <a href="../../index.html" class="text-gray-400 hover:text-white transition-colors ml-1" title="Showroom'a dön">✕</a>
+    </nav>
+    
+  
+    <div class="max-w-5xl mx-auto px-4 py-16 text-center">
+      <span class="px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono">ESPORTS & MEKANİK EKİPMAN DÜNYASI</span>
+      <h1 class="text-5xl sm:text-7xl font-mono font-black text-white mt-6 mb-4 tracking-tighter">CYBER.<span class="text-cyan-400">GEAR</span></h1>
+      <p class="text-gray-400 max-w-xl mx-auto text-sm sm:text-base mb-12">Mekanik klavyeler, 8K Hz oyuncu fareleri, 3D sesli kulaklıklar ve canlı switch ses test modülü.</p>
+
+      <!-- Mechanical Switch Sound Tester -->
+      <div class="glass-card rounded-2xl p-6 sm:p-8 max-w-xl mx-auto mb-16 text-left border-cyan-500/30">
+        <h3 class="font-mono text-sm font-bold text-cyan-300 mb-1">🔊 Canlı Switch Ses Testi</h3>
+        <p class="text-xs text-gray-400 mb-4">Satın almadan önce mekanik tuşun tıkırtısını dinleyin:</p>
+        <div class="grid grid-cols-3 gap-3">
+          <button onclick="playSwitch(800)" class="p-3 rounded-xl bg-blue-500/20 border border-blue-400/40 text-xs font-mono text-blue-300 text-center hover:bg-blue-500/30">
+            Blue Switch (Clicky)
+          </button>
+          <button onclick="playSwitch(400)" class="p-3 rounded-xl bg-red-500/20 border border-red-400/40 text-xs font-mono text-red-300 text-center hover:bg-red-500/30">
+            Red Switch (Linear)
+          </button>
+          <button onclick="playSwitch(600)" class="p-3 rounded-xl bg-amber-500/20 border border-amber-400/40 text-xs font-mono text-amber-300 text-center hover:bg-amber-500/30">
+            Brown (Tactile)
+          </button>
+        </div>
+      </div>
+
+      <!-- Gaming Gear Showcase -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto text-left">
+        <div class="glass-card p-6 rounded-2xl">
+          <span class="text-xs font-mono text-cyan-400">8000 Hz Polling Rate</span>
+          <h4 class="text-lg font-bold text-white mt-1">Titan 3D Ultra Hafif Fare</h4>
+          <p class="text-xs text-gray-400 mt-2">49 gram karbon fiber gövde, optik anahtarlar ve sıfır gecikme.</p>
+          <span class="block mt-4 font-mono text-cyan-400 font-bold text-base">3.490 ₺</span>
+        </div>
+        <div class="glass-card p-6 rounded-2xl">
+          <span class="text-xs font-mono text-cyan-400">7.1 Spatial Audio</span>
+          <h4 class="text-lg font-bold text-white mt-1">Apex Pro Kablosuz Kulaklık</h4>
+          <p class="text-xs text-gray-400 mt-2">50mm titanyum sürücüler, gürültü engelleyici yayıncı mikrofonu.</p>
+          <span class="block mt-4 font-mono text-cyan-400 font-bold text-base">5.800 ₺</span>
+        </div>
+      </div>
+    </div>
+    
+  
+  <!-- Footer -->
+  <footer class="border-t border-white/10 bg-black/60 py-10 px-4 text-center text-xs font-mono text-gray-400">
+    <div class="max-w-4xl mx-auto flex flex-col items-center gap-3">
+      <span class="font-royal text-base text-white font-bold">Neon Cyber Gaming & Gear Hub • aliWep Studio Projesi</span>
+      <p>Ön ödeme yok • 30 gün teknik garanti • 5-10 günde teslimat</p>
+      <a href="https://t.me/aliWep_code_Bot?start=secim_tech-gaming" class="text-amber-400 hover:underline">Telegram ile bu siteyi sipariş et →</a>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    
+    function playSwitch(freq) {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(0.1, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.08);
+      } catch(e){}
+    }
+    
+  </script>
+</body>
+</html>

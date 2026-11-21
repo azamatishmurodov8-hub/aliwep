@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROAST & ATELIER GALATA — 20.000 TL+ Elita Artisan Kahve & Roastery</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP for World-Class Fluid Motion -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Luxury Editorial Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            royal: ['"Cinzel"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+          },
+          colors: {
+            crema: {
+              DEFAULT: '#D4A373',
+              light: '#FAEDCD',
+              gold: '#E0A96D',
+              deep: '#99582A',
+            },
+            roast: {
+              black: '#070504',
+              espresso: '#120D0A',
+              card: '#18120E',
+              border: 'rgba(212, 163, 115, 0.15)',
+            }
+          },
+          animation: {
+            'steam-flow': 'steamFloat 6s ease-in-out infinite',
+            'spin-slow': 'spin 30s linear infinite',
+            'pulse-glow': 'pulseGlow 4s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            steamFloat: {
+              '0%, 100%': { transform: 'translateY(0) scaleX(1)', opacity: '0.4' },
+              '50%': { transform: 'translateY(-15px) scaleX(1.15)', opacity: '0.85' }
+            },
+            pulseGlow: {
+              '0%': { opacity: '0.2', transform: 'scale(0.95)' },
+              '100%': { opacity: '0.6', transform: 'scale(1.05)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #070504;
+      color: #FAEDCD;
+      overflow-x: hidden;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Giant Background Watermark Typography */
+    .bg-watermark {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cinzel', serif;
+      font-size: 20vw;
+      font-weight: 900;
+      color: rgba(212, 163, 115, 0.025);
+      letter-spacing: 0.15em;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 0;
+      user-select: none;
+    }
+
+    /* Glassmorphism Luxury Panel */
+    .glass-roast {
+      background: rgba(24, 18, 14, 0.72);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(212, 163, 115, 0.18);
+    }
+    .glass-roast:hover {
+      border-color: rgba(212, 163, 115, 0.55);
+      box-shadow: 0 15px 45px rgba(212, 163, 115, 0.15);
+    }
+
+    /* Luxury Gold Sweep Button */
+    .btn-crema-sweep {
+      position: relative;
+      background: #D4A373;
+      color: #070504;
+      overflow: hidden;
+      z-index: 1;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-crema-sweep::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 100%; height: 100%;
+      background: #FAEDCD;
+      transition: left 0.45s ease;
+      z-index: -1;
+    }
+    .btn-crema-sweep:hover::before {
+      left: 0;
+    }
+    .btn-crema-sweep:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(212, 163, 115, 0.35);
+    }
+
+    /* Steam Canvas Overlay */
+    #steam-canvas {
+      position: absolute;
+      top: -140px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      height: 260px;
+      pointer-events: none;
+      z-index: 25;
+    }
+
+    /* Custom Horizontal Scrollbar */
+    .horizontal-scroll-container::-webkit-scrollbar {
+      height: 6px;
+    }
+    .horizontal-scroll-container::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.02);
+    }
+    .horizontal-scroll-container::-webkit-scrollbar-thumb {
+      background: #D4A373;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="selection:bg-[#D4A373] selection:text-black">
+
+  <!-- ================= GIANT PARALLAX WATERMARK LOGO ================= -->
+  <div class="bg-watermark" id="watermark-logo">GALATA</div>
+
+  <!-- ================= PAGE LOAD PRELOADER ================= -->
+  <div id="loading-screen" class="fixed inset-0 z-50 bg-[#070504] flex flex-col items-center justify-center transition-all duration-700">
+    <div class="text-center px-4">
+      <div class="relative w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+        <div class="absolute inset-0 rounded-full border border-crema/40 animate-ping opacity-30"></div>
+        <div class="w-20 h-20 rounded-full border-2 border-crema flex items-center justify-center text-crema shadow-2xl shadow-crema/20">
+          <i data-lucide="flame" class="w-9 h-9 text-crema"></i>
+        </div>
+      </div>
+      <h2 class="font-royal text-2xl sm:text-3xl tracking-[0.25em] text-white uppercase mb-2">ROAST & ATELIER</h2>
+      <p class="text-[11px] tracking-[0.35em] text-crema uppercase mb-8">Specialty Coffee Roasters • Galata 1892</p>
+      <div class="w-48 h-0.5 bg-white/10 rounded-full mx-auto overflow-hidden">
+        <div id="loader-bar" class="w-0 h-full bg-crema transition-all duration-700 ease-out"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TOP NAVIGATION BAR ================= -->
+  <header class="fixed top-0 left-0 right-0 z-40 bg-[#070504]/80 backdrop-blur-2xl border-b border-crema/10 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
+      
+      <!-- Store Brand / Crest Logo -->
+      <a href="#" class="flex items-center space-x-4 group" onclick="playSfx('click')">
+        <div class="w-12 h-12 rounded-2xl border border-crema/40 bg-crema/10 flex items-center justify-center text-crema group-hover:scale-105 transition-transform duration-300">
+          <i data-lucide="coffee" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <span class="font-royal font-bold text-xl tracking-[0.18em] text-white group-hover:text-crema transition-colors">ROAST & ATELIER</span>
+          <span class="text-[10px] tracking-[0.28em] text-crema block -mt-1 font-semibold uppercase">GALATA • İSTANBUL</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center space-x-10 text-xs font-semibold tracking-widest uppercase text-gray-300">
+        <a href="#menyu" onclick="playSfx('tick')" class="hover:text-crema transition">10 Özel Kahve</a>
+        <a href="#kavrum" onclick="playSfx('tick')" class="hover:text-crema transition">Kavrum Felsefesi</a>
+        <a href="#atmosfer" onclick="playSfx('tick')" class="hover:text-crema transition">Atmosfer</a>
+        <a href="#rezervasyon" onclick="playSfx('tick')" class="hover:text-crema transition">Masa & Konum</a>
+      </nav>
+
+      <!-- Utilities: Sound, Language & WhatsApp -->
+      <div class="flex items-center space-x-3">
+        <!-- Ambient Sound Toggle -->
+        <button id="sound-btn" onclick="toggleSound()" class="p-2.5 rounded-full bg-white/5 border border-crema/20 hover:border-crema text-crema transition flex items-center justify-center" title="Akustik Ses">
+          <i id="sound-icon" data-lucide="volume-2" class="w-4 h-4"></i>
+        </button>
+
+        <a href="https://wa.me/905551234567?text=Merhaba!%20Roast%20Atelier%20Galata%20için%20masa%20rezervasyonu%20yaptırmak%20istiyorum." target="_blank" onclick="playSfx('success')" class="hidden sm:inline-flex items-center space-x-2 px-6 py-3 rounded-full btn-crema-sweep text-xs font-bold tracking-widest uppercase shadow-lg shadow-crema/15">
+          <i data-lucide="calendar" class="w-4 h-4"></i>
+          <span>Masa Rezervasyonu</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= 1. HERO SECTION WITH LIVING STEAMING COFFEE ================= -->
+  <section class="relative min-h-screen flex items-center pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden z-10">
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      
+      <!-- Left Column: Editorial Storytelling -->
+      <div class="lg:col-span-7 text-left z-20">
+        <div class="inline-flex items-center space-x-3 px-4 py-1.5 rounded-full bg-crema/10 border border-crema/30 text-crema text-xs font-bold tracking-[0.2em] uppercase mb-6">
+          <span class="w-2 h-2 rounded-full bg-crema animate-ping"></span>
+          <span>SPECIALTY COFFEE ROASTERY // EST. 1892</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-black tracking-tight text-white leading-[1.08] mb-6">
+          Tarihi Galata'da <br>
+          <span class="italic font-normal text-crema">Mükemmel Kavrulmuş</span> <br>
+          Bir Fincan Şiir.
+        </h1>
+
+        <p class="text-gray-300 text-base sm:text-lg max-w-xl mb-10 leading-relaxed font-light">
+          Etiyopya, Kolumbiya ve Panama'nın en yüksek rakımlı çekirdekleri, Galata'daki tarihi taş fırınımızın yanında özel döküm kavurucularda taze taze kavruluyor.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+          <a href="#menyu" onclick="playSfx('whoosh')" class="w-full sm:w-auto px-8 py-4 rounded-full btn-crema-sweep font-bold text-xs tracking-[0.2em] uppercase flex items-center justify-center space-x-3 shadow-xl">
+            <span>10 Özel Kahveyi İncele</span>
+            <i data-lucide="arrow-down-right" class="w-4 h-4"></i>
+          </a>
+          <a href="https://wa.me/905551234567?text=Merhaba!%20Gel-Al%20paket%20kahve%20siparişi%20vermek%20istiyorum." target="_blank" onclick="playSfx('success')" class="w-full sm:w-auto px-8 py-4 rounded-full glass-roast text-crema hover:text-white font-bold text-xs tracking-[0.2em] uppercase flex items-center justify-center space-x-3 transition">
+            <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
+            <span>Gel-Al / WhatsApp Sipariş</span>
+          </a>
+        </div>
+
+        <!-- Specialty Notes Bar -->
+        <div class="grid grid-cols-3 gap-6 mt-16 pt-8 border-t border-crema/15 max-w-lg">
+          <div>
+            <div class="text-2xl font-serif font-bold text-crema">88.5+</div>
+            <div class="text-[10px] uppercase tracking-widest text-gray-400 mt-1">SCA Cup Puanı</div>
+          </div>
+          <div>
+            <div class="text-2xl font-serif font-bold text-crema">Hergün</div>
+            <div class="text-[10px] uppercase tracking-widest text-gray-400 mt-1">Taze Mikro Kavrum</div>
+          </div>
+          <div>
+            <div class="text-2xl font-serif font-bold text-crema">Tarihi</div>
+            <div class="text-[10px] uppercase tracking-widest text-gray-400 mt-1">Galata Atmosferi</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Living Hot Cup with Interactive Rising Steam Simulator -->
+      <div class="lg:col-span-5 relative flex items-center justify-center z-20">
+        
+        <!-- Ambient Warm Candle/Roast Glow -->
+        <div class="absolute w-96 h-96 rounded-full bg-crema/15 blur-[120px] pointer-events-none animate-pulse-glow"></div>
+
+        <!-- Central Cup Composition -->
+        <div class="relative group cursor-pointer" onclick="pourCoffeeAction()">
+          
+          <!-- REALISTIC STEAM SIMULATION CANVAS (Live vapor rising directly from the cup!) -->
+          <canvas id="steam-canvas"></canvas>
+
+          <!-- Hot Cup Imagery with Shadow & Reflection -->
+          <div class="relative z-10 w-72 sm:w-80 h-72 sm:h-80 rounded-full p-3 border border-crema/30 bg-roast-card/90 shadow-2xl shadow-crema/20 flex items-center justify-center group-hover:border-crema transition-colors duration-500">
+            <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80" alt="Artisan Hot Cup with Crema" class="w-full h-full object-cover rounded-full filter contrast-110 group-hover:scale-105 transition-transform duration-700">
+            
+            <!-- Center Interactive Ripple Play Trigger -->
+            <div class="absolute inset-0 rounded-full flex flex-col items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-[2px]">
+              <i data-lucide="sparkles" class="w-8 h-8 text-crema animate-spin-slow mb-2"></i>
+              <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-crema">Buharı & Aromayı Hisset</span>
+            </div>
+          </div>
+
+          <!-- Circular Floating Roast Badge -->
+          <div class="absolute -bottom-6 -left-6 z-30 p-4 rounded-3xl glass-roast shadow-2xl border border-crema/30">
+            <div class="flex items-center space-x-3">
+              <span class="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></span>
+              <div>
+                <p class="text-[10px] tracking-widest text-gray-400 uppercase font-mono">ŞU AN KAVRULUYOR</p>
+                <p class="text-xs font-serif font-bold text-white">Etiyopya Yirgacheffe G1</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Temperature Meter -->
+          <div class="absolute -top-4 -right-4 z-30 p-3.5 rounded-2xl glass-roast shadow-2xl border border-crema/30">
+            <span class="text-xs font-serif font-bold text-crema">93.5°C</span>
+            <span class="text-[9px] block text-gray-400 uppercase tracking-widest">Demleme Isısı</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 2. THE 10 ARTISANAL COFFEE SPECIALTIES ================= -->
+  <section id="menyu" class="relative py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-20 border-t border-crema/10">
+    <div class="text-center max-w-3xl mx-auto mb-20">
+      <span class="text-xs font-bold tracking-[0.3em] text-crema uppercase mb-3 block">Ustalıkla Hazırlanan 10 Seçki</span>
+      <h2 class="text-4xl sm:text-6xl font-serif font-black text-white tracking-tight">Koleksiyon Menüsü</h2>
+      <p class="text-gray-400 text-sm sm:text-base mt-4 font-light">
+        Her bir kahve, kendi orijinine özel reçeteyle öğütülür ve özel dereceli suyla demlenir. Tek dokunuşla masanıza veya gel-al olarak sipariş verin.
+      </p>
+    </div>
+
+    <!-- 10 Specialty Coffees Grid (Clean, Luxurious, Informative) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8" id="coffee-list">
+      <!-- 10 coffees generated by JS -->
+    </div>
+  </section>
+
+  <!-- ================= 3. ROASTING PHILOSOPHY & ATMOSPHERE ================= -->
+  <section id="kavrum" class="relative py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-20 border-t border-crema/10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <div class="lg:col-span-5 relative rounded-3xl overflow-hidden border border-crema/25 shadow-2xl group">
+        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1000&q=80" alt="Galata Coffee Roasting Machine" class="w-full h-[480px] object-cover group-hover:scale-105 transition-transform duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+        <div class="absolute bottom-6 left-6 right-6">
+          <span class="px-3 py-1 rounded-xl bg-crema text-black text-[10px] font-bold uppercase tracking-widest">
+            Giesen W6A Roaster
+          </span>
+          <h3 class="font-serif text-2xl font-bold text-white mt-2">Döküm Tamburlu Hassas Kavrum</h3>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7 lg:pl-6">
+        <span class="text-xs font-bold tracking-[0.3em] text-crema uppercase mb-3 block">Felsefemiz</span>
+        <h2 class="text-3xl sm:text-5xl font-serif font-black text-white leading-tight mb-6">
+          Çekirdeğin Ruhunu <br>
+          <span class="italic font-normal text-crema">Yakmadan Uyandırıyoruz.</span>
+        </h2>
+        <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-8 font-light">
+          Koyu, yanık ve acı kahvelere inanmıyoruz. Bizim amacımız çekirdeğin içindeki yasemin, bergamot, yaban mersini ve fındık notalarını bardağınıza berrak bir şekilde aktarmaktır.
+        </p>
+
+        <!-- 3 Pillars -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="p-5 rounded-2xl glass-roast">
+            <i data-lucide="scale" class="w-5 h-5 text-crema mb-3"></i>
+            <h4 class="font-serif font-bold text-white text-sm">Hassas Gramaj</h4>
+            <p class="text-[11px] text-gray-400 mt-1">0.1 gram hassasiyetli oranlar</p>
+          </div>
+          <div class="p-5 rounded-2xl glass-roast">
+            <i data-lucide="droplet" class="w-5 h-5 text-crema mb-3"></i>
+            <h4 class="font-serif font-bold text-white text-sm">Mineralize Su</h4>
+            <p class="text-[11px] text-gray-400 mt-1">Özel 7 aşamalı filtreleme</p>
+          </div>
+          <div class="p-5 rounded-2xl glass-roast">
+            <i data-lucide="clock" class="w-5 h-5 text-crema mb-3"></i>
+            <h4 class="font-serif font-bold text-white text-sm">14 Gün Dinlendirme</h4>
+            <p class="text-[11px] text-gray-400 mt-1">Optimal degas süresi</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 4. ATMOSPHERE & INTERIOR GALLERY ================= -->
+  <section id="atmosfer" class="relative py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-20 border-t border-crema/10">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="text-xs font-bold tracking-[0.3em] text-crema uppercase mb-3 block">Galata Ruhu</span>
+      <h2 class="text-3xl sm:text-5xl font-serif font-black text-white">Tarihi Mekanımız</h2>
+      <p class="text-gray-400 text-sm mt-3">Taş tonozlar, caz melodileri ve taze kahve kokusu eşliğinde huzur bulun.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div class="relative rounded-3xl overflow-hidden border border-crema/20 group h-80">
+        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" alt="Cafe Interior" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
+          <span class="font-serif text-white font-bold text-lg">Tarihi Taş Kemerler</span>
+        </div>
+      </div>
+      <div class="relative rounded-3xl overflow-hidden border border-crema/20 group h-80">
+        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" alt="Espresso Bar" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
+          <span class="font-serif text-white font-bold text-lg">Mermer Bar & Slayer Makinesi</span>
+        </div>
+      </div>
+      <div class="relative rounded-3xl overflow-hidden border border-crema/20 group h-80">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80" alt="Coffee Tasting" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
+          <span class="font-serif text-white font-bold text-lg">Karaköy Sokak Masaları</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 5. LOCATION, RESERVATION & ONE-TOUCH CONTACT ================= -->
+  <section id="rezervasyon" class="relative py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-20 border-t border-crema/10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Left: Contact & Details -->
+      <div class="lg:col-span-6">
+        <span class="text-xs font-bold tracking-[0.3em] text-crema uppercase mb-3 block">Ziyaret & İletişim</span>
+        <h2 class="text-3xl sm:text-5xl font-serif font-black text-white mb-6">Masanızı Ayırtın</h2>
+        <p class="text-gray-300 text-sm leading-relaxed mb-8 font-light">
+          Hafta sonları yoğunluk yaşanmaması adına masa rezervasyonu yaptırmanızı öneririz.
+        </p>
+
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-4 p-4 rounded-2xl glass-roast">
+            <div class="w-10 h-10 rounded-xl bg-crema/10 text-crema flex items-center justify-center shrink-0">
+              <i data-lucide="map-pin" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Adres</h4>
+              <p class="text-sm font-serif font-bold text-white mt-0.5">Bereketzade Mah. Camekan Sok. No: 14/A, Galata / İstanbul</p>
+              <p class="text-xs text-crema mt-1">(Galata Kulesi'ne 80 metre mesafede)</p>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-4 p-4 rounded-2xl glass-roast">
+            <div class="w-10 h-10 rounded-xl bg-crema/10 text-crema flex items-center justify-center shrink-0">
+              <i data-lucide="clock" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest">Çalışma Saatleri</h4>
+              <p class="text-sm font-serif font-bold text-white mt-0.5">Her Gün: 08:30 — 23:30 (Mutfak & Bar)</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="https://wa.me/905551234567?text=Merhaba!%20Roast%20Atelier%20Galata%20için%20rezervasyon%20yaptırmak%20istiyorum." target="_blank" onclick="playSfx('success')" class="px-8 py-4 rounded-full btn-crema-sweep font-bold text-xs tracking-widest uppercase flex items-center justify-center space-x-2">
+            <i data-lucide="calendar" class="w-4 h-4"></i>
+            <span>WhatsApp ile Rezervasyon</span>
+          </a>
+          <a href="tel:+905551234567" onclick="playSfx('click')" class="px-6 py-4 rounded-full glass-roast text-white hover:text-crema font-bold text-xs tracking-widest uppercase flex items-center justify-center space-x-2 transition">
+            <i data-lucide="phone" class="w-4 h-4 text-crema"></i>
+            <span>+90 555 123 4567</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Embedded Map Card -->
+      <div class="lg:col-span-6 h-[400px] rounded-3xl overflow-hidden border border-crema/25 glass-roast p-2 relative shadow-2xl">
+        <iframe 
+          title="Galata Map"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.9702206253457!2d28.9741!3d41.0256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab9e7a7777777%3A0x1234567890abcdef!2sGalata%20Kulesi!5e0!3m2!1str!2str!4v1700000000000!5m2!1str!2str" 
+          class="w-full h-full rounded-2xl border-0 filter grayscale contrast-125 invert opacity-85"
+          loading="lazy">
+        </iframe>
+        <div class="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-black/85 backdrop-blur-md border border-crema/20 flex items-center justify-between">
+          <div>
+            <p class="font-serif font-bold text-white text-sm">Galata Kulesi Yanı</p>
+            <p class="text-[10px] text-gray-400">Tarihi Camekan Sokak</p>
+          </div>
+          <a href="https://maps.google.com/?q=Galata+Tower+Istanbul" target="_blank" onclick="playSfx('click')" class="px-4 py-2 rounded-xl btn-crema-sweep text-[10px] font-bold">Haritada Aç</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 6. VIRAL AGENCY LEAD MAGNET FOOTER ================= -->
+  <div class="fixed bottom-5 left-5 z-40 max-w-xs">
+    <a href="https://t.me/your_telegram_agent" target="_blank" onclick="playSfx('success')" class="group flex items-center space-x-3 px-4 py-3 rounded-2xl bg-[#14100D]/95 border border-crema/50 hover:border-crema shadow-2xl shadow-crema/15 backdrop-blur-md transition-all duration-300 transform hover:-translate-y-1">
+      <div class="w-2.5 h-2.5 rounded-full bg-crema animate-ping"></div>
+      <div class="text-left">
+        <span class="block text-[11px] font-semibold text-gray-200">
+          Kafeniz için böyle 20.000 TL'lik site ister misiniz?
+        </span>
+        <span class="text-[10px] font-bold text-crema group-hover:underline">
+          Ajans Sahibiyle Konuşun →
+        </span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Floating Contact Buttons (Bottom Right) -->
+  <div class="fixed bottom-5 right-5 z-40 flex flex-col space-y-3">
+    <a href="https://t.me/galata_roastery" target="_blank" onclick="playSfx('whoosh')" class="w-12 h-12 rounded-full bg-sky-500 hover:bg-sky-400 text-white shadow-xl flex items-center justify-center transition transform hover:scale-110">
+      <i data-lucide="send" class="w-5 h-5"></i>
+    </a>
+    <a href="https://wa.me/905551234567?text=Merhaba!%20Roast%20Atelier%20siparişi." target="_blank" onclick="playSfx('success')" class="w-13 h-13 p-3.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-xl flex items-center justify-center transition transform hover:scale-110 animate-pulse">
+      <i data-lucide="message-circle" class="w-6 h-6"></i>
+    </a>
+  </div>
+
+  <!-- ================= JAVASCRIPT: 10 COFFEES, STEAM PHYSICS & AUDIO ================= -->
+  <script>
+    // 1. THE 10 ARTISAN SPECIALTY COFFEES DATABASE
+    const coffeeMenu = [
+      {
+        id: 1,
+        name: "Galata Signature Espresso",
+        origin: "Etiyopya Yirgacheffe G1",
+        roast: "Light-Medium Roast",
+        notes: "Yasemin Çiçeği • Bergamot • Bal",
+        price: "₺120",
+        image: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=600&q=80",
+        desc: "9 bar basınçla çekilmiş yoğun gövdeli, narenciye asiditeli amiral fincan."
+      },
+      {
+        id: 2,
+        name: "Artisan Cortado Velvet",
+        origin: "Kolumbiya Huila Supremo",
+        roast: "Medium Roast",
+        notes: "Kavrulmuş Fındık • Sütlü Çikolata",
+        price: "₺145",
+        image: "https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=600&q=80",
+        desc: "Bire bir oranında mikrokopuklu süt ve çift shot espresso dengesi."
+      },
+      {
+        id: 3,
+        name: "Flat White Reserve",
+        origin: "Kosta Rika Tarrazu",
+        roast: "Medium Roast",
+        notes: "İncir • Esmer Şeker • Bitter Kakao",
+        price: "₺160",
+        image: "https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=600&q=80",
+        desc: "İpeksi dokulu ince süt köpüğü ile ristretto çift shot lezzeti."
+      },
+      {
+        id: 4,
+        name: "V60 Pour Over Hand Drip",
+        origin: "Panama Boquete Geisha",
+        roast: "Omni Light Roast",
+        notes: "Şeftali Çiçeği • Papaya • Limon Otu",
+        price: "₺220",
+        image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80",
+        desc: "Hario V60 ile 92°C derecede 3 dakika boyunca el ile demlenen berrak kadeh."
+      },
+      {
+        id: 5,
+        name: "Kyoto Drip 12h Cold Brew",
+        origin: "Guatemala Antigua Los Volcanes",
+        roast: "Dark Roast",
+        notes: "Meşe Fıçısı • Karamelize Vişne",
+        price: "₺175",
+        image: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=600&q=80",
+        desc: "12 saat boyunca buzlu su damlalarıyla damla damla süzülmüş asitsiz soğuk kahve."
+      },
+      {
+        id: 6,
+        name: "Spanish Saffron Latte",
+        origin: "Brezilya Cerrado & Hakiki Safran",
+        roast: "Medium Roast",
+        notes: "Doğal Safran • Yoğunlaştırılmış Süt",
+        price: "₺185",
+        image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=600&q=80",
+        desc: "Hakiki İran safranı esansı ile tatlandırılmış lüks kremsi kış kahvesi."
+      },
+      {
+        id: 7,
+        name: "Truffle Mocha Noir",
+        origin: "Belçika %72 Çikolatası & Espresso",
+        roast: "Dark Chocolate Roast",
+        notes: "Trüf • Orman Meyvesi • Kakao",
+        price: "₺195",
+        image: "https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?auto=format&fit=crop&w=600&q=80",
+        desc: "Eritilmiş sıcak çikolata tabanı ve çift shot espressonun muazzam uyumu."
+      },
+      {
+        id: 8,
+        name: "Aeropress Single Origin",
+        origin: "Kenya Nyeri Hill Farm",
+        roast: "Light Roast",
+        notes: "Frenk Üzümü • Domates Çiçeği • Canlı Asidite",
+        price: "₺165",
+        image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=600&q=80",
+        desc: "Hava basıncıyla demlenerek çekirdeğin en yoğun meyvemsi gövdesini açığa çıkarır."
+      },
+      {
+        id: 9,
+        name: "Chemex Roastery Sharing (2 Kişilik)",
+        origin: "Etiyopya Guji Hambela",
+        roast: "Light Roast",
+        notes: "Çilek Reçeli • Gül Suyu • Nane",
+        price: "₺260",
+        image: "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=600&q=80",
+        desc: "Kalın laboratuvar filtresiyle 2 kişilik paylaşımlı berrak aroma ziyafeti."
+      },
+      {
+        id: 10,
+        name: "Tarihi Kumda Türk Kahvesi",
+        origin: "Yemen Matari Özel Çekirdek",
+        roast: "Geleneksel Orta Kavrum",
+        notes: "Damla Sakızı • Kakule • Kadifemsi Köpük",
+        price: "₺110",
+        image: "https://images.unsplash.com/photo-1561047029-3000c68339ca?auto=format&fit=crop&w=600&q=80",
+        desc: "Kızgın kum tablasında bakır cezvede ağır ağır kabartılmış Osmanlı usulü ritüel."
+      }
+    ];
+
+    let isSoundMuted = false;
+
+    // 2. RENDER THE 10 ARTISANAL COFFEES
+    function renderCoffeeList() {
+      const container = document.getElementById('coffee-list');
+      container.innerHTML = coffeeMenu.map(c => `
+        <div class="glass-roast p-6 sm:p-7 rounded-3xl flex flex-col sm:flex-row gap-6 items-center group transition-all duration-400 hover:border-crema">
+          <!-- Image with Steam effect on hover -->
+          <div class="w-full sm:w-40 h-40 rounded-2xl overflow-hidden shrink-0 relative bg-black">
+            <img src="${c.image}" alt="${c.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-black/80 backdrop-blur-md text-[9px] font-mono uppercase tracking-wider text-crema border border-crema/20">
+              #${c.id}
+            </span>
+          </div>
+
+          <!-- Info & Actions -->
+          <div class="flex-1 w-full flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-[10px] uppercase font-mono tracking-widest text-crema">${c.origin}</span>
+                <span class="font-serif font-bold text-crema text-xl">${c.price}</span>
+              </div>
+              <h3 class="font-serif font-bold text-lg sm:text-xl text-white group-hover:text-crema transition-colors mb-2">${c.name}</h3>
+              <p class="text-xs text-gray-300 font-light mb-3 leading-relaxed">${c.desc}</p>
+              
+              <div class="flex items-center space-x-2 text-[10px] text-gray-400 font-mono mb-4">
+                <i data-lucide="tag" class="w-3 h-3 text-crema"></i>
+                <span>Notalar: <strong class="text-crema-light font-normal">${c.notes}</strong></span>
+              </div>
+            </div>
+
+            <!-- WhatsApp Order / Reservation -->
+            <button onclick="orderCoffeeWhatsApp('${c.name}', '${c.price}')" class="w-full py-2.5 rounded-xl btn-crema-sweep text-xs font-bold tracking-wider uppercase flex items-center justify-center space-x-2">
+              <i data-lucide="coffee" class="w-3.5 h-3.5"></i>
+              <span>Sipariş Ver / Masaya İste</span>
+            </button>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function orderCoffeeWhatsApp(name, price) {
+      playSfx('success');
+      const storeNumber = "905551234567";
+      const message = `Merhaba! Roast & Atelier Galata menünüzden ${name} (${price}) sipariş vermek / ayırtmak istiyorum.`;
+      window.open(`https://wa.me/${storeNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    // 3. REALISTIC PHYSICS STEAM SIMULATION CANVAS (Live vapor curling upward)
+    function initSteamSimulation() {
+      const canvas = document.getElementById('steam-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = 320;
+      canvas.height = 260;
+
+      const particles = [];
+      const particleCount = 45;
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: canvas.width / 2 + (Math.random() - 0.5) * 60,
+          y: canvas.height - 20 - Math.random() * 80,
+          radius: 8 + Math.random() * 14,
+          speedY: 0.6 + Math.random() * 0.9,
+          speedX: (Math.random() - 0.5) * 0.5,
+          opacity: Math.random() * 0.45,
+          maxLife: 120 + Math.random() * 80,
+          life: Math.random() * 100,
+          expansion: 0.18 + Math.random() * 0.15
+        });
+      }
+
+      function drawSteam() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(p => {
+          p.life++;
+          p.y -= p.speedY;
+          p.x += p.speedX + Math.sin(p.life * 0.05) * 0.4;
+          p.radius += p.expansion;
+
+          // Fade out as it climbs
+          const progress = p.life / p.maxLife;
+          const currentOpacity = (1 - progress) * p.opacity;
+
+          if (currentOpacity > 0) {
+            const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+            grad.addColorStop(0, `rgba(250, 237, 205, ${currentOpacity})`);
+            grad.addColorStop(0.6, `rgba(212, 163, 115, ${currentOpacity * 0.4})`);
+            grad.addColorStop(1, 'rgba(212, 163, 115, 0)');
+
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // Reset particle when dead
+          if (p.life >= p.maxLife || p.y <= 10) {
+            p.x = canvas.width / 2 + (Math.random() - 0.5) * 55;
+            p.y = canvas.height - 20;
+            p.radius = 8 + Math.random() * 10;
+            p.life = 0;
+          }
+        });
+
+        requestAnimationFrame(drawSteam);
+      }
+      drawSteam();
+    }
+
+    // 4. SYNTHETIC COFFEE AROMA AUDIO (Brewing soundscape)
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+
+    function playSfx(type) {
+      if (isSoundMuted) return;
+      try {
+        const ctx = getAudioCtx();
+        const now = ctx.currentTime;
+        if (type === 'tick') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(280, now);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.04);
+        } else if (type === 'click') {
+          // Espresso tamper click
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(160, now);
+          osc.frequency.exponentialRampToValueAtTime(60, now + 0.06);
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.07);
+        } else if (type === 'whoosh') {
+          // Soft steam hiss
+          const bufferSize = ctx.sampleRate * 0.25;
+          const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.08));
+          }
+          const noise = ctx.createBufferSource();
+          noise.buffer = buffer;
+          const filter = ctx.createBiquadFilter();
+          filter.type = 'bandpass';
+          filter.frequency.setValueAtTime(1400, now);
+          const gain = ctx.createGain();
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+          noise.connect(filter);
+          filter.connect(gain);
+          gain.connect(ctx.destination);
+          noise.start(now);
+        } else if (type === 'success') {
+          // Golden porcelain bell
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(784, now); // G5
+          gain.gain.setValueAtTime(0.3, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.5);
+        }
+      } catch(e){}
+    }
+
+    function toggleSound() {
+      isSoundMuted = !isSoundMuted;
+      const icon = document.getElementById('sound-icon');
+      const btn = document.getElementById('sound-btn');
+      if (isSoundMuted) {
+        icon.setAttribute('data-lucide', 'volume-x');
+        btn.classList.add('text-gray-500');
+        btn.classList.remove('text-crema');
+      } else {
+        icon.setAttribute('data-lucide', 'volume-2');
+        btn.classList.add('text-crema');
+        btn.classList.remove('text-gray-500');
+        playSfx('whoosh');
+      }
+      lucide.createIcons();
+    }
+
+    function pourCoffeeAction() {
+      playSfx('whoosh');
+    }
+
+    // 5. PARALLAX EFFECT ON WATERMARK
+    window.addEventListener('scroll', () => {
+      const watermark = document.getElementById('watermark-logo');
+      const scrollY = window.scrollY;
+      watermark.style.transform = `translate(-50%, calc(-50% + ${scrollY * 0.12}px))`;
+    });
+
+    // 6. PAGE LOAD
+    window.addEventListener('load', () => {
+      const loaderBar = document.getElementById('loader-bar');
+      const screen = document.getElementById('loading-screen');
+      loaderBar.style.width = '100%';
+      setTimeout(() => {
+        screen.classList.add('opacity-0', 'pointer-events-none');
+        playSfx('whoosh');
+        setTimeout(() => screen.remove(), 700);
+      }, 500);
+
+      renderCoffeeList();
+      initSteamSimulation();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

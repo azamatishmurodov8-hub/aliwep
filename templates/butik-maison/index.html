@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAISON İSTANBUL — 3D Walk-In Butik & Sanal Stilist (30.000 TL+ Masterpiece)</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP for Smooth Orchestration -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Haute Couture Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            royal: ['"Cinzel"', 'serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"Space Grotesk"', 'monospace'],
+          },
+          colors: {
+            gold: {
+              DEFAULT: '#D4AF37',
+              light: '#F5E6CA',
+              dark: '#997E25',
+              glow: 'rgba(212, 175, 55, 0.35)',
+            },
+            noir: {
+              void: '#070709',
+              dark: '#0D0D12',
+              card: '#13131A',
+              surface: '#1A1A24',
+              border: 'rgba(255, 255, 255, 0.08)',
+              goldborder: 'rgba(212, 175, 55, 0.25)',
+            }
+          },
+          animation: {
+            'float-slow': 'floatSlow 8s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 3s ease-in-out infinite alternate',
+            'spin-ultra-slow': 'spin 40s linear infinite',
+          },
+          keyframes: {
+            floatSlow: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-12px) rotate(1deg)' },
+            },
+            pulseGlow: {
+              '0%': { opacity: '0.3', transform: 'scale(0.98)' },
+              '100%': { opacity: '0.7', transform: 'scale(1.02)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #070709; }
+    ::-webkit-scrollbar-thumb { background: #262635; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+
+    /* 3D Walk-In Boutique Depth Viewport */
+    .perspective-container {
+      perspective: 1400px;
+      perspective-origin: center center;
+    }
+    .depth-room {
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Flip Card 3D */
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-style: preserve-3d;
+    }
+    .flip-card-inner.is-flipped {
+      transform: rotateY(180deg);
+    }
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      top: 0; left: 0;
+    }
+    .flip-card-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Glass Panels */
+    .glass-panel {
+      background: rgba(19, 19, 26, 0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-gold {
+      background: rgba(26, 22, 14, 0.85);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    /* Subtle background grid */
+    .bg-atelier-grid {
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Mannequin Avatar Slot Pin */
+    .slot-pin {
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .slot-pin:hover {
+      transform: scale(1.15);
+    }
+  </style>
+</head>
+<body class="bg-noir-void text-gray-200 antialiased selection:bg-gold selection:text-black overflow-x-hidden">
+
+  <!-- ================= TOP LUXURY TICKER ================= -->
+  <div class="bg-gradient-to-r from-noir-dark via-gold/15 to-noir-dark border-b border-gold/20 py-2 text-xs font-mono tracking-widest text-gold text-center px-4 flex items-center justify-center gap-6 overflow-hidden">
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-gold animate-ping"></span>
+      <span class="uppercase">MAISON İSTANBUL • 3D SANAL BUTİK & KİŞİSEL STİLİST</span>
+    </div>
+    <span class="hidden md:inline text-gray-500">|</span>
+    <span class="hidden md:inline text-gray-300">Nişantaşı Abdi İpekçi No:42</span>
+    <span class="hidden md:inline text-gray-500">|</span>
+    <span class="hidden sm:inline text-gold-light">⚡ İstanbul İçi Aynı Gün Özel Kurye Teslimat</span>
+    <span class="hidden lg:inline text-gray-500">|</span>
+    <span class="hidden lg:inline text-gray-400">50 Seçkin Başyapıt Koleksiyonu</span>
+  </div>
+
+  <!-- ================= NAVIGATION BAR ================= -->
+  <header class="sticky top-0 z-40 bg-noir-void/85 backdrop-blur-2xl border-b border-noir-border transition-all duration-300" id="mainHeader">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="#storeTour" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-full bg-gradient-to-br from-gold via-yellow-600 to-amber-900 p-[1px] flex items-center justify-center shadow-lg shadow-gold/10 group-hover:shadow-gold/30 transition-all">
+          <div class="w-full h-full rounded-full bg-noir-void flex items-center justify-center">
+            <span class="font-royal text-gold font-black text-xl tracking-tighter">M</span>
+          </div>
+        </div>
+        <div>
+          <div class="font-royal text-xl sm:text-2xl font-bold tracking-[0.25em] text-white group-hover:text-gold transition-colors">
+            MAISON
+          </div>
+          <div class="text-[9px] uppercase tracking-[0.35em] text-gold/80 font-mono -mt-1">
+            İSTANBUL • HAUTE ATELIER
+          </div>
+        </div>
+      </a>
+
+      <!-- Center Links (Desktop) -->
+      <nav class="hidden lg:flex items-center gap-8 text-xs font-mono tracking-wider uppercase">
+        <a href="#storeTour" class="text-gray-300 hover:text-gold transition-colors flex items-center gap-1.5">
+          <i data-lucide="compass" class="w-3.5 h-3.5 text-gold"></i> 3D Dükkan Turu
+        </a>
+        <a href="#virtualStylist" class="text-gold font-bold transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gold/10 border border-gold/30 hover:bg-gold/20">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold animate-pulse"></i> Sanal Stilist (Kombin Yap)
+        </a>
+        <button onclick="openCategoryDrawer('all')" class="text-gray-300 hover:text-gold transition-colors flex items-center gap-1.5">
+          <i data-lucide="layers" class="w-3.5 h-3.5 text-gold"></i> 50 Parça Koleksiyon
+        </button>
+        <a href="#atelierInfo" class="text-gray-300 hover:text-gold transition-colors flex items-center gap-1.5">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-gold"></i> Butik & Randevu
+        </a>
+      </nav>
+
+      <!-- Right Controls -->
+      <div class="flex items-center gap-3">
+        <!-- Sound FX Synth Toggle -->
+        <button id="soundToggleBtn" onclick="toggleAudio()" class="px-3 py-2 rounded-full border border-noir-border hover:border-gold/50 bg-noir-card text-xs font-mono text-gray-300 flex items-center gap-2 transition-all hover:bg-noir-surface" title="Ses Efektleri ve Ambiyans">
+          <i data-lucide="volume-2" id="soundIcon" class="w-4 h-4 text-gold"></i>
+          <span id="soundText" class="hidden sm:inline text-[11px]">Ambiyans: Açık</span>
+        </button>
+
+        <!-- Quick Cart Trigger -->
+        <button onclick="openCartDrawer()" class="relative px-4 py-2 rounded-full bg-gold text-black font-semibold text-xs font-mono tracking-wider flex items-center gap-2 hover:bg-gold-light hover:shadow-lg hover:shadow-gold/25 transition-all">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+          <span>Çanta</span>
+          <span id="cartCountBadge" class="w-5 h-5 rounded-full bg-black text-gold text-[10px] font-bold flex items-center justify-center">0</span>
+        </button>
+
+        <!-- Drawer Menu for Mobile -->
+        <button onclick="openCategoryDrawer('all')" class="lg:hidden p-2.5 rounded-xl border border-noir-border bg-noir-card text-gold">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= SECTION 1: 3D WALK-IN BOUTIQUE TOUR ================= -->
+  <section id="storeTour" class="relative min-h-[92vh] flex flex-col justify-center items-center overflow-hidden bg-atelier-grid py-12 px-4 sm:px-6">
+    
+    <!-- Ambient Golden Glow behind store -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gold/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <div class="max-w-7xl w-full mx-auto relative z-10">
+      
+      <!-- Section Intro & Guide -->
+      <div class="text-center max-w-3xl mx-auto mb-8">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-mono tracking-widest uppercase mb-4">
+          <i data-lucide="eye" class="w-3.5 h-3.5"></i> 3 Boyutlu İnteraktif Mağaza Deneyimi
+        </div>
+        <h1 class="font-royal text-3xl sm:text-5xl lg:text-6xl text-white font-bold tracking-tight mb-4 leading-tight">
+          Nişantaşı Butiğimize <br class="hidden sm:block">
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold via-yellow-300 to-amber-500">Adım Atın & Keşfedin</span>
+        </h1>
+        <p class="text-gray-400 text-sm sm:text-base font-light max-w-2xl mx-auto">
+          Gerçek hayattaki gibi dükkanın koridorlarında ilerleyin. İstediğiniz reyonu seçin, sağdan açılan vitrinde 50 lüks parçayı inceleyin ve <strong class="text-gold font-medium">Sanal Stilist</strong> ile kombininizi tamamlayın.
+        </p>
+      </div>
+
+      <!-- Navigation Steps (Store Zones) -->
+      <div class="flex items-center justify-center gap-2 sm:gap-3 mb-8 overflow-x-auto pb-2 px-2">
+        <button onclick="goToRoom(0)" class="room-nav-btn active px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all bg-gold text-black font-bold shadow-lg shadow-gold/20" data-room="0">
+          1. Giriş Cephesi
+        </button>
+        <button onclick="goToRoom(1)" class="room-nav-btn px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40" data-room="1">
+          2. Dış Giyim Koridoru
+        </button>
+        <button onclick="goToRoom(2)" class="room-nav-btn px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40" data-room="2">
+          3. Lüks Saat Kasası
+        </button>
+        <button onclick="goToRoom(3)" class="room-nav-btn px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40" data-room="3">
+          4. Ayakkabı & Sneaker
+        </button>
+        <button onclick="goToRoom(4)" class="room-nav-btn px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40" data-room="4">
+          5. Şapka & Aksesuar
+        </button>
+        <button onclick="goToRoom(5)" class="room-nav-btn px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40" data-room="5">
+          6. VIP Sanal Stilist
+        </button>
+      </div>
+
+      <!-- 3D Boutique Walkthrough Chamber -->
+      <div class="perspective-container relative w-full h-[520px] sm:h-[600px] rounded-3xl overflow-hidden border border-noir-goldborder bg-noir-dark shadow-2xl shadow-black">
+        
+        <!-- Interactive 3D Room Layer Container -->
+        <div id="walkthroughStage" class="depth-room relative w-full h-full flex items-center justify-center">
+          
+          <!-- ROOM 0: GRAND ENTRANCE FACADE -->
+          <div id="room-0" class="room-slide absolute inset-0 flex flex-col justify-between p-6 sm:p-12 bg-cover bg-center transition-all duration-700" style="background-image: linear-gradient(to top, rgba(7,7,9,0.92) 0%, rgba(7,7,9,0.4) 50%, rgba(7,7,9,0.85) 100%), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=85');">
+            <div class="flex items-center justify-between">
+              <span class="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-gold/40 text-gold text-xs font-mono">
+                📍 NİŞANTAŞI AMİRAL BUTİK
+              </span>
+              <span class="text-xs text-gray-300 font-mono flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Butik Açık • Misafir Kabulü
+              </span>
+            </div>
+
+            <div class="max-w-xl">
+              <div class="font-royal text-gold text-sm tracking-[0.3em] uppercase mb-2">01 / DÜKKAN GİRİŞİ</div>
+              <h2 class="font-royal text-3xl sm:text-4xl text-white font-bold mb-4">
+                Lüksün Mimariyle Buluştuğu Mekan
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed mb-6 font-light">
+                İtalyan mermeri zemin, sıcak amber aydınlatma ve dünya standartlarında haute couture seçkisi. Dükkanda ilerlemek için butona tıklayın ya da aşağıdaki reyonları keşfedin.
+              </p>
+              <div class="flex flex-wrap items-center gap-4">
+                <button onclick="goToRoom(1)" class="px-6 py-3.5 rounded-full bg-gold text-black font-semibold font-mono text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-gold-light hover:shadow-lg hover:shadow-gold/30 transition-all">
+                  <span>Mağaza İçine İlerle</span>
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+                <button onclick="openCategoryDrawer('all')" class="px-6 py-3.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white font-mono text-xs uppercase tracking-wider hover:border-gold hover:text-gold transition-all">
+                  Katalog Listesi (50 Ürün)
+                </button>
+              </div>
+            </div>
+
+            <!-- Floor Status Indicator -->
+            <div class="flex items-center justify-between text-[11px] font-mono text-gray-400 border-t border-white/10 pt-4">
+              <span>Zemin: Calacatta Gold Mermer</span>
+              <span>Aydınlatma: 2700K Sıcak Müze Spotları</span>
+              <span>Müzik: Lo-Fi Lounge Vinyl</span>
+            </div>
+          </div>
+
+          <!-- ROOM 1: OUTERWEAR & HOODIE RUNWAY -->
+          <div id="room-1" class="room-slide absolute inset-0 opacity-0 pointer-events-none flex flex-col justify-between p-6 sm:p-12 bg-cover bg-center transition-all duration-700" style="background-image: linear-gradient(to top, rgba(7,7,9,0.92) 0%, rgba(7,7,9,0.5) 50%, rgba(7,7,9,0.85) 100%), url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1800&q=85');">
+            <div class="flex items-center justify-between">
+              <span class="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-gold/40 text-gold text-xs font-mono">
+                🧥 REYON 01: DIŞ GİYİM & HOODIE
+              </span>
+              <button onclick="goToRoom(0)" class="text-xs text-gray-300 font-mono flex items-center gap-1 hover:text-gold">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Girişe Dön
+              </button>
+            </div>
+
+            <div class="max-w-xl">
+              <div class="font-royal text-gold text-sm tracking-[0.3em] uppercase mb-2">02 / KOLEKSİYON SALONU</div>
+              <h2 class="font-royal text-3xl sm:text-4xl text-white font-bold mb-4">
+                Ağır Gramajlı Hoodie & İtalyan Deri Ceketler
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed mb-6 font-light">
+                500 GSM fırçalanmamış Fransız havlu kumaşları, kuzu derisi biker montlar ve saf kaşmir kabanlar askılarda sizi bekliyor.
+              </p>
+              <div class="flex flex-wrap items-center gap-4">
+                <button onclick="openCategoryDrawer('outerwear')" class="px-6 py-3.5 rounded-full bg-gold text-black font-semibold font-mono text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-gold-light hover:shadow-lg hover:shadow-gold/30 transition-all">
+                  <i data-lucide="sidebar" class="w-4 h-4"></i>
+                  <span>Dış Giyim Vitrinini Aç (10 Parça)</span>
+                </button>
+                <button onclick="goToRoom(2)" class="px-6 py-3.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white font-mono text-xs uppercase tracking-wider hover:border-gold hover:text-gold transition-all">
+                  Saat Kasasına İlerle →
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-[11px] font-mono text-gray-400 border-t border-white/10 pt-4">
+              <span>Askı Malzemesi: Masif Meşe & Pirinç</span>
+              <span>Kumaşlar: 500 GSM French Terry, Kaşmir, Nappa Deri</span>
+            </div>
+          </div>
+
+          <!-- ROOM 2: LUXURY WATCH VAULT -->
+          <div id="room-2" class="room-slide absolute inset-0 opacity-0 pointer-events-none flex flex-col justify-between p-6 sm:p-12 bg-cover bg-center transition-all duration-700" style="background-image: linear-gradient(to top, rgba(7,7,9,0.92) 0%, rgba(7,7,9,0.4) 50%, rgba(7,7,9,0.85) 100%), url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1800&q=85');">
+            <div class="flex items-center justify-between">
+              <span class="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-gold/40 text-gold text-xs font-mono">
+                ⌚ REYON 02: HOROLOJİ & SAAT KASASI
+              </span>
+              <button onclick="goToRoom(1)" class="text-xs text-gray-300 font-mono flex items-center gap-1 hover:text-gold">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Önceki Reyon
+              </button>
+            </div>
+
+            <div class="max-w-xl">
+              <div class="font-royal text-gold text-sm tracking-[0.3em] uppercase mb-2">03 / ZAMAN MAKİNELERİ</div>
+              <h2 class="font-royal text-3xl sm:text-4xl text-white font-bold mb-4">
+                İsviçre Kalibreli Lüks Mekanik Saatler
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed mb-6 font-light">
+                Cam fanuslar altında spot ışıklarıyla aydınlatılan 6 eşsiz zaman makinesi. Sekizgen bezel kronograflar, iskelet mekanizmalar ve dalgıç modelleri.
+              </p>
+              <div class="flex flex-wrap items-center gap-4">
+                <button onclick="openCategoryDrawer('watches')" class="px-6 py-3.5 rounded-full bg-gold text-black font-semibold font-mono text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-gold-light hover:shadow-lg hover:shadow-gold/30 transition-all">
+                  <i data-lucide="sidebar" class="w-4 h-4"></i>
+                  <span>Saat Kasasını Aç (6 Model)</span>
+                </button>
+                <button onclick="goToRoom(3)" class="px-6 py-3.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white font-mono text-xs uppercase tracking-wider hover:border-gold hover:text-gold transition-all">
+                  Ayakkabı Reyonuna İlerle →
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-[11px] font-mono text-gray-400 border-t border-white/10 pt-4">
+              <span>Camlar: Çift Yansıma Önleyici Safir Kristal</span>
+              <span>Hassasiyet: COSC Kronometre Standartları</span>
+            </div>
+          </div>
+
+          <!-- ROOM 3: SNEAKER & FOOTWEAR PODIUM -->
+          <div id="room-3" class="room-slide absolute inset-0 opacity-0 pointer-events-none flex flex-col justify-between p-6 sm:p-12 bg-cover bg-center transition-all duration-700" style="background-image: linear-gradient(to top, rgba(7,7,9,0.92) 0%, rgba(7,7,9,0.4) 50%, rgba(7,7,9,0.85) 100%), url('https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=1800&q=85');">
+            <div class="flex items-center justify-between">
+              <span class="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-gold/40 text-gold text-xs font-mono">
+                👟 REYON 03: AYAKKABI & SNEAKER PODYUMU
+              </span>
+              <button onclick="goToRoom(2)" class="text-xs text-gray-300 font-mono flex items-center gap-1 hover:text-gold">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Önceki Reyon
+              </button>
+            </div>
+
+            <div class="max-w-xl">
+              <div class="font-royal text-gold text-sm tracking-[0.3em] uppercase mb-2">04 / PODYUM</div>
+              <h2 class="font-royal text-3xl sm:text-4xl text-white font-bold mb-4">
+                Heykelsi Tabanlar & El Yapımı Deri Botlar
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed mb-6 font-light">
+                Fütüristik chunky taban sneakers, İtalyan dana derisi minimal ayakkabılar ve el cilalı süet Chelsea botlar.
+              </p>
+              <div class="flex flex-wrap items-center gap-4">
+                <button onclick="openCategoryDrawer('shoes')" class="px-6 py-3.5 rounded-full bg-gold text-black font-semibold font-mono text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-gold-light hover:shadow-lg hover:shadow-gold/30 transition-all">
+                  <i data-lucide="sidebar" class="w-4 h-4"></i>
+                  <span>Ayakkabı Vitrinini Aç (8 Model)</span>
+                </button>
+                <button onclick="goToRoom(4)" class="px-6 py-3.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white font-mono text-xs uppercase tracking-wider hover:border-gold hover:text-gold transition-all">
+                  Şapka Reyonuna İlerle →
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-[11px] font-mono text-gray-400 border-t border-white/10 pt-4">
+              <span>Tabanlar: Vibram & Margom İtalyan Kauçuk</span>
+              <span>Deri: Tam Tahıllı Toskana Dana Derisi</span>
+            </div>
+          </div>
+
+          <!-- ROOM 4: CAPS & HEADWEAR ALCOVE -->
+          <div id="room-4" class="room-slide absolute inset-0 opacity-0 pointer-events-none flex flex-col justify-between p-6 sm:p-12 bg-cover bg-center transition-all duration-700" style="background-image: linear-gradient(to top, rgba(7,7,9,0.92) 0%, rgba(7,7,9,0.4) 50%, rgba(7,7,9,0.85) 100%), url('https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=1800&q=85');">
+            <div class="flex items-center justify-between">
+              <span class="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-gold/40 text-gold text-xs font-mono">
+                🧢 REYON 04: ŞAPKALAR & BAŞLIKLAR
+              </span>
+              <button onclick="goToRoom(3)" class="text-xs text-gray-300 font-mono flex items-center gap-1 hover:text-gold">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Önceki Reyon
+              </button>
+            </div>
+
+            <div class="max-w-xl">
+              <div class="font-royal text-gold text-sm tracking-[0.3em] uppercase mb-2">05 / AKSESUAR KÖŞESİ</div>
+              <h2 class="font-royal text-3xl sm:text-4xl text-white font-bold mb-4">
+                Kadife, Kaşmir & Altın Rozetli Şapkalar
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed mb-6 font-light">
+                İtalyan kadife kepler, saf kaşmir bereler, çift taraflı ipek bucket şapkalar ve 24K altın kaplama iğneli modeller.
+              </p>
+              <div class="flex flex-wrap items-center gap-4">
+                <button onclick="openCategoryDrawer('caps')" class="px-6 py-3.5 rounded-full bg-gold text-black font-semibold font-mono text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-gold-light hover:shadow-lg hover:shadow-gold/30 transition-all">
+                  <i data-lucide="sidebar" class="w-4 h-4"></i>
+                  <span>Şapkaları Gör (8 Model)</span>
+                </button>
+                <button onclick="goToRoom(5)" class="px-6 py-3.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white font-mono text-xs uppercase tracking-wider hover:border-gold hover:text-gold transition-all">
+                  Sanal Stilist Lounge'ına Gir ✨
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-[11px] font-mono text-gray-400 border-t border-white/10 pt-4">
+              <span>Detay: 24 Ayar Altın Kaplama Pimler & Ham Kenar Eskitme</span>
+            </div>
+          </div>
+
+          <!-- ROOM 5: VIP SANAL STILIST LOUNGE -->
+          <div id="room-5" class="room-slide absolute inset-0 opacity-0 pointer-events-none flex flex-col justify-between p-6 sm:p-12 bg-cover bg-center transition-all duration-700" style="background-image: linear-gradient(to top, rgba(7,7,9,0.92) 0%, rgba(7,7,9,0.5) 50%, rgba(7,7,9,0.85) 100%), url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1800&q=85');">
+            <div class="flex items-center justify-between">
+              <span class="px-3 py-1 rounded-full bg-gold/20 backdrop-blur-md border border-gold text-gold text-xs font-mono animate-pulse">
+                ✨ VIP GİYİNME SALONU & SANAL STİLİST
+              </span>
+              <button onclick="goToRoom(4)" class="text-xs text-gray-300 font-mono flex items-center gap-1 hover:text-gold">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Önceki Reyon
+              </button>
+            </div>
+
+            <div class="max-w-xl">
+              <div class="font-royal text-gold text-sm tracking-[0.3em] uppercase mb-2">06 / FITTING ROOM</div>
+              <h2 class="font-royal text-3xl sm:text-4xl text-white font-bold mb-4">
+                Kendi Lüks Kombininizi Yaratın
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed mb-6 font-light">
+                Şapkanızı, tişörtünüzü, lüks saatinizi, pantolonunuzu ve ayakkabınızı sanal manken üzerinde birleştirin. Tüm parçaları canlı fiyatta görün ve tek tıkla sepete ekleyin.
+              </p>
+              <div class="flex flex-wrap items-center gap-4">
+                <a href="#virtualStylist" class="px-6 py-3.5 rounded-full bg-gold text-black font-semibold font-mono text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-gold-light hover:shadow-lg hover:shadow-gold/30 transition-all">
+                  <i data-lucide="sparkles" class="w-4 h-4"></i>
+                  <span>Sanal Manken Üzerinde Kombin Yap</span>
+                </a>
+                <button onclick="goToRoom(0)" class="px-6 py-3.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white font-mono text-xs uppercase tracking-wider hover:border-gold hover:text-gold transition-all">
+                  Mağaza Girişine Dön
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-[11px] font-mono text-gray-400 border-t border-white/10 pt-4">
+              <span>Özellik: 5 Ayrı Katmanda Canlı Stil Oluşturucu</span>
+              <span>Tek Tıkla WhatsApp Sipariş Entegrasyonu</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Room Controls (Prev / Next Arrows) -->
+        <button onclick="prevRoom()" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-white hover:text-gold hover:border-gold flex items-center justify-center transition-all z-20 group">
+          <i data-lucide="chevron-left" class="w-6 h-6 group-hover:-translate-x-0.5 transition-transform"></i>
+        </button>
+        <button onclick="nextRoom()" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-white hover:text-gold hover:border-gold flex items-center justify-center transition-all z-20 group">
+          <i data-lucide="chevron-right" class="w-6 h-6 group-hover:translate-x-0.5 transition-transform"></i>
+        </button>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 2: VIRTUAL FITTING ROOM & STYLIST ================= -->
+  <section id="virtualStylist" class="relative py-20 px-4 sm:px-6 lg:px-8 border-t border-noir-border bg-noir-void">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/15 border border-gold/40 text-gold text-xs font-mono tracking-widest uppercase mb-4">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold animate-spin-slow"></i>
+          SANAL GİYİNME ODASI & STİLİST
+        </div>
+        <h2 class="font-royal text-3xl sm:text-5xl text-white font-bold tracking-tight mb-4">
+          Kombin Yaratıcı: <span class="text-gold">Sizin İmza Stiliniz</span>
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base font-light">
+          Manken üzerindeki 5 kritik katmanı (Şapka, Üst, Saat, Pantolon, Ayakkabı) istediğiniz parçalarla eşleştirin. İster tek tıkla rastgele stil üretin, ister tek tek giydirip WhatsApp'tan sipariş verin.
+        </p>
+      </div>
+
+      <!-- Fitting Room Stage Layout: 3 Columns -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- LEFT COLUMN: Category Selector & Item Tray (4 Cols) -->
+        <div class="lg:col-span-4 glass-panel rounded-3xl p-6 border border-noir-border">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-royal text-lg font-bold text-white flex items-center gap-2">
+              <i data-lucide="layers" class="w-4 h-4 text-gold"></i>
+              <span>Parça Seçimi</span>
+            </h3>
+            <span class="text-[11px] font-mono text-gold bg-gold/10 px-2.5 py-1 rounded-full border border-gold/30" id="currentSlotName">
+              Şapka Seçiliyor
+            </span>
+          </div>
+
+          <!-- Slot Selection Tabs -->
+          <div class="grid grid-cols-5 gap-1.5 p-1.5 rounded-2xl bg-noir-dark border border-noir-border mb-6">
+            <button onclick="selectStylistSlot('caps')" class="stylist-tab active py-2 text-center rounded-xl text-[11px] font-mono transition-all bg-gold text-black font-bold" data-slot="caps" title="Şapka & Başlık">
+              🧢 Şapka
+            </button>
+            <button onclick="selectStylistSlot('tops')" class="stylist-tab py-2 text-center rounded-xl text-[11px] font-mono text-gray-400 hover:text-white transition-all" data-slot="tops" title="Tişört & Üst">
+              👕 Üst
+            </button>
+            <button onclick="selectStylistSlot('outerwear')" class="stylist-tab py-2 text-center rounded-xl text-[11px] font-mono text-gray-400 hover:text-white transition-all" data-slot="outerwear" title="Hoodie & Ceket">
+              🧥 Ceket
+            </button>
+            <button onclick="selectStylistSlot('pants')" class="stylist-tab py-2 text-center rounded-xl text-[11px] font-mono text-gray-400 hover:text-white transition-all" data-slot="pants" title="Pantolon">
+              👖 Alt
+            </button>
+            <button onclick="selectStylistSlot('shoes')" class="stylist-tab py-2 text-center rounded-xl text-[11px] font-mono text-gray-400 hover:text-white transition-all" data-slot="shoes" title="Ayakkabı">
+              👟 Pabuç
+            </button>
+          </div>
+
+          <!-- Watch Special Slot Shortcut -->
+          <button onclick="selectStylistSlot('watches')" class="w-full mb-6 py-2.5 px-4 rounded-xl border border-gold/30 bg-gold/10 hover:bg-gold/20 text-gold text-xs font-mono flex items-center justify-between transition-all group">
+            <span class="flex items-center gap-2">
+              <i data-lucide="watch" class="w-4 h-4 text-gold"></i>
+              <span class="font-bold">Lüks Saat Kasasını Eşleştir (Horoloji)</span>
+            </span>
+            <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+          </button>
+
+          <!-- Scrollable Item Carousel for Active Slot -->
+          <div class="space-y-3 max-h-[460px] overflow-y-auto pr-2" id="stylistItemTray">
+            <!-- Populated via Javascript -->
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="mt-6 pt-4 border-t border-noir-border flex items-center gap-3">
+            <button onclick="randomizeOutfit()" class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-gold/20 via-gold/30 to-amber-600/20 border border-gold/40 text-gold font-mono text-xs font-bold hover:bg-gold/30 transition-all flex items-center justify-center gap-2">
+              <i data-lucide="shuffle" class="w-4 h-4"></i>
+              <span>Rastgele Lüks Kombin</span>
+            </button>
+            <button onclick="resetOutfit()" class="py-3 px-4 rounded-xl border border-noir-border text-gray-400 hover:text-white text-xs font-mono transition-all" title="Kombini Sıfırla">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- CENTER COLUMN: Interactive Stylized Mannequin Stage (5 Cols) -->
+        <div class="lg:col-span-5 relative flex flex-col items-center justify-center min-h-[640px] glass-panel rounded-3xl p-6 border border-gold/30 overflow-hidden shadow-2xl shadow-gold/5">
+          
+          <!-- Background Atmospheric Radial Spotlight -->
+          <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold/10 via-noir-void to-noir-void pointer-events-none"></div>
+
+          <!-- Mannequin Container with SVG Avatar and Floating Slot Badges -->
+          <div class="relative w-full max-w-[340px] h-[540px] flex items-center justify-center">
+            
+            <!-- STYLIZED FASHION SILHOUETTE SVG -->
+            <svg viewBox="0 0 300 600" class="w-full h-full drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)] filter">
+              <defs>
+                <linearGradient id="mannequinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#22222E" />
+                  <stop offset="50%" stop-color="#14141C" />
+                  <stop offset="100%" stop-color="#09090D" />
+                </linearGradient>
+                <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#D4AF37" />
+                  <stop offset="100%" stop-color="#F5E6CA" />
+                </linearGradient>
+              </defs>
+
+              <!-- Pedestal Stand -->
+              <ellipse cx="150" cy="580" rx="90" ry="14" fill="#0A0A0E" stroke="rgba(212,175,55,0.3)" stroke-width="2" />
+              <line x1="150" y1="580" x2="150" y2="480" stroke="#333" stroke-width="4" />
+
+              <!-- Silhouette Mannequin Body -->
+              <!-- Head -->
+              <ellipse id="avatarHead" cx="150" cy="85" rx="32" ry="40" fill="url(#mannequinGrad)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <!-- Neck -->
+              <rect x="142" y="125" width="16" height="20" fill="url(#mannequinGrad)" />
+              <!-- Torso & Shoulders -->
+              <path id="avatarTorso" d="M 85 145 C 105 138, 195 138, 215 145 C 230 155, 230 200, 210 260 C 195 300, 185 330, 180 340 L 120 340 C 115 330, 105 300, 90 260 C 70 200, 70 155, 85 145 Z" fill="url(#mannequinGrad)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <!-- Left Arm & Wrist -->
+              <path d="M 85 145 C 65 190, 60 250, 65 310 C 68 335, 75 350, 80 360" fill="none" stroke="url(#mannequinGrad)" stroke-width="20" stroke-linecap="round" />
+              <!-- Right Arm -->
+              <path d="M 215 145 C 235 190, 240 250, 235 310 C 232 335, 225 350, 220 360" fill="none" stroke="url(#mannequinGrad)" stroke-width="20" stroke-linecap="round" />
+              <!-- Legs & Pants -->
+              <path id="avatarPants" d="M 120 340 L 180 340 L 195 480 C 195 490, 165 490, 160 480 L 150 390 L 140 480 C 135 490, 105 490, 105 480 Z" fill="url(#mannequinGrad)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+              <!-- Feet -->
+              <ellipse id="avatarShoesLeft" cx="132" cy="495" rx="18" ry="8" fill="#1C1C26" stroke="rgba(255,255,255,0.2)" />
+              <ellipse id="avatarShoesRight" cx="168" cy="495" rx="18" ry="8" fill="#1C1C26" stroke="rgba(255,255,255,0.2)" />
+            </svg>
+
+            <!-- ANCHORED INTERACTIVE SLOT CHIPS ON MANNEQUIN -->
+
+            <!-- 1. Headwear Chip -->
+            <div id="pin-head" class="slot-pin absolute top-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 cursor-pointer" onclick="selectStylistSlot('caps')">
+              <div class="w-8 h-8 rounded-full bg-noir-card border-2 border-gold p-0.5 shadow-lg shadow-gold/30 flex items-center justify-center overflow-hidden">
+                <img id="pinImg-caps" src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=150&q=80" class="w-full h-full object-cover">
+              </div>
+              <div class="glass-gold px-2.5 py-1 rounded-lg text-[10px] font-mono text-gold-light border border-gold/40 whitespace-nowrap shadow-md">
+                <span id="pinName-caps">Maison Velvet Cap</span>
+              </div>
+            </div>
+
+            <!-- 2. Torso / Outerwear Chip -->
+            <div id="pin-torso" class="slot-pin absolute top-40 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 cursor-pointer" onclick="selectStylistSlot('outerwear')">
+              <div class="glass-gold px-2.5 py-1 rounded-lg text-[10px] font-mono text-gold-light border border-gold/40 whitespace-nowrap shadow-md">
+                <span id="pinName-tops">500 GSM Heavy Hoodie</span>
+              </div>
+              <div class="w-10 h-10 rounded-full bg-noir-card border-2 border-gold p-0.5 shadow-lg shadow-gold/30 flex items-center justify-center overflow-hidden">
+                <img id="pinImg-tops" src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=150&q=80" class="w-full h-full object-cover">
+              </div>
+            </div>
+
+            <!-- 3. Wrist / Watch Chip -->
+            <div id="pin-watch" class="slot-pin absolute top-64 left-1 z-20 flex items-center gap-2 cursor-pointer" onclick="selectStylistSlot('watches')">
+              <div class="w-8 h-8 rounded-full bg-noir-card border-2 border-amber-400 p-0.5 shadow-lg shadow-amber-400/30 flex items-center justify-center overflow-hidden">
+                <img id="pinImg-watches" src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=150&q=80" class="w-full h-full object-cover">
+              </div>
+              <div class="glass-panel px-2 py-0.5 rounded-lg text-[9px] font-mono text-amber-300 border border-amber-400/40 whitespace-nowrap">
+                <span id="pinName-watches">Royal Chronograph</span>
+              </div>
+            </div>
+
+            <!-- 4. Pants / Bottom Chip -->
+            <div id="pin-pants" class="slot-pin absolute top-[360px] left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 cursor-pointer" onclick="selectStylistSlot('pants')">
+              <div class="w-8 h-8 rounded-full bg-noir-card border-2 border-gold p-0.5 shadow-lg shadow-gold/30 flex items-center justify-center overflow-hidden">
+                <img id="pinImg-pants" src="https://images.unsplash.com/photo-1542272604-780c96856482?auto=format&fit=crop&w=150&q=80" class="w-full h-full object-cover">
+              </div>
+              <div class="glass-gold px-2.5 py-1 rounded-lg text-[10px] font-mono text-gold-light border border-gold/40 whitespace-nowrap shadow-md">
+                <span id="pinName-pants">Selvedge Raw Denim</span>
+              </div>
+            </div>
+
+            <!-- 5. Footwear Chip -->
+            <div id="pin-shoes" class="slot-pin absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 cursor-pointer" onclick="selectStylistSlot('shoes')">
+              <div class="glass-gold px-2.5 py-1 rounded-lg text-[10px] font-mono text-gold-light border border-gold/40 whitespace-nowrap shadow-md">
+                <span id="pinName-shoes">Sculpted Sole Runner</span>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-noir-card border-2 border-gold p-0.5 shadow-lg shadow-gold/30 flex items-center justify-center overflow-hidden">
+                <img id="pinImg-shoes" src="https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=150&q=80" class="w-full h-full object-cover">
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Mannequin Badge -->
+          <div class="mt-4 text-center">
+            <span class="text-[10px] font-mono uppercase tracking-[0.25em] text-gray-400">
+              Manken: 188cm • 78kg • Beden: L / 32
+            </span>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Outfit Breakdown & WhatsApp Checkout (3 Cols) -->
+        <div class="lg:col-span-3 glass-panel rounded-3xl p-6 border border-noir-border flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-4 border-b border-noir-border mb-4">
+              <h3 class="font-royal text-lg font-bold text-white flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4 text-gold"></i>
+                <span>Kombin Özeti</span>
+              </h3>
+              <span class="text-xs font-mono text-gray-400">5 Parça</span>
+            </div>
+
+            <!-- Outfit Itemized List -->
+            <div class="space-y-3 mb-6" id="outfitBreakdownList">
+              <!-- Dynamically Populated -->
+            </div>
+          </div>
+
+          <!-- Price & Actions Box -->
+          <div class="pt-4 border-t border-noir-border">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-mono text-gray-400 uppercase">Kombin Toplam Değeri:</span>
+              <span class="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">Ücretsiz Kurye</span>
+            </div>
+            <div class="font-royal text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gold via-yellow-200 to-amber-400 mb-4" id="outfitTotalPrice">
+              39.750 ₺
+            </div>
+
+            <div class="space-y-2.5">
+              <!-- Add Full Outfit to Cart -->
+              <button onclick="addEntireOutfitToCart()" class="w-full py-3.5 px-4 rounded-xl bg-gold text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-gold-light hover:shadow-lg hover:shadow-gold/30 transition-all flex items-center justify-center gap-2">
+                <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                <span>Tüm Kombini Sepete Ekle</span>
+              </button>
+
+              <!-- WhatsApp Direct Order -->
+              <button onclick="orderOutfitViaWhatsApp()" class="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold uppercase tracking-wider shadow-lg shadow-emerald-900/30 transition-all flex items-center justify-center gap-2">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                <span>WhatsApp ile Hemen Sipariş Ver</span>
+              </button>
+
+              <!-- Telegram Order -->
+              <button onclick="orderOutfitViaTelegram()" class="w-full py-3 px-4 rounded-xl bg-[#229ED9]/20 hover:bg-[#229ED9]/30 border border-[#229ED9]/40 text-[#229ED9] font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>Telegram ile Sipariş Ver</span>
+              </button>
+            </div>
+
+            <p class="text-[10px] text-gray-500 text-center mt-3 font-mono">
+              Kapıda nakit/kredi kartı geçerlidir • İstanbul içi 3 saatte teslimat
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 3: 50 PRODUCTS SHOWCASE & QUICK FILTER ================= -->
+  <section id="fullCatalog" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-noir-border bg-noir-dark">
+    <div class="max-w-7xl mx-auto">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-mono tracking-widest uppercase mb-3">
+            <i data-lucide="grid" class="w-3.5 h-3.5"></i> TAM LÜKS KOLEKSİYON
+          </div>
+          <h2 class="font-royal text-3xl sm:text-4xl text-white font-bold">
+            50 Seçkin Başyapıt <span class="text-gold font-light">& Horoloji</span>
+          </h2>
+          <p class="text-gray-400 text-sm mt-1 max-w-xl">
+            Tüm ürünlerimizde ön/arka görünüm, 360° detay inceleme ve sanal stiliste tek tıkla aktarma özelliği mevcuttur.
+          </p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+          <button onclick="filterCatalog('all')" class="cat-pill active px-3.5 py-2 rounded-full bg-gold text-black font-bold transition-all" data-filter="all">Tümü (50)</button>
+          <button onclick="filterCatalog('caps')" class="cat-pill px-3.5 py-2 rounded-full bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40 transition-all" data-filter="caps">Şapkalar (8)</button>
+          <button onclick="filterCatalog('tops')" class="cat-pill px-3.5 py-2 rounded-full bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40 transition-all" data-filter="tops">Tişörtler (10)</button>
+          <button onclick="filterCatalog('outerwear')" class="cat-pill px-3.5 py-2 rounded-full bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40 transition-all" data-filter="outerwear">Hoodie & Ceket (10)</button>
+          <button onclick="filterCatalog('pants')" class="cat-pill px-3.5 py-2 rounded-full bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40 transition-all" data-filter="pants">Pantolon (8)</button>
+          <button onclick="filterCatalog('shoes')" class="cat-pill px-3.5 py-2 rounded-full bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40 transition-all" data-filter="shoes">Ayakkabı (8)</button>
+          <button onclick="filterCatalog('watches')" class="cat-pill px-3.5 py-2 rounded-full bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40 transition-all" data-filter="watches">Lüks Saatler (6)</button>
+        </div>
+      </div>
+
+      <!-- Product Cards Grid: 4 cols desktop, 2 cols mobile -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6" id="productCatalogGrid">
+        <!-- Generated by JavaScript for complete 50 items -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 4: NİŞANTAŞI AMİRAL BUTİK & VIP ATELIER ================= -->
+  <section id="atelierInfo" class="py-20 px-4 sm:px-6 lg:px-8 border-t border-noir-border bg-noir-void relative overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left: Boutique Imagery -->
+        <div class="lg:col-span-6 relative">
+          <div class="relative rounded-3xl overflow-hidden border border-noir-goldborder shadow-2xl">
+            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80" alt="Maison Istanbul Boutique" class="w-full h-[460px] object-cover filter brightness-90 hover:scale-105 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-noir-void via-transparent to-transparent"></div>
+            
+            <div class="absolute bottom-6 left-6 right-6 p-4 rounded-2xl glass-panel border border-gold/30">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="font-royal text-gold font-bold text-sm">MAISON İSTANBUL NİŞANTAŞI</h4>
+                  <p class="text-[11px] font-mono text-gray-300">Abdi İpekçi Cad. No: 42, Şişli / İstanbul</p>
+                </div>
+                <a href="https://maps.google.com" target="_blank" class="px-3 py-1.5 rounded-lg bg-gold text-black text-[11px] font-mono font-bold flex items-center gap-1 hover:bg-gold-light transition-colors">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> Yol Tarifi
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Story & Details -->
+        <div class="lg:col-span-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-mono tracking-widest uppercase mb-4">
+            <i data-lucide="award" class="w-3.5 h-3.5"></i> HAUTE COUTURE GELENEĞİ
+          </div>
+          <h2 class="font-royal text-3xl sm:text-5xl text-white font-bold tracking-tight mb-6 leading-tight">
+            İstanbul'un Kalbinde <br>
+            <span class="text-gold">Kişiselleştirilmiş Lüks</span>
+          </h2>
+          <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-6 font-light">
+            Maison İstanbul, geleneksel Türk terzilik ustalığını modern Avrupa sokak silüetleri ve İsviçre saat zanaatiyle birleştirir. Tüm koleksiyonlarımız sınırlı adetlerde, organik kumaşlar ve el işçiliği donanımlarla üretilir.
+          </p>
+
+          <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="p-4 rounded-2xl glass-panel border border-noir-border">
+              <div class="font-mono text-xs text-gold uppercase mb-1">Çalışma Saatleri</div>
+              <div class="font-royal text-white text-base font-bold">10:00 - 21:00</div>
+              <div class="text-[11px] text-gray-400 font-mono mt-0.5">Haftanın her günü açık</div>
+            </div>
+            <div class="p-4 rounded-2xl glass-panel border border-noir-border">
+              <div class="font-mono text-xs text-gold uppercase mb-1">Özel VIP Randevu</div>
+              <div class="font-royal text-white text-base font-bold">Birebir Stilist</div>
+              <div class="text-[11px] text-gray-400 font-mono mt-0.5">Özel salon & şampanya ikramı</div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4">
+            <a href="https://wa.me/905340000000?text=Merhaba!%20Ni%C5%9Fanta%C5%9F%C4%B1%20buti%C4%9Finiz%20i%C3%A7in%20VIP%20stilist%20randevusu%20almak%20istiyorum." target="_blank" class="px-6 py-3.5 rounded-full bg-gold text-black font-semibold font-mono text-xs uppercase tracking-wider flex items-center gap-2 hover:bg-gold-light hover:shadow-lg hover:shadow-gold/25 transition-all">
+              <i data-lucide="calendar" class="w-4 h-4"></i>
+              <span>VIP Randevu Oluştur</span>
+            </a>
+            <a href="tel:+905340000000" class="px-6 py-3.5 rounded-full border border-noir-border bg-noir-card text-white hover:text-gold hover:border-gold/50 font-mono text-xs uppercase tracking-wider transition-all flex items-center gap-2">
+              <i data-lucide="phone" class="w-4 h-4 text-gold"></i>
+              <span>+90 534 000 0000</span>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SLIDE-OVER CATEGORY DRAWER ================= -->
+  <!-- Takes over right side without leaving store -->
+  <div id="categoryDrawerBackdrop" onclick="closeCategoryDrawer()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+  
+  <aside id="categoryDrawer" class="fixed top-0 right-0 h-full w-full sm:w-[580px] md:w-[650px] bg-noir-void border-l border-gold/30 z-50 translate-x-full transition-transform duration-500 ease-out flex flex-col shadow-2xl shadow-black">
+    
+    <!-- Drawer Header -->
+    <div class="p-6 border-b border-noir-border flex items-center justify-between bg-noir-dark/80 backdrop-blur-md">
+      <div>
+        <div class="text-[10px] font-mono uppercase tracking-[0.25em] text-gold" id="drawerSubtitle">
+          REYON VİTRİNİ
+        </div>
+        <h3 class="font-royal text-2xl font-bold text-white" id="drawerTitle">
+          Tüm Koleksiyon (50 Ürün)
+        </h3>
+      </div>
+      <button onclick="closeCategoryDrawer()" class="w-10 h-10 rounded-full border border-noir-border hover:border-gold text-gray-300 hover:text-gold flex items-center justify-center transition-all">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Quick Search & Category Pills -->
+    <div class="p-4 border-b border-noir-border bg-noir-card/50 flex flex-col gap-3">
+      <div class="relative">
+        <i data-lucide="search" class="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+        <input type="text" id="drawerSearchInput" oninput="searchDrawerItems()" placeholder="Ürün adı, kumaş veya model ara..." class="w-full bg-noir-dark border border-noir-border rounded-xl pl-10 pr-4 py-2 text-xs font-mono text-white placeholder-gray-500 focus:outline-none focus:border-gold">
+      </div>
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px] font-mono">
+        <button onclick="renderDrawerCategory('all')" class="drawer-pill active px-3 py-1 rounded-full bg-gold text-black font-bold whitespace-nowrap" data-cat="all">Tümü (50)</button>
+        <button onclick="renderDrawerCategory('caps')" class="drawer-pill px-3 py-1 rounded-full bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40 whitespace-nowrap" data-cat="caps">Şapkalar (8)</button>
+        <button onclick="renderDrawerCategory('tops')" class="drawer-pill px-3 py-1 rounded-full bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40 whitespace-nowrap" data-cat="tops">Tişörtler (10)</button>
+        <button onclick="renderDrawerCategory('outerwear')" class="drawer-pill px-3 py-1 rounded-full bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40 whitespace-nowrap" data-cat="outerwear">Hoodie & Ceket (10)</button>
+        <button onclick="renderDrawerCategory('pants')" class="drawer-pill px-3 py-1 rounded-full bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40 whitespace-nowrap" data-cat="pants">Pantolon (8)</button>
+        <button onclick="renderDrawerCategory('shoes')" class="drawer-pill px-3 py-1 rounded-full bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40 whitespace-nowrap" data-cat="shoes">Ayakkabı (8)</button>
+        <button onclick="renderDrawerCategory('watches')" class="drawer-pill px-3 py-1 rounded-full bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40 whitespace-nowrap" data-cat="watches">Lüks Saatler (6)</button>
+      </div>
+    </div>
+
+    <!-- Scrollable Products Grid in Drawer -->
+    <div class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4" id="drawerProductsContainer">
+      <!-- Injected by JavaScript -->
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="p-4 border-t border-noir-border bg-noir-dark flex items-center justify-between">
+      <button onclick="closeCategoryDrawer()" class="text-xs font-mono text-gray-400 hover:text-white flex items-center gap-1.5">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+        <span>3D Dükkana Geri Dön</span>
+      </button>
+      <button onclick="openCartDrawer()" class="px-4 py-2 rounded-xl bg-gold text-black font-mono text-xs font-bold flex items-center gap-2 hover:bg-gold-light transition-all">
+        <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+        <span>Sepeti Gör</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ================= 360° / FRONT-BACK PRODUCT DETAIL MODAL ================= -->
+  <div id="productDetailModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="relative w-full max-w-4xl bg-noir-void border border-gold/40 rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
+      
+      <!-- Close Button -->
+      <button onclick="closeProductModal()" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/60 text-white hover:text-gold flex items-center justify-center transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Left: Interactive Flip Image Viewer -->
+      <div class="md:w-1/2 p-6 flex flex-col justify-between bg-noir-dark border-b md:border-b-0 md:border-r border-noir-border">
+        
+        <!-- Badge & Category -->
+        <div class="flex items-center justify-between mb-4">
+          <span id="modalBadge" class="text-[10px] font-mono uppercase bg-gold/15 text-gold px-2.5 py-1 rounded-full border border-gold/30">VIP Koleksiyon</span>
+          <span id="modalCatName" class="text-[11px] font-mono text-gray-400">Kategori</span>
+        </div>
+
+        <!-- 3D Flip Card Viewport -->
+        <div class="relative w-full h-[280px] sm:h-[340px] rounded-2xl overflow-hidden cursor-pointer group" onclick="toggleCardFlip()">
+          <div id="modalFlipInner" class="flip-card-inner">
+            <!-- Front View -->
+            <div class="flip-card-front rounded-2xl overflow-hidden bg-noir-card">
+              <img id="modalImgFront" src="" alt="Ön Görünüm" class="w-full h-full object-cover">
+              <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-mono text-gray-300">
+                Ön Görünüm
+              </div>
+            </div>
+            <!-- Back View -->
+            <div class="flip-card-back rounded-2xl overflow-hidden bg-noir-card">
+              <img id="modalImgBack" src="" alt="Arka Görünüm" class="w-full h-full object-cover">
+              <div class="absolute bottom-3 left-3 bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-mono text-gray-300">
+                Arka Görünüm
+              </div>
+            </div>
+          </div>
+
+          <!-- Flip Click Indicator -->
+          <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10px] font-mono text-gold flex items-center gap-1 pointer-events-none">
+            <i data-lucide="repeat" class="w-3 h-3"></i> Tıkla & Çevir
+          </div>
+        </div>
+
+        <!-- View Controls Buttons -->
+        <div class="flex items-center justify-center gap-2 mt-4">
+          <button onclick="setModalView('front')" class="px-3 py-1 rounded-lg text-xs font-mono bg-gold text-black font-bold" id="btnViewFront">Ön Görünüm</button>
+          <button onclick="setModalView('back')" class="px-3 py-1 rounded-lg text-xs font-mono bg-noir-card text-gray-400 border border-noir-border hover:text-white" id="btnViewBack">Arka Görünüm</button>
+        </div>
+
+      </div>
+
+      <!-- Right: Product Specifications & Order Actions -->
+      <div class="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto">
+        <div>
+          <h3 id="modalTitle" class="font-royal text-2xl font-bold text-white mb-2 leading-tight">Ürün Adı</h3>
+          <div id="modalPrice" class="font-royal text-3xl font-black text-gold mb-4">0 ₺</div>
+
+          <p id="modalDesc" class="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6 font-light">
+            Açıklama metni.
+          </p>
+
+          <!-- Material & Details -->
+          <div class="p-3.5 rounded-xl bg-noir-card border border-noir-border mb-6">
+            <div class="text-[10px] font-mono text-gold uppercase mb-1">Kumaş & Donanım Özellikleri:</div>
+            <div id="modalMat" class="text-xs text-gray-300 font-mono">Detay</div>
+          </div>
+
+          <!-- Size Selector -->
+          <div class="mb-6">
+            <div class="flex items-center justify-between text-xs font-mono text-gray-400 mb-2">
+              <span>Beden Seçimi:</span>
+              <span class="text-emerald-400">Stokta Mevcut</span>
+            </div>
+            <div class="flex flex-wrap gap-2" id="modalSizesContainer">
+              <!-- Sizes -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="space-y-2.5 pt-4 border-t border-noir-border">
+          <button id="modalBtnAddToCart" class="w-full py-3 px-4 rounded-xl bg-gold text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-gold-light hover:shadow-lg hover:shadow-gold/30 transition-all flex items-center justify-center gap-2">
+            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+            <span>Sepete Ekle</span>
+          </button>
+          <button id="modalBtnSendToStylist" class="w-full py-2.5 px-4 rounded-xl border border-gold/40 bg-gold/10 hover:bg-gold/20 text-gold font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            <span>Sanal Manken Üzerinde Dene</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= SLIDE-OUT SHOPPING BAG (CART) ================= -->
+  <div id="cartBackdrop" onclick="closeCartDrawer()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+  <aside id="cartDrawer" class="fixed top-0 right-0 h-full w-full sm:w-[480px] bg-noir-void border-l border-gold/30 z-50 translate-x-full transition-transform duration-500 ease-out flex flex-col shadow-2xl shadow-black">
+    
+    <!-- Cart Header -->
+    <div class="p-6 border-b border-noir-border flex items-center justify-between bg-noir-dark">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-gold/15 flex items-center justify-center text-gold">
+          <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-royal text-xl font-bold text-white">Alışveriş Çantası</h3>
+          <span class="text-xs font-mono text-gray-400" id="cartItemCountLabel">0 Ürün</span>
+        </div>
+      </div>
+      <button onclick="closeCartDrawer()" class="w-9 h-9 rounded-full border border-noir-border hover:border-gold text-gray-400 hover:text-white flex items-center justify-center transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Cart Items List -->
+    <div class="flex-1 overflow-y-auto p-6 space-y-4" id="cartItemsList">
+      <!-- Dynamic Cart Items -->
+    </div>
+
+    <!-- Cart Footer & Checkout -->
+    <div class="p-6 border-t border-noir-border bg-noir-dark">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-xs font-mono text-gray-400">Ara Toplam:</span>
+        <span class="font-royal text-2xl font-bold text-gold" id="cartSubtotalPrice">0 ₺</span>
+      </div>
+      <div class="flex items-center justify-between text-[11px] font-mono text-gray-400 mb-4 pb-3 border-b border-noir-border">
+        <span>VIP Motorlu Kurye (İstanbul):</span>
+        <span class="text-emerald-400 font-bold">ÜCRETSİZ</span>
+      </div>
+
+      <div class="space-y-2.5">
+        <!-- WhatsApp Direct Checkout -->
+        <button onclick="checkoutWhatsApp()" class="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/30 transition-all">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>WhatsApp ile Siparişi Tamamla</span>
+        </button>
+
+        <!-- Telegram Direct Checkout -->
+        <button onclick="checkoutTelegram()" class="w-full py-3 px-4 rounded-xl bg-[#229ED9]/20 hover:bg-[#229ED9]/30 border border-[#229ED9]/40 text-[#229ED9] font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>Telegram ile Siparişi Tamamla</span>
+        </button>
+      </div>
+
+      <p class="text-[10px] text-gray-500 text-center mt-3 font-mono">
+        Kapıda ödeme & Güvenli SSL ödeme mevcuttur
+      </p>
+    </div>
+
+  </aside>
+
+  <!-- ================= VIRAL AGENCY FOOTER (30.000 TL+ CONVERSION MAGNET) ================= -->
+  <footer class="border-t border-gold/30 bg-gradient-to-b from-noir-dark via-noir-void to-black py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    
+    <!-- Golden Accent Line -->
+    <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- VIP Web Agency Callout Box -->
+      <div class="p-8 sm:p-12 rounded-3xl glass-gold border-2 border-gold/50 shadow-2xl shadow-gold/10 text-center max-w-4xl mx-auto mb-16 relative">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold text-black text-xs font-mono font-bold uppercase tracking-widest mb-4">
+          ⚡ 30.000 TL+ DEĞERİNDEKİ BU DİJİTAL BUTİK DENEYİMİ
+        </div>
+        <h3 class="font-royal text-2xl sm:text-4xl text-white font-bold mb-4">
+          Kendi Butiğiniz veya Markanız İçin <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold via-yellow-200 to-amber-400">
+            Böyle Bir 3D Sanal Mağaza İster misiniz?
+          </span>
+        </h3>
+        <p class="text-gray-300 text-xs sm:text-sm font-light max-w-2xl mx-auto mb-8 leading-relaxed">
+          Müşterilerinizin dükkanınızda dakikalarca vakit geçirmesini sağlayan 3D yürüyüş, sanal giyinme odası (kombin oluşturucu) ve anında WhatsApp sipariş sistemiyle satışlarınızı 4 katına çıkarın.
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <a href="https://wa.me/905340000000?text=Merhaba!%20Maison%20%C4%B0stanbul%20benzeri%2030.000%20TL'lik%203D%20Sanal%20Butik%20ve%20Kombin%20Sistemi%20yapt%C4%B1rmak%20istiyorum." target="_blank" class="px-8 py-4 rounded-full bg-gold text-black font-semibold font-mono text-xs uppercase tracking-widest hover:bg-gold-light hover:shadow-xl hover:shadow-gold/40 transition-all flex items-center gap-2">
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+            <span>WhatsApp ile Ajansımızla Görüşün</span>
+          </a>
+          <a href="https://t.me/WebBotAgent" target="_blank" class="px-8 py-4 rounded-full bg-noir-card border border-white/20 text-white font-mono text-xs uppercase tracking-widest hover:border-gold hover:text-gold transition-all flex items-center gap-2">
+            <i data-lucide="bot" class="w-4 h-4 text-gold"></i>
+            <span>WebBot ile Hemen Fiyat Al</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer Columns -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-noir-border text-xs font-mono">
+        <div>
+          <div class="font-royal text-lg text-white font-bold tracking-widest mb-3">MAISON İSTANBUL</div>
+          <p class="text-gray-400 leading-relaxed font-sans font-light">
+            3D Walk-In Boutique & Virtual Stylist Experience. Nişantaşı, İstanbul.
+          </p>
+        </div>
+        <div>
+          <div class="text-gold uppercase tracking-wider mb-3">Reyonlar</div>
+          <ul class="space-y-2 text-gray-400">
+            <li><button onclick="openCategoryDrawer('caps')" class="hover:text-gold">Şapka & Başlık (8)</button></li>
+            <li><button onclick="openCategoryDrawer('tops')" class="hover:text-gold">Tişört & Üst Giyim (10)</button></li>
+            <li><button onclick="openCategoryDrawer('outerwear')" class="hover:text-gold">Hoodie & Ceketler (10)</button></li>
+            <li><button onclick="openCategoryDrawer('pants')" class="hover:text-gold">Pantolon & Denim (8)</button></li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-gold uppercase tracking-wider mb-3">Horoloji & Ayakkabı</div>
+          <ul class="space-y-2 text-gray-400">
+            <li><button onclick="openCategoryDrawer('watches')" class="hover:text-gold">Lüks Mekanik Saatler (6)</button></li>
+            <li><button onclick="openCategoryDrawer('shoes')" class="hover:text-gold">Ayakkabı & Sneaker (8)</button></li>
+            <li><a href="#virtualStylist" class="hover:text-gold">Kombin Oluşturucu</a></li>
+            <li><a href="#atelierInfo" class="hover:text-gold">VIP Randevu</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-gold uppercase tracking-wider mb-3">İletişim & Lokasyon</div>
+          <p class="text-gray-400 leading-relaxed font-sans font-light mb-2">
+            Abdi İpekçi Cad. No: 42, Nişantaşı, Şişli / İstanbul
+          </p>
+          <p class="text-gold font-bold">Tel: +90 534 000 0000</p>
+        </div>
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-gray-500 gap-4">
+        <div>© 2026 MAISON İSTANBUL. Tüm Hakları Saklıdır.</div>
+        <div>Designed & Engineered with 3D Walk-In & Virtual Fitting Tech</div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================= JAVASCRIPT STATE ENGINE & DATASET ================= -->
+  <script>
+    // 50 COMPLETE VERIFIED PRODUCTS DATASET
+    const PRODUCTS = [{"id": 1, "cat": "caps", "catName": "Şapka & Başlık", "name": "Maison Monogram Velvet Cap", "price": 1650, "badge": "VIP Koleksiyon", "img_front": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=800&q=80", "desc": "İtalyan kadife kumaş, altın yaldız nakışlı Maison monogramı ve ayarlanabilir pirinç tokalı dana derisi kayış.", "mat": "%100 İtalyan Pamuk Kadife, Pirinç Donanım", "sizes": ["Standart (56-61cm)"]}, {"id": 2, "cat": "caps", "catName": "Şapka & Başlık", "name": "Atelier Distressed Vintage 6-Panel", "price": 1450, "badge": "Çok Satan", "img_front": "https://images.unsplash.com/photo-1534215754734-18e55d13e346?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=800&q=80", "desc": "Özel taşlama ve eskitme yıkama, ham kenar yıpratma detayları ve nefes alan iç astar.", "mat": "%100 Organik Ağır Kanvas", "sizes": ["Standart"]}, {"id": 3, "cat": "caps", "catName": "Şapka & Başlık", "name": "Kashmir Ribbed Beanie - Midnight Noir", "price": 1850, "badge": "Yeni Sezon", "img_front": "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80", "desc": "Saf Moğolistan kaşmiri, termal ısı korumalı çift katman fitilli örgü ve minimalist metal logo.", "mat": "%100 Saf Kaşmir", "sizes": ["Standart"]}, {"id": 4, "cat": "caps", "catName": "Şapka & Başlık", "name": "Technical Waterproof 5-Panel Runner", "price": 1750, "badge": "Performans", "img_front": "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&q=80", "desc": "Hidrofobik nanoteknoloji membran, lazer kesim yan hava tahliye delikleri ve manyetik Fidlock toka.", "mat": "Su Geçirmez Naylon Ripstop", "sizes": ["Standart"]}, {"id": 5, "cat": "caps", "catName": "Şapka & Başlık", "name": "Silk Jacquard Reversible Bucket Hat", "price": 2200, "badge": "Sınırlı Seri", "img_front": "https://images.unsplash.com/photo-1565895405138-6c3a1555da6a?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1534215754734-18e55d13e346?auto=format&fit=crop&w=800&q=80", "desc": "İki yönlü kullanım: Bir yüzü barok ipek jakar deseni, diğer yüzü mat siyah teknik kumaş.", "mat": "%60 İpek, %40 Mat Poliamid", "sizes": ["M (57cm)", "L (59cm)"]}, {"id": 6, "cat": "caps", "catName": "Şapka & Başlık", "name": "24K Gold-Plated Pin Suede Cap", "price": 1950, "badge": "Özel Tasarım", "img_front": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&q=80", "desc": "Mat süet siperlik, taranmış gabardin gövde ve elde mıhlanmış 24 ayar altın kaplama logo iğnesi.", "mat": "Doğal Süet & Gabardin", "sizes": ["Standart"]}, {"id": 7, "cat": "caps", "catName": "Şapka & Başlık", "name": "Merino Melange Fisherman Beanie", "price": 1550, "badge": "Kış Özel", "img_front": "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?auto=format&fit=crop&w=800&q=80", "desc": "Ekstra ince İtalyan merinos yünü, başı sarmalayan sığ kesim balıkçı stili.", "mat": "%100 Ekstra İnce Merinos", "sizes": ["Standart"]}, {"id": 8, "cat": "caps", "catName": "Şapka & Başlık", "name": "Leather Visor Carbon Pilot Cap", "price": 2400, "badge": "Atelier", "img_front": "https://images.unsplash.com/photo-1575428652377-a2d80e2277fc?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=800&q=80", "desc": "Hakiki dana derisi siperlik, karbon fiber desenli kumaş dokusu ve saten iç kaplama.", "mat": "Hakiki Dana Derisi, Karbon Dokuma", "sizes": ["Standart"]}, {"id": 9, "cat": "tops", "catName": "Tişört & Üst Giyim", "name": "Maison Heavyweight 320 GSM Boxy Tee", "price": 1850, "badge": "İmza Parça", "img_front": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80", "desc": "320 gram süper ağır gramajlı Ege pamuğu. Mimari kutu kesim (boxy fit), düşmüş omuz ve tok duruş.", "mat": "%100 Taranmış Ağır Ege Pamuğu", "sizes": ["S", "M", "L", "XL"]}, {"id": 10, "cat": "tops", "catName": "Tişört & Üst Giyim", "name": "Silk-Blend Knit Relaxed Polo", "price": 2850, "badge": "Lüks Dokuma", "img_front": "https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80", "desc": "İpek ve pamuk harmanı triko polo. Sedef düğmeler, dikişsiz yaka birleşimi ve serinletici tuşe.", "mat": "%55 İpek, %45 Mısır Pamuğu", "sizes": ["S", "M", "L", "XL"]}, {"id": 11, "cat": "tops", "catName": "Tişört & Üst Giyim", "name": "Acid Vintage Washed Graphic Tee", "price": 1950, "badge": "Streetwear", "img_front": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80", "desc": "Özel mineral asit yıkama, arka yüzde devasa monokrom Maison tipografisi.", "mat": "%100 Ham Pamuk (280 GSM)", "sizes": ["S", "M", "L", "XL", "XXL"]}, {"id": 12, "cat": "tops", "catName": "Tişört & Üst Giyim", "name": "Gold Thread Embroidered Crest Tee", "price": 2400, "badge": "Atelier", "img_front": "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80", "desc": "Göğüste 24 ayar yaldızlı iplikle işlenmiş İstanbul arması. Mikro nervürlü yaka.", "mat": "%100 Organik Kompakt Pamuk", "sizes": ["S", "M", "L", "XL"]}, {"id": 13, "cat": "tops", "catName": "Tişört & Üst Giyim", "name": "Oversized Minimalist Mock Neck", "price": 2200, "badge": "Minimalist", "img_front": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80", "desc": "Yarım dik yaka (mock neck) mimarisi. Dökümlü kumaş kesimi ve gizli yan fermuarlı havalandırma.", "mat": "%95 Pamuk, %5 Elastan (300 GSM)", "sizes": ["S", "M", "L", "XL"]}, {"id": 14, "cat": "tops", "catName": "Tişört & Üst Giyim", "name": "Linen Canvas Summer Resort Shirt", "price": 3100, "badge": "Yaz Özel", "img_front": "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=800&q=80", "desc": "Fransız keteni, camp yaka (küba yaka) tasarımı ve sedef düğmeler. Sıcak havalarda kusursuz hava sirkülasyonu.", "mat": "%100 Saf Fransız Keteni", "sizes": ["S", "M", "L", "XL"]}, {"id": 15, "cat": "tops", "catName": "Tişört & Üst Giyim", "name": "Raw Edge Deconstructed Tee", "price": 1750, "badge": "Avant-Garde", "img_front": "https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80", "desc": "Ham dikilmemiş kol uçları ve etek boyu, asimetrik arka dikiş detayı.", "mat": "%100 Saf Penye Pamuk", "sizes": ["S", "M", "L", "XL"]}, {"id": 16, "cat": "tops", "catName": "Tişört & Üst Giyim", "name": "Noir Pure Cashmere Short Sleeve Knit", "price": 3950, "badge": "Haute Couture", "img_front": "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80", "desc": "Yaz ve kış giyilebilen ultra hafif saf kaşmir kısa kollu triko. İpeksi tene temas.", "mat": "%100 Saf Kaşmir", "sizes": ["S", "M", "L", "XL"]}, {"id": 17, "cat": "tops", "catName": "Tişört & Üst Giyim", "name": "Striped Monochrome Atelier Tee", "price": 1650, "badge": "Klasik", "img_front": "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80", "desc": "Geniş siyah-beyaz monokrom çizgili, kalın ribanalı yaka ve rahat kesim.", "mat": "%100 Penye Pamuk", "sizes": ["S", "M", "L", "XL"]}, {"id": 18, "cat": "tops", "catName": "Tişört & Üst Giyim", "name": "Technical Reflective Cyber Tee", "price": 2100, "badge": "Gece Serisi", "img_front": "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80", "desc": "Karanlıkta ışık vurduğunda parlayan reflektif Maison logosu ve nefes alabilir arka panel.", "mat": "Teknik Pamuk & Spandeks", "sizes": ["S", "M", "L", "XL"]}, {"id": 19, "cat": "outerwear", "catName": "Hoodie & Dış Giyim", "name": "Architectural 500 GSM Heavy Hoodie", "price": 3850, "badge": "İmza Hoodie", "img_front": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?auto=format&fit=crop&w=800&q=80", "desc": "500 GSM fırçalanmamış ağır Fransız havlu kumaşı. Çift katmanlı dik duran hacimli kapüşon ve gizli kanguru cep.", "mat": "%100 Ağır Fransız Havlu Pamuk (500 GSM)", "sizes": ["S", "M", "L", "XL"]}, {"id": 20, "cat": "outerwear", "catName": "Hoodie & Dış Giyim", "name": "Distressed Washed Vintage Zip Hoodie", "price": 4200, "badge": "Trend", "img_front": "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80", "desc": "Çift yönlü özel üretim gümüş fermuar, eskitilmiş manşetler ve güneş solması efekti verilmiş yıkama.", "mat": "%100 Ağır Pamuk, Raccagni Çift Fermuar", "sizes": ["S", "M", "L", "XL"]}, {"id": 21, "cat": "outerwear", "catName": "Hoodie & Dış Giyim", "name": "Nappa Leather Biker Oversized Jacket", "price": 14500, "badge": "Lüks Deri", "img_front": "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=80", "desc": "Kuzu nappa derisi, İtalyan donanım, kupro ipek iç astar ve asimetrik fermuar hatları.", "mat": "%100 Hakiki Kuzu Nappa Deri", "sizes": ["M", "L", "XL"]}, {"id": 22, "cat": "outerwear", "catName": "Hoodie & Dış Giyim", "name": "Cashmere Double-Breasted Long Overcoat", "price": 16800, "badge": "Haute Horlogerie", "img_front": "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80", "desc": "Kusursuz dökümlü kruvaze kesim, geniş sivri yaka, boynuz düğmeler ve sırt yırtmaç detayı.", "mat": "%80 Kaşmir, %20 Bakir Yün", "sizes": ["48 (M)", "50 (L)", "52 (XL)"]}, {"id": 23, "cat": "outerwear", "catName": "Hoodie & Dış Giyim", "name": "Technical Matte Down Puffer Jacket", "price": 6900, "badge": "Kış VIP", "img_front": "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?auto=format&fit=crop&w=800&q=80", "desc": "750 fill-power beyaz kaz tüyü dolgu, rüzgar geçirmez mat yüzey ve manyetik fırtına kapağı.", "mat": "%90 Beyaz Kaz Tüyü, %10 Gıdık Tüyü", "sizes": ["S", "M", "L", "XL"]}, {"id": 24, "cat": "outerwear", "catName": "Hoodie & Dış Giyim", "name": "Velour Track Jacket with Gold Piping", "price": 3600, "badge": "Retro Lüks", "img_front": "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80", "desc": "Ağır kadife dokuma, omuz boyu altın biyeler ve dik ribana yaka.", "mat": "Kadife Pamuk Karışımı", "sizes": ["S", "M", "L", "XL"]}, {"id": 25, "cat": "outerwear", "catName": "Hoodie & Dış Giyim", "name": "Wool Overshirt with Horn Buttons", "price": 4400, "badge": "Atelier", "img_front": "https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=800&q=80", "desc": "Kalın dokuma balıksırtı yün ceket-gömlek. Çift kapaklı göğüs cepleri ve rahat kalıp.", "mat": "%100 Doğal İtalyan Yünü", "sizes": ["S", "M", "L", "XL"]}, {"id": 26, "cat": "outerwear", "catName": "Hoodie & Dış Giyim", "name": "Monogram Reversible Bomber Jacket", "price": 5800, "badge": "İki Taraflı", "img_front": "https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80", "desc": "Bir tarafı saten parlaklığında monogram işlemeli, diğer tarafı askeri mat haki naylon.", "mat": "Saten & Balistik Naylon", "sizes": ["S", "M", "L", "XL"]}, {"id": 27, "cat": "outerwear", "catName": "Hoodie & Dış Giyim", "name": "Minimalist Cashmere Knit Cardigan", "price": 4900, "badge": "Elegance", "img_front": "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=800&q=80", "desc": "Derin V yaka, kalın sedef düğmeler ve ultra yumuşak dokuma hacimli hırka.", "mat": "%70 Kaşmir, %30 İpek", "sizes": ["S", "M", "L", "XL"]}, {"id": 28, "cat": "outerwear", "catName": "Hoodie & Dış Giyim", "name": "Cropped Tactical Utility Parka", "price": 5200, "badge": "Teknik", "img_front": "https://images.unsplash.com/photo-1544022613-e87ca75a784a?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1544923246-77307dd654cb?auto=format&fit=crop&w=800&q=80", "desc": "Kısaltılmış modern silüet, modüler cepler ve su geçirmez bantlı dikişler.", "mat": "3-Katmanlı Teknik Kumaş", "sizes": ["S", "M", "L", "XL"]}, {"id": 29, "cat": "pants", "catName": "Pantolon & Denim", "name": "Japanese Selvedge Raw Denim 14oz", "price": 3200, "badge": "Kojima Denim", "img_front": "https://images.unsplash.com/photo-1542272604-780c96856482?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80", "desc": "Japonya Kojima dokuma tezgahlarında üretilen 14oz kırmızı kenar (redline) ham selvedge kot.", "mat": "%100 Saf Pamuk Selvedge (14oz)", "sizes": ["30", "31", "32", "33", "34", "36"]}, {"id": 30, "cat": "pants", "catName": "Pantolon & Denim", "name": "Technical Modular Cargo Trousers", "price": 3600, "badge": "Fonksiyonel", "img_front": "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1542272604-780c96856482?auto=format&fit=crop&w=800&q=80", "desc": "Dizlerde ergonomik 3D körükler, paçada ayarlanabilir stoperli kordon ve su itici kumaş.", "mat": "Teknik Kordura & Elastan", "sizes": ["S", "M", "L", "XL"]}, {"id": 31, "cat": "pants", "catName": "Pantolon & Denim", "name": "Pleated Wool Relaxed Wide-Leg Trousers", "price": 4100, "badge": "Sartorial", "img_front": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80", "desc": "Çift pilili ön cephe, geniş paça dökümü, ayarlanabilir yan tokalar (side adjusters). Kemer gerektirmez.", "mat": "%100 İtalyan Yün Kumaş", "sizes": ["46", "48", "50", "52", "54"]}, {"id": 32, "cat": "pants", "catName": "Pantolon & Denim", "name": "Heavy French Terry Relaxed Sweatpants", "price": 2400, "badge": "Rahat Lüks", "img_front": "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1542272604-780c96856482?auto=format&fit=crop&w=800&q=80", "desc": "480 GSM Fransız havlu pamuğu. Metal uçlu kalın kordonlar, derin cepler ve açık düz paça.", "mat": "%100 Ağır Penye Pamuk", "sizes": ["S", "M", "L", "XL"]}, {"id": 33, "cat": "pants", "catName": "Pantolon & Denim", "name": "Washed Black Vintage Loose Denim", "price": 2950, "badge": "Vintage", "img_front": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1542272604-780c96856482?auto=format&fit=crop&w=800&q=80", "desc": "Yıkanmış füme siyah renk, rahat bol kesim (loose fit) ve ayakkabının üzerine kusursuz oturan paça boyu.", "mat": "%100 Pamuklu Denim", "sizes": ["30", "31", "32", "33", "34", "36"]}, {"id": 34, "cat": "pants", "catName": "Pantolon & Denim", "name": "Silk-Linen Drawstring Resort Trousers", "price": 3400, "badge": "Yazlık", "img_front": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=800&q=80", "desc": "İpek ve keten karışımlı dökümlü kumaş, elastik bel ve hafif yapı.", "mat": "%60 Keten, %40 İpek", "sizes": ["S", "M", "L", "XL"]}, {"id": 35, "cat": "pants", "catName": "Pantolon & Denim", "name": "Leather Inset Moto Pants", "price": 5600, "badge": "Limited Edition", "img_front": "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&w=800&q=80", "desc": "Dizlerde hakiki kuzu derisi paneller, gümüş yan fermuarlar ve daralan paça.", "mat": "Kuzu Derisi & Esnek Gabardin", "sizes": ["30", "32", "34", "36"]}, {"id": 36, "cat": "pants", "catName": "Pantolon & Denim", "name": "Cropped Tailored Flannel Pants", "price": 3800, "badge": "Kış Klasik", "img_front": "https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=800&q=80", "desc": "Bilek hizasında duble paça, sıcak tutan yün flanel kumaş ve kusursuz ütü izi.", "mat": "%100 Yün Flanel", "sizes": ["46", "48", "50", "52"]}, {"id": 37, "cat": "shoes", "catName": "Ayakkabı & Sneaker", "name": "Maison Sculpted Sole Chunky Runner", "price": 5900, "badge": "İmza Sneaker", "img_front": "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80", "desc": "Fütüristik 3D heykelsi taban mimarisi, dana derisi ve teknik file katmanlar, yastıklamalı EVA taban.", "mat": "Dana Derisi, File, Vibram Kauçuk Taban", "sizes": ["40", "41", "42", "43", "44", "45"]}, {"id": 38, "cat": "shoes", "catName": "Ayakkabı & Sneaker", "name": "Minimalist Italian Calfskin Low-Top", "price": 4800, "badge": "Kusursuz Beyaz", "img_front": "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80", "desc": "Margom dikişli İtalyan kauçuk taban, el cilalı dana derisi ve altın seri numarası baskısı.", "mat": "%100 İtalyan Dana Derisi", "sizes": ["40", "41", "42", "43", "44", "45"]}, {"id": 39, "cat": "shoes", "catName": "Ayakkabı & Sneaker", "name": "Suede Chelsea Boot - Espresso Noir", "price": 6400, "badge": "El Yapımı", "img_front": "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80", "desc": "İpeksi su geçirmez süet kaplama, krep kauçuk esnek taban ve yan elastik paneller.", "mat": "Hakiki Dana Süeti & Doğal Kauçuk", "sizes": ["40", "41", "42", "43", "44", "45"]}, {"id": 40, "cat": "shoes", "catName": "Ayakkabı & Sneaker", "name": "High-Top Cyber Platform Trainer", "price": 6200, "badge": "Fütüristik", "img_front": "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80", "desc": "Bileği kavrayan dolgulu yüksek boğaz, kalın dişli fütüristik taban ve hızlı bağcık sistemi.", "mat": "Teknik Deri & Balistik Kumaş", "sizes": ["41", "42", "43", "44", "45"]}, {"id": 41, "cat": "shoes", "catName": "Ayakkabı & Sneaker", "name": "Velvet Embroidered Venetian Loafer", "price": 5400, "badge": "Gala & Gece", "img_front": "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80", "desc": "Venedik kadifesi üzerine el işlemesi altın monogram, kösele deri taban ve saten astar.", "mat": "İpek Kadife & Doğal Kösele", "sizes": ["40", "41", "42", "43", "44"]}, {"id": 42, "cat": "shoes", "catName": "Ayakkabı & Sneaker", "name": "Vintage Distressed Skate Sneaker", "price": 4200, "badge": "Street", "img_front": "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80", "desc": "El işçiliği ile yıpratılmış ve sarartılmış retro taban, kalın pamuk bağcıklar.", "mat": "Süet & Taranmış Kanvas", "sizes": ["40", "41", "42", "43", "44", "45"]}, {"id": 43, "cat": "shoes", "catName": "Ayakkabı & Sneaker", "name": "Military Combat Zip Boot", "price": 7500, "badge": "Dayanıklı", "img_front": "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80", "desc": "Ağır hizmet tipi parlatılmış deri gövde, yan fermuarlı hızlı giyim, kalın Vibram Commando taban.", "mat": "%100 Kalın Sığır Derisi, Vibram", "sizes": ["40", "41", "42", "43", "44", "45"]}, {"id": 44, "cat": "shoes", "catName": "Ayakkabı & Sneaker", "name": "Minimalist Leather Mule Slide", "price": 3800, "badge": "Yaz Şıklığı", "img_front": "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80", "desc": "Yumuşacık deri tek parça üst bant, anatomik mantar taban kaplama.", "mat": "Yumuşak Nappa Deri & Mantar", "sizes": ["40", "41", "42", "43", "44"]}, {"id": 45, "cat": "watches", "catName": "Lüks Saatler & Horoloji", "name": "Maison Royal Octagon Chronograph - Gold & Emerald", "price": 28500, "badge": "Başyapıt", "img_front": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=80", "desc": "41mm sekizgen fırçalanmış çelik ve 18K altın bezel. Zümrüt yeşili 'Tapisserie' kadran, otomatik İsviçre kalibre ve safir kristal cam.", "mat": "316L Paslanmaz Çelik, 18K Altın Kaplama, Safir Cam (100m Su Geçirmez)", "sizes": ["41mm Kasa Çapı"]}, {"id": 46, "cat": "watches", "catName": "Lüks Saatler & Horoloji", "name": "Submariner Deep Black Automatic Diver", "price": 24800, "badge": "İkonik Dalış", "img_front": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80", "desc": "Seramik tek yönlü döner bezel, süper parlak lüminesans fosfor indisler ve Oyster çelik bilezik.", "mat": "Seramik Bezel, 316L Çelik, 300m Su Geçirmezlik", "sizes": ["40mm Kasa Çapı"]}, {"id": 47, "cat": "watches", "catName": "Lüks Saatler & Horoloji", "name": "Skeleton Tourbillon Openworked Mechanical", "price": 32000, "badge": "Haute Horlogerie", "img_front": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=80", "desc": "Tamamen açık iskelet kadran sayesinde çalışan mekanizmanın tüm çarkları görünür. 72 saat güç rezervi ve timsah derisi kayış.", "mat": "Titanyum Kasa, Hakiki Timsah Derisi Kayış", "sizes": ["42mm Kasa Çapı"]}, {"id": 48, "cat": "watches", "catName": "Lüks Saatler & Horoloji", "name": "Art Deco Tank Gold Rectangular Dress Watch", "price": 19500, "badge": "Klasik Zarafet", "img_front": "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80", "desc": "Dikdörtgen Art Deco altın kasa, Romen rakamlı mine kadran ve kurma kolunda safir kaboşon taşı.", "mat": "18K Sarı Altın Kaplama, Parlak Dana Derisi Kayış", "sizes": ["33.7mm x 25.5mm Kasa"]}, {"id": 49, "cat": "watches", "catName": "Lüks Saatler & Horoloji", "name": "Chronoflyer GMT Dual-Time Aviator", "price": 22400, "badge": "Seyyah", "img_front": "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=80", "desc": "İki farklı zaman dilimini aynı anda takip eden kırmızı GMT ibresi. 24 saatlik çift renkli gündüz/gece bezeli.", "mat": "Fırçalanmış Paslanmaz Çelik, Jubilee 5 Parçalı Bilezik", "sizes": ["40mm Kasa Çapı"]}, {"id": 50, "cat": "watches", "catName": "Lüks Saatler & Horoloji", "name": "Carbon Stealth Matte Black Chrono", "price": 26900, "badge": "Karbon Fiber", "img_front": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80", "img_back": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80", "desc": "Hafif dövme karbon kompozit gövde, mat siyah detaylar, neon kırmızı kronograf saniye ibresi ve FKM kauçuk kordon.", "mat": "Dövme Karbon Fiber, FKM Floroelastomer Kauçuk", "sizes": ["43mm Kasa Çapı"]}];
+
+    // APP STATE
+    let currentRoom = 0;
+    const totalRooms = 6;
+    let currentStylistSlot = 'caps'; // 'caps', 'tops', 'outerwear', 'pants', 'shoes', 'watches'
+    let selectedOutfit = {
+      caps: PRODUCTS.find(p => p.id === 1),        // Maison Velvet Cap
+      tops: PRODUCTS.find(p => p.id === 9),        // Heavyweight Tee
+      outerwear: PRODUCTS.find(p => p.id === 19),  // Heavy Hoodie
+      pants: PRODUCTS.find(p => p.id === 29),     // Selvedge Denim
+      shoes: PRODUCTS.find(p => p.id === 37),     // Sculpted Sole Runner
+      watches: PRODUCTS.find(p => p.id === 45)    // Royal Chronograph
+    };
+
+    let cart = [];
+    let isFlippedModal = false;
+    let currentModalProduct = null;
+    let audioEnabled = true;
+    let audioCtx = null;
+
+    // INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      renderStylistTray('caps');
+      updateMannequinUI();
+      renderCatalogGrid('all');
+      initAudio();
+    });
+
+    // ================= SOUND SYNTHESIZER (WEB AUDIO API) =================
+    function initAudio() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          audioCtx = new AudioContext();
+        }
+      } catch (e) {
+        console.warn('Web Audio not supported');
+      }
+    }
+
+    function playTone(freq, type, duration, gainVal = 0.08) {
+      if (!audioEnabled || !audioCtx) return;
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    // Sound FX Triggers
+    function playClickSfx() {
+      playTone(800, 'sine', 0.08, 0.04);
+    }
+    function playClothSfx() {
+      playTone(280, 'triangle', 0.25, 0.06);
+    }
+    function playWatchTickSfx() {
+      playTone(1800, 'sine', 0.04, 0.03);
+    }
+    function playCashSfx() {
+      if (!audioEnabled || !audioCtx) return;
+      playTone(523.25, 'sine', 0.3, 0.08); // C5
+      setTimeout(() => playTone(659.25, 'sine', 0.4, 0.08), 80); // E5
+      setTimeout(() => playTone(783.99, 'sine', 0.5, 0.09), 160); // G5
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      const icon = document.getElementById('soundIcon');
+      const text = document.getElementById('soundText');
+      if (audioEnabled) {
+        icon.setAttribute('data-lucide', 'volume-2');
+        text.innerText = 'Ambiyans: Açık';
+        playCashSfx();
+      } else {
+        icon.setAttribute('data-lucide', 'volume-x');
+        text.innerText = 'Ambiyans: Kapalı';
+      }
+      lucide.createIcons();
+    }
+
+    // ================= 3D WALK-IN BOUTIQUE TOUR ENGINE =================
+    function goToRoom(roomIndex) {
+      currentRoom = roomIndex;
+      playClickSfx();
+
+      // Update room navigation buttons
+      document.querySelectorAll('.room-nav-btn').forEach((btn, idx) => {
+        if (idx === roomIndex) {
+          btn.className = 'room-nav-btn active px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all bg-gold text-black font-bold shadow-lg shadow-gold/20';
+        } else {
+          btn.className = 'room-nav-btn px-3.5 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40';
+        }
+      });
+
+      // Crossfade slides with 3D depth effect
+      for (let i = 0; i < totalRooms; i++) {
+        const slide = document.getElementById(`room-${i}`);
+        if (!slide) continue;
+        if (i === roomIndex) {
+          slide.classList.remove('opacity-0', 'pointer-events-none');
+          slide.classList.add('opacity-100');
+          slide.style.transform = 'translateZ(0px) scale(1)';
+        } else if (i < roomIndex) {
+          slide.classList.add('opacity-0', 'pointer-events-none');
+          slide.classList.remove('opacity-100');
+          slide.style.transform = 'translateZ(-150px) scale(0.92)';
+        } else {
+          slide.classList.add('opacity-0', 'pointer-events-none');
+          slide.classList.remove('opacity-100');
+          slide.style.transform = 'translateZ(150px) scale(1.08)';
+        }
+      }
+    }
+
+    function nextRoom() {
+      goToRoom((currentRoom + 1) % totalRooms);
+    }
+    function prevRoom() {
+      goToRoom((currentRoom - 1 + totalRooms) % totalRooms);
+    }
+
+    // ================= VIRTUAL FITTING ROOM / STYLIST ENGINE =================
+    function selectStylistSlot(slot) {
+      currentStylistSlot = slot;
+      playClickSfx();
+
+      const slotNames = {
+        caps: 'Şapka & Başlık Seçiliyor',
+        tops: 'Tişört & Üst Seçiliyor',
+        outerwear: 'Hoodie & Ceket Seçiliyor',
+        pants: 'Pantolon & Denim Seçiliyor',
+        shoes: 'Ayakkabı & Sneaker Seçiliyor',
+        watches: 'Lüks Saat Kasası Seçiliyor'
+      };
+
+      document.getElementById('currentSlotName').innerText = slotNames[slot] || 'Parça Seçiliyor';
+
+      document.querySelectorAll('.stylist-tab').forEach(tab => {
+        if (tab.getAttribute('data-slot') === slot) {
+          tab.className = 'stylist-tab active py-2 text-center rounded-xl text-[11px] font-mono transition-all bg-gold text-black font-bold';
+        } else {
+          tab.className = 'stylist-tab py-2 text-center rounded-xl text-[11px] font-mono text-gray-400 hover:text-white transition-all';
+        }
+      });
+
+      renderStylistTray(slot);
+    }
+
+    function renderStylistTray(slot) {
+      const tray = document.getElementById('stylistItemTray');
+      const items = PRODUCTS.filter(p => p.cat === slot);
+
+      tray.innerHTML = items.map(item => {
+        const isSelected = selectedOutfit[slot] && selectedOutfit[slot].id === item.id;
+        return `
+          <div onclick="applyOutfitItem(${item.id})" class="p-3 rounded-2xl border ${isSelected ? 'border-gold bg-gold/15 shadow-md shadow-gold/10' : 'border-noir-border bg-noir-card hover:border-gold/40'} transition-all cursor-pointer flex items-center justify-between gap-3 group">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl overflow-hidden bg-noir-dark flex-shrink-0 border border-white/10">
+                <img src="${item.img_front}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+              </div>
+              <div>
+                <div class="text-[10px] font-mono text-gold uppercase">${item.badge}</div>
+                <div class="font-royal text-xs font-bold text-white group-hover:text-gold transition-colors line-clamp-1">${item.name}</div>
+                <div class="font-mono text-xs text-gray-300 font-bold">${item.price.toLocaleString('tr-TR')} ₺</div>
+              </div>
+            </div>
+            <button class="px-2.5 py-1 rounded-lg text-[10px] font-mono uppercase font-bold ${isSelected ? 'bg-gold text-black' : 'bg-noir-surface text-gray-300 group-hover:bg-gold group-hover:text-black'} transition-colors">
+              ${isSelected ? '✓ Seçili' : 'Dene'}
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function applyOutfitItem(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+
+      selectedOutfit[product.cat] = product;
+      if (product.cat === 'watches') {
+        playWatchTickSfx();
+      } else {
+        playClothSfx();
+      }
+
+      updateMannequinUI();
+      renderStylistTray(currentStylistSlot);
+    }
+
+    function updateMannequinUI() {
+      // 1. Update Head
+      if (selectedOutfit.caps) {
+        document.getElementById('pinName-caps').innerText = selectedOutfit.caps.name;
+        document.getElementById('pinImg-caps').src = selectedOutfit.caps.img_front;
+      }
+      // 2. Update Torso (prioritize outerwear or tops)
+      const topItem = selectedOutfit.outerwear || selectedOutfit.tops;
+      if (topItem) {
+        document.getElementById('pinName-tops').innerText = topItem.name;
+        document.getElementById('pinImg-tops').src = topItem.img_front;
+      }
+      // 3. Update Watch
+      if (selectedOutfit.watches) {
+        document.getElementById('pinName-watches').innerText = selectedOutfit.watches.name;
+        document.getElementById('pinImg-watches').src = selectedOutfit.watches.img_front;
+      }
+      // 4. Update Pants
+      if (selectedOutfit.pants) {
+        document.getElementById('pinName-pants').innerText = selectedOutfit.pants.name;
+        document.getElementById('pinImg-pants').src = selectedOutfit.pants.img_front;
+      }
+      // 5. Update Shoes
+      if (selectedOutfit.shoes) {
+        document.getElementById('pinName-shoes').innerText = selectedOutfit.shoes.name;
+        document.getElementById('pinImg-shoes').src = selectedOutfit.shoes.img_front;
+      }
+
+      // Update Breakdown List
+      const outfitItems = Object.values(selectedOutfit).filter(Boolean);
+      const breakdownEl = document.getElementById('outfitBreakdownList');
+      
+      breakdownEl.innerHTML = outfitItems.map(item => `
+        <div class="flex items-center justify-between text-xs font-mono p-2 rounded-xl bg-noir-card border border-noir-border">
+          <div class="flex items-center gap-2">
+            <img src="${item.img_front}" class="w-7 h-7 rounded object-cover">
+            <span class="text-gray-300 line-clamp-1 max-w-[130px]">${item.name}</span>
+          </div>
+          <span class="text-gold font-bold whitespace-nowrap">${item.price.toLocaleString('tr-TR')} ₺</span>
+        </div>
+      `).join('');
+
+      // Calculate Total
+      const total = outfitItems.reduce((acc, curr) => acc + curr.price, 0);
+      document.getElementById('outfitTotalPrice').innerText = total.toLocaleString('tr-TR') + ' ₺';
+    }
+
+    function randomizeOutfit() {
+      playClothSfx();
+      const getRandom = (cat) => {
+        const arr = PRODUCTS.filter(p => p.cat === cat);
+        return arr[Math.floor(Math.random() * arr.length)];
+      };
+
+      selectedOutfit = {
+        caps: getRandom('caps'),
+        tops: getRandom('tops'),
+        outerwear: getRandom('outerwear'),
+        pants: getRandom('pants'),
+        shoes: getRandom('shoes'),
+        watches: getRandom('watches')
+      };
+
+      updateMannequinUI();
+      renderStylistTray(currentStylistSlot);
+    }
+
+    function resetOutfit() {
+      playClickSfx();
+      selectedOutfit = {};
+      document.getElementById('pinName-caps').innerText = 'Şapka Seçin';
+      document.getElementById('pinName-tops').innerText = 'Üst Seçin';
+      document.getElementById('pinName-watches').innerText = 'Saat Seçin';
+      document.getElementById('pinName-pants').innerText = 'Pantolon Seçin';
+      document.getElementById('pinName-shoes').innerText = 'Pabuç Seçin';
+      document.getElementById('outfitBreakdownList').innerHTML = '<div class="text-xs text-gray-500 font-mono text-center py-4">Manken henüz giydirilmedi.</div>';
+      document.getElementById('outfitTotalPrice').innerText = '0 ₺';
+    }
+
+    function addEntireOutfitToCart() {
+      const items = Object.values(selectedOutfit).filter(Boolean);
+      if (items.length === 0) return;
+
+      items.forEach(item => {
+        addToCart(item.id, false);
+      });
+
+      playCashSfx();
+      openCartDrawer();
+    }
+
+    function orderOutfitViaWhatsApp() {
+      const items = Object.values(selectedOutfit).filter(Boolean);
+      if (items.length === 0) return;
+
+      const total = items.reduce((acc, curr) => acc + curr.price, 0);
+      let text = `Merhaba! Maison İstanbul Sanal Stilist üzerinden özel kombin oluşturdum:%0A%0A`;
+      items.forEach((item, idx) => {
+        text += `${idx + 1}. ${item.name} (${item.catName}) - ${item.price.toLocaleString('tr-TR')} ₺%0A`;
+      });
+      text += `%0AToplam Tutar: ${total.toLocaleString('tr-TR')} ₺%0AAdres: İstanbul / Teslimat rica ediyorum.`;
+
+      window.open(`https://wa.me/905340000000?text=${text}`, '_blank');
+    }
+
+    function orderOutfitViaTelegram() {
+      const items = Object.values(selectedOutfit).filter(Boolean);
+      if (items.length === 0) return;
+
+      const total = items.reduce((acc, curr) => acc + curr.price, 0);
+      let text = `Merhaba! Maison İstanbul Sanal Stilist kombin siparişi:%0A`;
+      items.forEach(item => {
+        text += `• ${item.name} (${item.price.toLocaleString('tr-TR')} ₺)%0A`;
+      });
+      text += `Toplam: ${total.toLocaleString('tr-TR')} ₺`;
+
+      window.open(`https://t.me/maison_istanbul?text=${text}`, '_blank');
+    }
+
+    // ================= SLIDE-OVER CATEGORY DRAWER ENGINE =================
+    function openCategoryDrawer(cat = 'all') {
+      playClickSfx();
+      const backdrop = document.getElementById('categoryDrawerBackdrop');
+      const drawer = document.getElementById('categoryDrawer');
+      backdrop.classList.remove('opacity-0', 'pointer-events-none');
+      drawer.classList.remove('translate-x-full');
+      renderDrawerCategory(cat);
+    }
+
+    function closeCategoryDrawer() {
+      playClickSfx();
+      const backdrop = document.getElementById('categoryDrawerBackdrop');
+      const drawer = document.getElementById('categoryDrawer');
+      backdrop.classList.add('opacity-0', 'pointer-events-none');
+      drawer.classList.add('translate-x-full');
+    }
+
+    function renderDrawerCategory(cat = 'all') {
+      const container = document.getElementById('drawerProductsContainer');
+      const filtered = cat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === cat);
+
+      // Update pills
+      document.querySelectorAll('.drawer-pill').forEach(pill => {
+        if (pill.getAttribute('data-cat') === cat) {
+          pill.className = 'drawer-pill active px-3 py-1 rounded-full bg-gold text-black font-bold whitespace-nowrap';
+        } else {
+          pill.className = 'drawer-pill px-3 py-1 rounded-full bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40 whitespace-nowrap';
+        }
+      });
+
+      container.innerHTML = filtered.map(item => `
+        <div class="p-4 rounded-2xl bg-noir-card border border-noir-border hover:border-gold/40 transition-all flex flex-col sm:flex-row gap-4 group">
+          <div class="relative w-full sm:w-28 h-36 rounded-xl overflow-hidden bg-noir-dark flex-shrink-0">
+            <img src="${item.img_front}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-2 left-2 text-[9px] font-mono bg-black/70 px-2 py-0.5 rounded text-gold">${item.badge}</span>
+          </div>
+          <div class="flex-1 flex flex-col justify-between">
+            <div>
+              <div class="text-[10px] font-mono text-gray-400 uppercase">${item.catName}</div>
+              <h4 class="font-royal text-sm font-bold text-white group-hover:text-gold transition-colors">${item.name}</h4>
+              <p class="text-[11px] text-gray-400 font-light line-clamp-2 mt-1">${item.desc}</p>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-noir-border mt-3">
+              <span class="font-royal text-base font-bold text-gold">${item.price.toLocaleString('tr-TR')} ₺</span>
+              <div class="flex items-center gap-2">
+                <button onclick="openProductModal(${item.id})" class="px-2.5 py-1.5 rounded-lg border border-noir-border hover:border-gold text-[10px] font-mono text-gray-300 hover:text-white transition-colors">
+                  İncele / 360°
+                </button>
+                <button onclick="applyOutfitItem(${item.id}); selectStylistSlot('${item.cat}')" class="px-2.5 py-1.5 rounded-lg bg-gold/15 border border-gold/40 hover:bg-gold hover:text-black text-[10px] font-mono text-gold transition-all" title="Mankende Dene">
+                  Mankende Dene
+                </button>
+                <button onclick="addToCart(${item.id})" class="p-1.5 rounded-lg bg-gold text-black hover:bg-gold-light transition-colors" title="Sepete Ekle">
+                  <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    function searchDrawerItems() {
+      const q = document.getElementById('drawerSearchInput').value.toLowerCase();
+      const container = document.getElementById('drawerProductsContainer');
+      const filtered = PRODUCTS.filter(p => p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.mat.toLowerCase().includes(q));
+
+      container.innerHTML = filtered.map(item => `
+        <div class="p-3 rounded-xl bg-noir-card border border-noir-border flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <img src="${item.img_front}" class="w-12 h-12 rounded-lg object-cover">
+            <div>
+              <div class="font-royal text-xs font-bold text-white">${item.name}</div>
+              <div class="font-mono text-xs text-gold">${item.price.toLocaleString('tr-TR')} ₺</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="openProductModal(${item.id})" class="px-2 py-1 rounded text-[10px] font-mono border border-noir-border hover:border-gold">Detay</button>
+            <button onclick="addToCart(${item.id})" class="px-2 py-1 rounded text-[10px] font-mono bg-gold text-black font-bold">Ekle</button>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    // ================= FULL CATALOG GRID RENDERING =================
+    function filterCatalog(cat = 'all') {
+      playClickSfx();
+      document.querySelectorAll('.cat-pill').forEach(pill => {
+        if (pill.getAttribute('data-filter') === cat) {
+          pill.className = 'cat-pill active px-3.5 py-2 rounded-full bg-gold text-black font-bold transition-all';
+        } else {
+          pill.className = 'cat-pill px-3.5 py-2 rounded-full bg-noir-card text-gray-300 border border-noir-border hover:border-gold/40 transition-all';
+        }
+      });
+      renderCatalogGrid(cat);
+    }
+
+    function renderCatalogGrid(cat = 'all') {
+      const container = document.getElementById('productCatalogGrid');
+      const list = cat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === cat);
+
+      container.innerHTML = list.map(item => `
+        <div class="group rounded-3xl bg-noir-card border border-noir-border hover:border-gold/50 p-4 transition-all duration-300 hover:shadow-xl hover:shadow-gold/5 flex flex-col justify-between">
+          <div>
+            <!-- Image Card with Quick Flip -->
+            <div class="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-noir-dark mb-4 cursor-pointer" onclick="openProductModal(${item.id})">
+              <img src="${item.img_front}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-noir-void/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              
+              <!-- Badge -->
+              <span class="absolute top-3 left-3 text-[10px] font-mono bg-black/70 backdrop-blur-md px-2.5 py-0.5 rounded-full text-gold border border-gold/30">
+                ${item.badge}
+              </span>
+
+              <!-- Quick Hover CTA -->
+              <div class="absolute bottom-3 left-3 right-3 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <span class="px-3 py-1.5 rounded-full bg-gold text-black font-mono text-[10px] font-bold uppercase tracking-wider shadow-lg">
+                  360° İncele
+                </span>
+              </div>
+            </div>
+
+            <!-- Details -->
+            <div class="text-[10px] font-mono text-gray-400 uppercase tracking-wider mb-1">${item.catName}</div>
+            <h4 class="font-royal text-sm sm:text-base font-bold text-white group-hover:text-gold transition-colors line-clamp-1 mb-2">
+              ${item.name}
+            </h4>
+            <div class="font-mono text-sm sm:text-base font-bold text-gold mb-3">
+              ${item.price.toLocaleString('tr-TR')} ₺
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="pt-3 border-t border-noir-border flex items-center gap-2">
+            <button onclick="applyOutfitItem(${item.id}); selectStylistSlot('${item.cat}')" class="flex-1 py-2 rounded-xl bg-noir-surface hover:bg-gold hover:text-black text-gray-300 font-mono text-[11px] font-medium transition-all text-center" title="Sanal Manken Üzerinde Dene">
+              ✨ Mankende Dene
+            </button>
+            <button onclick="addToCart(${item.id})" class="p-2 rounded-xl bg-gold text-black hover:bg-gold-light transition-colors" title="Sepete Ekle">
+              <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    // ================= 360° & PRODUCT DETAIL MODAL =================
+    function openProductModal(productId) {
+      playClickSfx();
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+      currentModalProduct = product;
+
+      document.getElementById('modalTitle').innerText = product.name;
+      document.getElementById('modalPrice').innerText = product.price.toLocaleString('tr-TR') + ' ₺';
+      document.getElementById('modalDesc').innerText = product.desc;
+      document.getElementById('modalMat').innerText = product.mat;
+      document.getElementById('modalBadge').innerText = product.badge;
+      document.getElementById('modalCatName').innerText = product.catName;
+      document.getElementById('modalImgFront').src = product.img_front;
+      document.getElementById('modalImgBack').src = product.img_back;
+
+      // Sizes
+      const sizesEl = document.getElementById('modalSizesContainer');
+      sizesEl.innerHTML = product.sizes.map((s, idx) => `
+        <button class="px-3 py-1.5 rounded-lg text-xs font-mono border ${idx === 0 ? 'border-gold bg-gold/15 text-gold font-bold' : 'border-noir-border text-gray-400 hover:text-white'}">
+          ${s}
+        </button>
+      `).join('');
+
+      // Wire Modal Buttons
+      document.getElementById('modalBtnAddToCart').onclick = () => {
+        addToCart(product.id);
+        closeProductModal();
+      };
+      document.getElementById('modalBtnSendToStylist').onclick = () => {
+        applyOutfitItem(product.id);
+        selectStylistSlot(product.cat);
+        closeProductModal();
+        window.location.hash = 'virtualStylist';
+      };
+
+      setModalView('front');
+      const modal = document.getElementById('productDetailModal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeProductModal() {
+      playClickSfx();
+      const modal = document.getElementById('productDetailModal');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function toggleCardFlip() {
+      playClothSfx();
+      isFlippedModal = !isFlippedModal;
+      document.getElementById('modalFlipInner').classList.toggle('is-flipped', isFlippedModal);
+      updateModalViewButtons();
+    }
+
+    function setModalView(view) {
+      playClothSfx();
+      isFlippedModal = (view === 'back');
+      document.getElementById('modalFlipInner').classList.toggle('is-flipped', isFlippedModal);
+      updateModalViewButtons();
+    }
+
+    function updateModalViewButtons() {
+      const btnFront = document.getElementById('btnViewFront');
+      const btnBack = document.getElementById('btnViewBack');
+      if (isFlippedModal) {
+        btnBack.className = 'px-3 py-1 rounded-lg text-xs font-mono bg-gold text-black font-bold';
+        btnFront.className = 'px-3 py-1 rounded-lg text-xs font-mono bg-noir-card text-gray-400 border border-noir-border hover:text-white';
+      } else {
+        btnFront.className = 'px-3 py-1 rounded-lg text-xs font-mono bg-gold text-black font-bold';
+        btnBack.className = 'px-3 py-1 rounded-lg text-xs font-mono bg-noir-card text-gray-400 border border-noir-border hover:text-white';
+      }
+    }
+
+    // ================= SHOPPING CART & CHECKOUT ENGINE =================
+    function addToCart(productId, notify = true) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+
+      const existing = cart.find(i => i.product.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ product, qty: 1, size: product.sizes[0] });
+      }
+
+      if (notify) playCashSfx();
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const totalItems = cart.reduce((acc, i) => acc + i.qty, 0);
+      document.getElementById('cartCountBadge').innerText = totalItems;
+      document.getElementById('cartItemCountLabel').innerText = `${totalItems} Ürün`;
+
+      const listEl = document.getElementById('cartItemsList');
+      if (cart.length === 0) {
+        listEl.innerHTML = `
+          <div class="text-center py-16 text-gray-500 font-mono text-xs">
+            <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto mb-3 opacity-30 text-gold"></i>
+            Çantanız henüz boş.<br>Reyonlardan ürün ekleyin veya Sanal Stilist ile kombinleyin.
+          </div>
+        `;
+        document.getElementById('cartSubtotalPrice').innerText = '0 ₺';
+      } else {
+        listEl.innerHTML = cart.map(item => `
+          <div class="p-3 rounded-2xl bg-noir-card border border-noir-border flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <img src="${item.product.img_front}" class="w-14 h-14 rounded-xl object-cover">
+              <div>
+                <h5 class="font-royal text-xs font-bold text-white line-clamp-1">${item.product.name}</h5>
+                <div class="text-[10px] font-mono text-gray-400">Beden: ${item.size}</div>
+                <div class="font-mono text-xs text-gold font-bold">${item.product.price.toLocaleString('tr-TR')} ₺</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="flex items-center border border-noir-border rounded-lg bg-noir-dark text-xs font-mono">
+                <button onclick="changeCartQty(${item.product.id}, -1)" class="px-2 py-1 text-gray-400 hover:text-white">-</button>
+                <span class="px-2 text-white">${item.qty}</span>
+                <button onclick="changeCartQty(${item.product.id}, 1)" class="px-2 py-1 text-gray-400 hover:text-white">+</button>
+              </div>
+              <button onclick="removeCartItem(${item.product.id})" class="text-gray-500 hover:text-rose-400 p-1">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+        const subtotal = cart.reduce((acc, i) => acc + (i.product.price * i.qty), 0);
+        document.getElementById('cartSubtotalPrice').innerText = subtotal.toLocaleString('tr-TR') + ' ₺';
+      }
+
+      lucide.createIcons();
+    }
+
+    function changeCartQty(productId, delta) {
+      playClickSfx();
+      const item = cart.find(i => i.product.id === productId);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart = cart.filter(i => i.product.id !== productId);
+      }
+      updateCartUI();
+    }
+
+    function removeCartItem(productId) {
+      playClickSfx();
+      cart = cart.filter(i => i.product.id !== productId);
+      updateCartUI();
+    }
+
+    function openCartDrawer() {
+      playClickSfx();
+      document.getElementById('cartBackdrop').classList.remove('opacity-0', 'pointer-events-none');
+      document.getElementById('cartDrawer').classList.remove('translate-x-full');
+      updateCartUI();
+    }
+
+    function closeCartDrawer() {
+      playClickSfx();
+      document.getElementById('cartBackdrop').classList.add('opacity-0', 'pointer-events-none');
+      document.getElementById('cartDrawer').classList.add('translate-x-full');
+    }
+
+    function checkoutWhatsApp() {
+      if (cart.length === 0) return;
+      const subtotal = cart.reduce((acc, i) => acc + (i.product.price * i.qty), 0);
+      let text = `Merhaba! Maison İstanbul'dan sipariş vermek istiyorum:%0A%0A`;
+      cart.forEach((i, idx) => {
+        text += `${idx + 1}. ${i.product.name} (Beden: ${i.size}, Adet: ${i.qty}) - ${(i.product.price * i.qty).toLocaleString('tr-TR')} ₺%0A`;
+      });
+      text += `%0AToplam Tutar: ${subtotal.toLocaleString('tr-TR')} ₺%0ATeslimat Adresi: İstanbul (VIP Kurye Talebi)`;
+
+      window.open(`https://wa.me/905340000000?text=${text}`, '_blank');
+    }
+
+    function checkoutTelegram() {
+      if (cart.length === 0) return;
+      const subtotal = cart.reduce((acc, i) => acc + (i.product.price * i.qty), 0);
+      let text = `Merhaba! Maison İstanbul Butik Siparişi:%0A`;
+      cart.forEach(i => {
+        text += `• ${i.product.name} x${i.qty} (${(i.product.price * i.qty).toLocaleString('tr-TR')} ₺)%0A`;
+      });
+      text += `Toplam: ${subtotal.toLocaleString('tr-TR')} ₺`;
+
+      window.open(`https://t.me/maison_istanbul?text=${text}`, '_blank');
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>İstanbul Coffee Roasters Club — aliWep 3D Master Showcase</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            royal: ['"Cinzel"', 'serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"Space Grotesk"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background: #07070A; color: #F3F4F6; overflow-x: hidden; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.3s ease; }
+    .glass-card:hover { border-color: rgba(212, 175, 55, 0.4); transform: translateY(-4px); }
+    .glow-gold { box-shadow: 0 0 40px -10px rgba(212, 175, 55, 0.25); }
+  </style>
+</head>
+<body class="min-h-screen relative selection:bg-amber-500 selection:text-black pt-16">
+  
+    <nav class="fixed top-3 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 sm:gap-3 px-4 py-2 rounded-full bg-black/85 backdrop-blur-md border border-white/20 shadow-2xl text-[11px] sm:text-xs font-mono">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="text-white font-bold tracking-tight">İstanbul Coffee Roasters Club</span>
+      <span class="px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 font-bold border border-amber-400/30">25.000 ₺</span>
+      <a href="https://t.me/aliWep_code_Bot?start=secim_kofe-club" target="_blank" class="px-3 py-1 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 text-black font-bold hover:scale-105 transition-transform flex items-center gap-1">
+        ⚡️ Bu Tasarımı Al
+      </a>
+      <a href="../../index.html" class="text-gray-400 hover:text-white transition-colors ml-1" title="Showroom'a dön">✕</a>
+    </nav>
+    
+  
+    <div class="max-w-5xl mx-auto px-4 py-16 text-center">
+      <span class="px-3.5 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-xs font-mono">DÜZENLİ TAZE ÇEKİRDEK ABONELİĞİ</span>
+      <h1 class="text-5xl sm:text-7xl font-sans font-black text-white mt-6 mb-4">ROASTERS CLUB.<span class="text-orange-500">İST</span></h1>
+      <p class="text-gray-400 max-w-xl mx-auto text-sm sm:text-base mb-12">Her ay kapınıza gelen taze kavrulmuş mikro lot çekirdekler. Dijital sadakat kartı ve özel barista atölyeleri.</p>
+
+      <!-- Subscription Builder -->
+      <div class="glass-card rounded-2xl p-6 sm:p-8 max-w-2xl mx-auto mb-16 text-left border-orange-500/30">
+        <h3 class="font-mono uppercase text-xs tracking-widest text-orange-400 mb-3">📦 Aylık Kahve Kutunuzu Oluşturun</h3>
+        
+        <label class="block text-xs text-gray-300 font-medium mb-2">Aylık Çekirdek Miktarı:</label>
+        <div class="grid grid-cols-3 gap-3 mb-6">
+          <button onclick="setSub('250g', 'Ayda 2 Paket (500g)', '350 ₺/ay')" class="sub-btn p-3 rounded-xl bg-white/10 border border-orange-400 text-xs font-mono text-white text-center">
+            500g
+          </button>
+          <button onclick="setSub('500g', 'Ayda 4 Paket (1kg)', '650 ₺/ay')" class="sub-btn p-3 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-gray-300 text-center hover:bg-white/10">
+            1 Kg
+          </button>
+          <button onclick="setSub('1kg', 'Ofis & Aile Paketi (2kg)', '1.190 ₺/ay')" class="sub-btn p-3 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-gray-300 text-center hover:bg-white/10">
+            2 Kg
+          </button>
+        </div>
+
+        <div class="p-4 rounded-xl bg-black/50 border border-white/5 flex items-center justify-between">
+          <div>
+            <h4 id="sub-title" class="font-bold text-white text-base">Ayda 2 Paket (500g) Taze Çekirdek</h4>
+            <p class="text-xs text-gray-400 mt-0.5">Ücretsiz kargo + Özel tadım kartları dahil</p>
+          </div>
+          <span id="sub-price" class="font-mono text-xl font-bold text-orange-400">350 ₺/ay</span>
+        </div>
+
+        <a href="https://wa.me/905521234567?text=Roasters%20Club%20Abonelik%20Talebi" target="_blank" class="w-full mt-6 py-3.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 text-black font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2">
+          Aboneliği Başlat →
+        </a>
+      </div>
+    </div>
+    
+  
+  <!-- Footer -->
+  <footer class="border-t border-white/10 bg-black/60 py-10 px-4 text-center text-xs font-mono text-gray-400">
+    <div class="max-w-4xl mx-auto flex flex-col items-center gap-3">
+      <span class="font-royal text-base text-white font-bold">İstanbul Coffee Roasters Club • aliWep Studio Projesi</span>
+      <p>Ön ödeme yok • 30 gün teknik garanti • 5-10 günde teslimat</p>
+      <a href="https://t.me/aliWep_code_Bot?start=secim_kofe-club" class="text-amber-400 hover:underline">Telegram ile bu siteyi sipariş et →</a>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    
+    function setSub(amount, title, price) {
+      document.getElementById('sub-title').innerText = title;
+      document.getElementById('sub-price').innerText = price;
+    }
+    
+  </script>
+</body>
+</html>

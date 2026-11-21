@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CYBERTECH İSTANBUL — Premium Akıllı Telefon & Elektronik</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Three.js CDN for 3D Phone & Particle Universe -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- GSAP for World-Class Fluid Motion -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Google Fonts: Inter & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Inter"', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+          },
+          colors: {
+            cyber: {
+              black: '#000000',
+              card: '#0D0D11',
+              surface: '#15151C',
+              border: 'rgba(255, 255, 255, 0.08)',
+              blue: '#00D4FF',
+              purple: '#7B2FFF',
+            }
+          },
+          animation: {
+            'glow-pulse': 'pulseGlow 4s infinite alternate',
+            'float-badge': 'floatBadge 4s ease-in-out infinite',
+          },
+          keyframes: {
+            pulseGlow: {
+              '0%': { opacity: '0.4', transform: 'scale(0.95)' },
+              '100%': { opacity: '0.8', transform: 'scale(1.1)' }
+            },
+            floatBadge: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-8px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Pure Apple/Samsung Style Dark Foundation */
+    body {
+      background-color: #000000;
+      color: #FFFFFF;
+      overflow-x: hidden;
+      font-family: 'Inter', sans-serif;
+      cursor: default;
+    }
+
+    /* Custom Electric Cursor */
+    #custom-cursor {
+      pointer-events: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: #00D4FF;
+      box-shadow: 0 0 16px #00D4FF, 0 0 32px #7B2FFF;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background-color 0.2s, opacity 0.2s;
+      z-index: 9999;
+    }
+    #custom-cursor-follower {
+      pointer-events: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease-out, width 0.2s, height 0.2s;
+      z-index: 9998;
+    }
+
+    /* 3D Glassmorphism Cards */
+    .glass-panel {
+      background: rgba(18, 18, 24, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-panel:hover {
+      border-color: rgba(0, 212, 255, 0.5);
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.15), 0 0 60px rgba(123, 47, 255, 0.1);
+    }
+
+    /* Electric Gradient Text & Buttons */
+    .electric-gradient-text {
+      background: linear-gradient(135deg, #00D4FF 0%, #A855F7 50%, #FFFFFF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .btn-electric {
+      background: linear-gradient(135deg, #00D4FF 0%, #7B2FFF 100%);
+      color: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s;
+    }
+    .btn-electric::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.6s ease;
+      z-index: -1;
+    }
+    .btn-electric:hover::before {
+      left: 100%;
+    }
+    .btn-electric:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+    }
+
+    /* 3D Tilt Card Container */
+    .tilt-card-wrap {
+      perspective: 1200px;
+    }
+    .tilt-card {
+      transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+      transform-style: preserve-3d;
+    }
+
+    /* ThreeJS Background Canvas */
+    #bg-particles-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000000;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1F1F2E;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00D4FF;
+    }
+  </style>
+</head>
+<body class="selection:bg-cyan-500 selection:text-black">
+
+  <!-- ================= 0. INTERACTIVE CURSOR ================= -->
+  <div id="custom-cursor" class="hidden md:block"></div>
+  <div id="custom-cursor-follower" class="hidden md:block"></div>
+
+  <!-- ================= THREE.JS BACKGROUND CANVAS ================= -->
+  <canvas id="bg-particles-canvas"></canvas>
+
+  <!-- ================= 1. PAGE LOAD SCREEN ================= -->
+  <div id="loading-screen" class="fixed inset-0 z-50 bg-[#000000] flex flex-col items-center justify-center transition-all duration-700">
+    <div class="text-center px-4">
+      <!-- Pulsing Brand Symbol -->
+      <div class="relative w-24 h-24 mx-auto mb-8 flex items-center justify-center">
+        <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-cyan-500 to-purple-600 blur-xl opacity-60 animate-pulse"></div>
+        <div class="relative w-20 h-20 rounded-2xl bg-black border border-cyan-400/50 flex items-center justify-center shadow-2xl">
+          <i data-lucide="smartphone" class="w-10 h-10 text-cyan-400"></i>
+        </div>
+      </div>
+
+      <h1 class="font-display text-3xl sm:text-4xl font-extrabold tracking-wider text-white uppercase mb-2">
+        CYBERTECH <span class="text-cyan-400">İSTANBUL</span>
+      </h1>
+      <p class="text-xs tracking-[0.3em] text-gray-400 uppercase mb-8">Apple & Flagship Experience</p>
+
+      <!-- Gradient Progress Bar -->
+      <div class="w-56 h-1 bg-white/10 rounded-full mx-auto overflow-hidden">
+        <div id="loader-bar" class="w-0 h-full bg-gradient-to-r from-cyan-400 via-purple-500 to-cyan-300 transition-all duration-700 ease-out"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 2. TOP NAVIGATION ================= -->
+  <header class="fixed top-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-xl border-b border-white/5 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo with 3D Depth on Hover -->
+      <a href="#" class="flex items-center space-x-3 group" onmouseenter="playSfx('hover')" onclick="playSfx('click')">
+        <div class="relative w-11 h-11 rounded-2xl bg-gradient-to-tr from-cyan-500 to-purple-600 p-[1.5px] group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-cyan-500/20">
+          <div class="w-full h-full bg-black rounded-2xl flex items-center justify-center">
+            <i data-lucide="zap" class="w-5 h-5 text-cyan-400"></i>
+          </div>
+        </div>
+        <div>
+          <span class="font-display font-extrabold text-xl tracking-tight text-white group-hover:text-cyan-400 transition-colors">CYBERTECH</span>
+          <span class="text-[10px] tracking-[0.25em] text-cyan-400 block -mt-1 font-bold uppercase">İSTANBUL</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+        <a href="#telefonlar" onmouseenter="playSfx('hover')" class="hover:text-cyan-400 transition">Modeller</a>
+        <a href="#kategoriler" onmouseenter="playSfx('hover')" class="hover:text-cyan-400 transition">Kategoriler</a>
+        <a href="#neden-biz" onmouseenter="playSfx('hover')" class="hover:text-cyan-400 transition">Neden Biz?</a>
+        <a href="#iletisim" onmouseenter="playSfx('hover')" class="hover:text-cyan-400 transition">İletişim & Konum</a>
+      </nav>
+
+      <!-- Utilities: Sound, Language & WhatsApp -->
+      <div class="flex items-center space-x-3">
+        <!-- Sound Toggle -->
+        <button id="sound-btn" onclick="toggleSound()" class="p-2.5 rounded-full bg-white/5 border border-white/10 hover:border-cyan-400/50 text-cyan-400 transition flex items-center justify-center" title="Ses Aç/Kapat">
+          <i id="sound-icon" data-lucide="volume-2" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Language Switcher -->
+        <button onclick="toggleLang()" onmouseenter="playSfx('hover')" class="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-400/50 text-xs font-bold text-gray-300 hover:text-cyan-400 transition flex items-center space-x-1.5">
+          <i data-lucide="globe" class="w-3.5 h-3.5 text-cyan-400"></i>
+          <span id="lang-label">TR | EN</span>
+        </button>
+
+        <a href="https://wa.me/905551234567?text=Merhaba!%20Cybertech%20İstanbul%20stokları%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" onclick="playSfx('success')" class="hidden sm:inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl btn-electric text-xs font-bold tracking-wider uppercase shadow-lg shadow-cyan-500/20">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span data-i18n="nav_call">WhatsApp Hattı</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= 3. HERO SECTION (100vh WITH 3D PHONE) ================= -->
+  <section class="relative min-h-screen flex items-center pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden z-10">
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Left Hero Column -->
+      <div class="lg:col-span-7 text-left z-20">
+        <!-- Store badge -->
+        <div class="inline-flex items-center space-x-2.5 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-400 text-xs font-bold tracking-widest uppercase mb-6 shadow-lg shadow-cyan-500/10">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          <span data-i18n="hero_badge">İSTANBUL'UN #1 AMİRAL GEMİSİ MAĞAZASI</span>
+        </div>
+
+        <!-- Mega Headline -->
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-display font-extrabold text-white tracking-tight leading-[1.05] mb-6">
+          <span data-i18n="hero_title_1">Geleceğin Teknolojisi,</span> <br>
+          <span class="electric-gradient-text" data-i18n="hero_title_2">Bugün Avucunuzda.</span>
+        </h1>
+
+        <!-- Subheadline -->
+        <p class="text-gray-300 text-base sm:text-lg max-w-xl mb-10 leading-relaxed" data-i18n="hero_desc">
+          Kadıköy Bağdat Caddesi No: 182, İstanbul • %100 Orijinal, Türkiye ve Global Garantili amiral gemisi akıllı telefonlar, tabletler ve aksesuarlar.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+          <a href="#telefonlar" onclick="playSfx('click')" class="w-full sm:w-auto px-8 py-4 rounded-xl btn-electric font-bold text-sm tracking-wider uppercase flex items-center justify-center space-x-3 shadow-xl min-h-[48px]">
+            <span data-i18n="btn_explore">Ürünleri Keşfet</span>
+            <i data-lucide="arrow-down-right" class="w-4 h-4"></i>
+          </a>
+          <a href="https://wa.me/905551234567?text=Merhaba!%20Telefon%20satın%20almak%20istiyorum." target="_blank" onclick="playSfx('success')" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-panel text-white hover:text-cyan-400 font-bold text-sm tracking-wider uppercase flex items-center justify-center space-x-3 transition min-h-[48px]">
+            <i data-lucide="phone-call" class="w-4 h-4 text-cyan-400"></i>
+            <span data-i18n="btn_call_wa">WhatsApp ile Ara</span>
+          </a>
+        </div>
+
+        <!-- Real-time Specs Bar -->
+        <div class="grid grid-cols-3 gap-6 mt-14 pt-8 border-t border-white/10 max-w-lg">
+          <div>
+            <div class="text-2xl sm:text-3xl font-display font-extrabold text-cyan-400 counter-num" data-target="100">%100</div>
+            <div class="text-xs text-gray-400 mt-1" data-i18n="spec_1">Orijinal Sıfır Cihaz</div>
+          </div>
+          <div>
+            <div class="text-2xl sm:text-3xl font-display font-extrabold text-purple-400 counter-num" data-target="2">2 Yıl</div>
+            <div class="text-xs text-gray-400 mt-1" data-i18n="spec_2">Resmi Garanti</div>
+          </div>
+          <div>
+            <div class="text-2xl sm:text-3xl font-display font-extrabold text-white counter-num" data-target="30">30 Dk</div>
+            <div class="text-xs text-gray-400 mt-1" data-i18n="spec_3">Hızlı Kurye İstanbul</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right 3D Interactive Phone Canvas Area -->
+      <div class="lg:col-span-5 relative flex items-center justify-center h-[520px] sm:h-[600px] z-20">
+        <!-- Ambient Neon Halo -->
+        <div class="absolute w-80 h-80 rounded-full bg-gradient-to-tr from-cyan-500/30 to-purple-600/30 blur-[100px] pointer-events-none animate-glow-pulse"></div>
+        
+        <!-- Three.js Canvas for 3D Phone -->
+        <div id="three-phone-container" class="w-full h-full relative cursor-grab active:cursor-grabbing"></div>
+
+        <!-- Floating Spec Badges around 3D Phone -->
+        <div class="absolute top-10 right-4 sm:-right-4 px-4 py-2.5 rounded-2xl glass-panel shadow-2xl border border-cyan-400/30 animate-float-badge z-30 pointer-events-none">
+          <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+            <span class="text-xs font-bold text-white">iPhone 16 Pro Max</span>
+          </div>
+          <span class="text-[10px] text-cyan-400 block font-mono">Titanium • A18 Pro</span>
+        </div>
+
+        <div class="absolute bottom-14 -left-2 sm:-left-6 px-4 py-2.5 rounded-2xl glass-panel shadow-2xl border border-purple-500/30 animate-float-badge z-30 pointer-events-none" style="animation-delay: 2s;">
+          <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+            <span class="text-xs font-bold text-white">Galaxy S24 Ultra</span>
+          </div>
+          <span class="text-[10px] text-purple-400 block font-mono">Galaxy AI • 200MP</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 4. FEATURED PRODUCTS (3D TILT CARDS) ================= -->
+  <section id="telefonlar" class="relative py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-20">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-400/20 text-cyan-400 text-xs font-bold tracking-widest uppercase mb-3">
+        <span>EN ÇOK SATANLAR</span>
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight" data-i18n="prod_head">
+        Amiral Gemisi Telefonlar
+      </h2>
+      <p class="text-gray-400 text-sm sm:text-base mt-4" data-i18n="prod_sub">
+        İstediğiniz hafıza seçeneğini belirleyin. Tek tıkla WhatsApp üzerinden anında mağaza yetkilimizle stok ve sipariş görüşmesi başlatın.
+      </p>
+    </div>
+
+    <!-- Product Grid (3 cols desktop, horizontal scroll on mobile) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="products-grid">
+      <!-- Injected via JavaScript -->
+    </div>
+  </section>
+
+  <!-- ================= 5. CATEGORIES ================= -->
+  <section id="kategoriler" class="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-20 border-t border-white/10">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <h2 class="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight" data-i18n="cat_title">Kategoriler</h2>
+      <p class="text-gray-400 text-sm mt-3" data-i18n="cat_desc">Teknoloji dünyasının en seçkin donanımları tek adreste.</p>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+      
+      <!-- Category 1 -->
+      <div onmouseenter="playSfx('hover')" class="glass-panel p-6 rounded-3xl text-center group cursor-pointer transition-all duration-300 transform hover:-translate-y-2">
+        <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-400 mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+          <i data-lucide="smartphone" class="w-7 h-7"></i>
+        </div>
+        <h3 class="font-display font-bold text-sm text-white group-hover:text-cyan-400 transition-colors" data-i18n="cat_1">Akıllı Telefon</h3>
+        <span class="text-[10px] text-gray-500 mt-1 block">Apple, Samsung, Xiaomi</span>
+      </div>
+
+      <!-- Category 2 -->
+      <div onmouseenter="playSfx('hover')" class="glass-panel p-6 rounded-3xl text-center group cursor-pointer transition-all duration-300 transform hover:-translate-y-2">
+        <div class="w-14 h-14 rounded-2xl bg-purple-500/10 text-purple-400 mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+          <i data-lucide="tablet" class="w-7 h-7"></i>
+        </div>
+        <h3 class="font-display font-bold text-sm text-white group-hover:text-purple-400 transition-colors" data-i18n="cat_2">Tablet & iPad</h3>
+        <span class="text-[10px] text-gray-500 mt-1 block">Pro & Air Serileri</span>
+      </div>
+
+      <!-- Category 3 -->
+      <div onmouseenter="playSfx('hover')" class="glass-panel p-6 rounded-3xl text-center group cursor-pointer transition-all duration-300 transform hover:-translate-y-2">
+        <div class="w-14 h-14 rounded-2xl bg-pink-500/10 text-pink-400 mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+          <i data-lucide="headphones" class="w-7 h-7"></i>
+        </div>
+        <h3 class="font-display font-bold text-sm text-white group-hover:text-pink-400 transition-colors" data-i18n="cat_3">Kulaklık & Ses</h3>
+        <span class="text-[10px] text-gray-500 mt-1 block">AirPods, Sony, Bose</span>
+      </div>
+
+      <!-- Category 4 -->
+      <div onmouseenter="playSfx('hover')" class="glass-panel p-6 rounded-3xl text-center group cursor-pointer transition-all duration-300 transform hover:-translate-y-2">
+        <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+          <i data-lucide="watch" class="w-7 h-7"></i>
+        </div>
+        <h3 class="font-display font-bold text-sm text-white group-hover:text-amber-400 transition-colors" data-i18n="cat_4">Akıllı Saat</h3>
+        <span class="text-[10px] text-gray-500 mt-1 block">Watch Ultra, Galaxy Watch</span>
+      </div>
+
+      <!-- Category 5 -->
+      <div onmouseenter="playSfx('hover')" class="glass-panel p-6 rounded-3xl text-center group cursor-pointer transition-all duration-300 transform hover:-translate-y-2">
+        <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-400 mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+          <i data-lucide="battery-charging" class="w-7 h-7"></i>
+        </div>
+        <h3 class="font-display font-bold text-sm text-white group-hover:text-emerald-400 transition-colors" data-i18n="cat_5">Aksesuarlar</h3>
+        <span class="text-[10px] text-gray-500 mt-1 block">MagSafe, Şarj, Powerbank</span>
+      </div>
+
+      <!-- Category 6 -->
+      <div onmouseenter="playSfx('hover')" class="glass-panel p-6 rounded-3xl text-center group cursor-pointer transition-all duration-300 transform hover:-translate-y-2">
+        <div class="w-14 h-14 rounded-2xl bg-blue-500/10 text-blue-400 mx-auto flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+          <i data-lucide="shield-check" class="w-7 h-7"></i>
+        </div>
+        <h3 class="font-display font-bold text-sm text-white group-hover:text-blue-400 transition-colors" data-i18n="cat_6">Kılıf & Koruma</h3>
+        <span class="text-[10px] text-gray-500 mt-1 block">Zırhlı Kılıf, Nano Cam</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 6. WHY US & LIVE ANIMATED COUNTERS ================= -->
+  <section id="neden-biz" class="relative py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-20 border-t border-white/10">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <h2 class="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight" data-i18n="why_title">
+        Neden Cybertech İstanbul?
+      </h2>
+      <p class="text-gray-400 text-sm mt-3" data-i18n="why_desc">Müşteri memnuniyetini ve cihaz güvenliğini birinci sıraya koyuyoruz.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
+        <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-6">
+          <i data-lucide="badge-check" class="w-6 h-6"></i>
+        </div>
+        <div class="text-4xl font-display font-extrabold text-white mb-2 counter" data-val="100">%100</div>
+        <h3 class="font-display font-bold text-lg text-white mb-2" data-i18n="why_1_title">Orijinal Ürün Garantisi</h3>
+        <p class="text-xs text-gray-400 leading-relaxed" data-i18n="why_1_desc">Tüm kutular kapalı, faturalı ve resmi ithalatçı/distribütör garantilidir.</p>
+      </div>
+
+      <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
+        <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-6">
+          <i data-lucide="truck" class="w-6 h-6"></i>
+        </div>
+        <div class="text-4xl font-display font-extrabold text-white mb-2 counter" data-val="30">30 Dk</div>
+        <h3 class="font-display font-bold text-lg text-white mb-2" data-i18n="why_2_title">Aynı Gün VIP Teslimat</h3>
+        <p class="text-xs text-gray-400 leading-relaxed" data-i18n="why_2_desc">İstanbul içi özel motorlu kuryemiz ile kapınıza kadar güvenli ulaştırılır.</p>
+      </div>
+
+      <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
+        <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-400 flex items-center justify-center mb-6">
+          <i data-lucide="wrench" class="w-6 h-6"></i>
+        </div>
+        <div class="text-4xl font-display font-extrabold text-white mb-2 counter" data-val="5">5 Yıl</div>
+        <h3 class="font-display font-bold text-lg text-white mb-2" data-i18n="why_3_title">Ücretsiz Teknik Destek</h3>
+        <p class="text-xs text-gray-400 leading-relaxed" data-i18n="why_3_desc">Veri aktarımı, kurulum ve danışmanlık hizmeti mağazamızda ücretsizdir.</p>
+      </div>
+
+      <div class="glass-panel p-8 rounded-3xl relative overflow-hidden group">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-6">
+          <i data-lucide="credit-card" class="w-6 h-6"></i>
+        </div>
+        <div class="text-4xl font-display font-extrabold text-white mb-2 counter" data-val="1000">1000+</div>
+        <h3 class="font-display font-bold text-lg text-white mb-2" data-i18n="why_4_title">Taksit & Kolay Ödeme</h3>
+        <p class="text-xs text-gray-400 leading-relaxed" data-i18n="why_4_desc">Tüm kredi kartlarına taksit ve kapıda ödeme seçenekleri mevcuttur.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 7. HOW TO ORDER (3 STEPS) ================= -->
+  <section class="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-20 border-t border-white/10">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <h2 class="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight" data-i18n="how_title">Nasıl Sipariş Verilir?</h2>
+      <p class="text-gray-400 text-sm mt-3" data-i18n="how_desc">Üç basit adımda yeni cihazınıza kavuşun.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+      <!-- Step 1 -->
+      <div class="glass-panel p-8 rounded-3xl text-center relative group">
+        <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-400 mx-auto flex items-center justify-center mb-6 shadow-lg shadow-cyan-500/20 group-hover:scale-110 transition-transform">
+          <i data-lucide="mouse-pointer-click" class="w-8 h-8"></i>
+        </div>
+        <span class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">ADIM 01</span>
+        <h3 class="font-display font-bold text-xl text-white mb-2" data-i18n="step_1_t">Ürünü Seçin</h3>
+        <p class="text-xs text-gray-400 leading-relaxed" data-i18n="step_1_d">Katalogdan istediğiniz telefon modelini ve hafızasını belirleyin.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="glass-panel p-8 rounded-3xl text-center relative group">
+        <div class="w-16 h-16 rounded-2xl bg-purple-500/10 text-purple-400 mx-auto flex items-center justify-center mb-6 shadow-lg shadow-purple-500/20 group-hover:scale-110 transition-transform">
+          <i data-lucide="message-square" class="w-8 h-8"></i>
+        </div>
+        <span class="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest block mb-2">ADIM 02</span>
+        <h3 class="font-display font-bold text-xl text-white mb-2" data-i18n="step_2_t">WhatsApp'tan Yazın</h3>
+        <p class="text-xs text-gray-400 leading-relaxed" data-i18n="step_2_d">Tek tıkla hazır mesajla mağaza temsilcimize bağlanın ve siparişinizi iletin.</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="glass-panel p-8 rounded-3xl text-center relative group">
+        <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 text-emerald-400 mx-auto flex items-center justify-center mb-6 shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform">
+          <i data-lucide="package-check" class="w-8 h-8"></i>
+        </div>
+        <span class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest block mb-2">ADIM 03</span>
+        <h3 class="font-display font-bold text-xl text-white mb-2" data-i18n="step_3_t">Cihazınız Kapınızda!</h3>
+        <p class="text-xs text-gray-400 leading-relaxed" data-i18n="step_3_d">VIP kurye ile aynı gün elinize ulaşsın veya mağazamızdan teslim alın.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 8. CONTACT & STORE LOCATION ================= -->
+  <section id="iletisim" class="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-20 border-t border-white/10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      
+      <!-- Store Info Card -->
+      <div>
+        <span class="text-xs font-bold tracking-[0.25em] text-cyan-400 uppercase mb-3 block" data-i18n="loc_tag">Mağaza İletişim</span>
+        <h2 class="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight mb-6" data-i18n="loc_title">
+          Bizimle İletişime Geçin
+        </h2>
+        <p class="text-gray-300 text-sm leading-relaxed mb-8" data-i18n="loc_desc">
+          Cihazları yakından görmek, takas teklifi almak veya doğrudan satın almak için Kadıköy mağazamıza bekliyoruz.
+        </p>
+
+        <!-- Information List -->
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start space-x-4 p-4 rounded-2xl glass-panel">
+            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center shrink-0">
+              <i data-lucide="map-pin" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Açık Adres</h4>
+              <p class="text-sm font-semibold text-white mt-0.5">Bağdat Caddesi No: 182/A, Kadıköy / İstanbul</p>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-4 p-4 rounded-2xl glass-panel">
+            <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center shrink-0">
+              <i data-lucide="clock" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Çalışma Saatleri</h4>
+              <p class="text-sm font-semibold text-white mt-0.5">Hergün Kesintisiz: 09:30 — 22:00</p>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-4 p-4 rounded-2xl glass-panel">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
+              <i data-lucide="phone" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Müşteri Destek Hattı</h4>
+              <a href="tel:+905551234567" class="text-sm font-semibold text-cyan-400 hover:underline mt-0.5 block">+90 (555) 123-4567</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Action Buttons -->
+        <div class="grid grid-cols-3 gap-3">
+          <a href="https://wa.me/905551234567" target="_blank" onclick="playSfx('success')" class="p-3 rounded-2xl bg-emerald-600/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center space-x-2 text-xs font-bold hover:bg-emerald-600 hover:text-white transition">
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+            <span>WhatsApp</span>
+          </a>
+          <a href="https://t.me/cybertech_istanbul" target="_blank" onclick="playSfx('click')" class="p-3 rounded-2xl bg-sky-600/20 border border-sky-500/40 text-sky-400 flex items-center justify-center space-x-2 text-xs font-bold hover:bg-sky-600 hover:text-white transition">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>Telegram</span>
+          </a>
+          <a href="https://instagram.com/cybertech_istanbul" target="_blank" onclick="playSfx('click')" class="p-3 rounded-2xl bg-pink-600/20 border border-pink-500/40 text-pink-400 flex items-center justify-center space-x-2 text-xs font-bold hover:bg-pink-600 hover:text-white transition">
+            <i data-lucide="instagram" class="w-4 h-4"></i>
+            <span>Instagram</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Google Maps Embed Representation -->
+      <div class="glass-panel p-3 rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative h-[380px] sm:h-[420px]">
+        <iframe 
+          title="Google Maps"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12046.220138964267!2d29.0553!3d40.9632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cac793f77dfcfb%3A0xbcf0ff6696b99ce4!2sBa%C4%9Fdat%20Cd.%2C%20Kad%C4%B1k%C3%B6y%2F%C4%B0stanbul!5e0!3m2!1str!2str!4v1700000000000!5m2!1str!2str" 
+          class="w-full h-full rounded-2xl border-0 filter grayscale invert contrast-125 opacity-80"
+          loading="lazy">
+        </iframe>
+        <div class="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-black/80 backdrop-blur-md border border-white/10 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold text-white">Kadıköy Mağazamız</p>
+            <p class="text-[10px] text-gray-400">Bağdat Cad. No: 182/A</p>
+          </div>
+          <a href="https://maps.google.com/?q=Bagdat+Caddesi+Kadikoy" target="_blank" onclick="playSfx('click')" class="px-3 py-1.5 rounded-xl btn-electric text-[10px] font-bold">Yol Tarifi</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= 9. FOOTER ================= -->
+  <footer class="relative z-20 border-t border-white/10 bg-black/90 py-12 px-4 text-center sm:text-left">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-400 to-purple-600 flex items-center justify-center font-bold text-black text-xs">C</div>
+        <span class="text-sm font-display font-bold text-white">CYBERTECH İSTANBUL</span>
+        <span class="text-xs text-gray-500">© 2026. Tüm hakları saklıdır.</span>
+      </div>
+      <p class="text-xs text-gray-500">Apple & Samsung Yetkili Satış Partneri • Kadıköy</p>
+    </div>
+  </footer>
+
+  <!-- ================= 10. FLOATING ELEMENTS ================= -->
+
+  <!-- Agency Client Grabber (Bottom Left) -->
+  <div class="fixed bottom-5 left-5 z-40 max-w-xs">
+    <a href="https://t.me/your_telegram_agent" target="_blank" onclick="playSfx('success')" class="group flex items-center space-x-3 px-4 py-3 rounded-2xl bg-[#0D0D11]/95 border border-cyan-400/40 hover:border-cyan-400 shadow-2xl shadow-cyan-500/20 backdrop-blur-md transition-all duration-300 transform hover:-translate-y-1">
+      <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping"></div>
+      <div class="text-left">
+        <span class="block text-[11px] font-semibold text-gray-200">
+          Bu dükkan için site ister misiniz?
+        </span>
+        <span class="text-[10px] font-bold text-cyan-400 group-hover:underline">
+          Ajans Sahibiyle Konuşun →
+        </span>
+      </div>
+    </a>
+  </div>
+
+  <!-- WhatsApp & Telegram Floating Action Buttons (Bottom Right) -->
+  <div class="fixed bottom-5 right-5 z-40 flex flex-col space-y-3">
+    <!-- Back to Top Button -->
+    <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); playSfx('click');" class="w-12 h-12 p-3 rounded-full glass-panel text-white hover:text-cyan-400 shadow-xl opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center">
+      <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+
+    <!-- Telegram Floating -->
+    <a href="https://t.me/cybertech_istanbul" target="_blank" onclick="playSfx('click')" class="w-13 h-13 p-3.5 rounded-full bg-sky-500 hover:bg-sky-400 text-white shadow-xl shadow-sky-500/30 flex items-center justify-center transition transform hover:scale-110" title="Telegram">
+      <i data-lucide="send" class="w-5 h-5"></i>
+    </a>
+    
+    <!-- WhatsApp Floating with Pulse -->
+    <a href="https://wa.me/905551234567?text=Merhaba!%20Cybertech%20İstanbul%20iletişim." target="_blank" onclick="playSfx('success')" class="w-13 h-13 p-3.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-xl shadow-emerald-500/30 flex items-center justify-center transition transform hover:scale-110 animate-bounce" title="WhatsApp">
+      <i data-lucide="message-circle" class="w-6 h-6"></i>
+    </a>
+  </div>
+
+  <!-- ================= 11. MOBILE BOTTOM BAR ================= -->
+  <div class="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-black/90 backdrop-blur-xl border-t border-white/10 px-4 py-3 flex items-center justify-around text-[10px] text-gray-400 font-semibold">
+    <a href="#" onclick="playSfx('click')" class="flex flex-col items-center hover:text-cyan-400">
+      <i data-lucide="home" class="w-4 h-4 mb-1"></i>
+      <span>Ana Sayfa</span>
+    </a>
+    <a href="#telefonlar" onclick="playSfx('click')" class="flex flex-col items-center hover:text-cyan-400">
+      <i data-lucide="smartphone" class="w-4 h-4 mb-1"></i>
+      <span>Ürünler</span>
+    </a>
+    <a href="#iletisim" onclick="playSfx('click')" class="flex flex-col items-center hover:text-cyan-400">
+      <i data-lucide="map-pin" class="w-4 h-4 mb-1"></i>
+      <span>İletişim</span>
+    </a>
+    <a href="https://wa.me/905551234567" target="_blank" onclick="playSfx('success')" class="flex flex-col items-center text-emerald-400">
+      <i data-lucide="message-circle" class="w-4 h-4 mb-1"></i>
+      <span>WhatsApp</span>
+    </a>
+  </div>
+
+  <!-- ================= JAVASCRIPT: THREE.JS 3D PHONE, PRODUCTS, AUDIO ================= -->
+  <script>
+    // 1. FLAGSHIP PRODUCTS DATA
+    const products = [
+      {
+        id: 1,
+        brand: "APPLE",
+        name: "iPhone 16 Pro Max",
+        tag: "YENİ NESİL AMİRAL",
+        price: "₺84,999",
+        storage: ["256GB", "512GB", "1TB"],
+        selectedStorage: "256GB",
+        image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=700&q=80",
+        specs: "Grade 5 Titanyum Kasa • A18 Pro Bionic Çip • 48MP Fusion Kamera • 120Hz ProMotion"
+      },
+      {
+        id: 2,
+        brand: "SAMSUNG",
+        name: "Galaxy S24 Ultra",
+        tag: "GALAXY AI GÜCÜ",
+        price: "₺71,499",
+        storage: ["256GB", "512GB", "1TB"],
+        selectedStorage: "256GB",
+        image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=700&q=80",
+        specs: "Titanyum Çerçeve • Snapdragon 8 Gen 3 • 200MP Yapay Zeka Kamera • S-Pen Dahil"
+      },
+      {
+        id: 3,
+        brand: "APPLE",
+        name: "iPhone 15 Pro",
+        tag: "KOMPAKT TİTANYUM",
+        price: "₺64,999",
+        storage: ["128GB", "256GB", "512GB"],
+        selectedStorage: "128GB",
+        image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=700&q=80",
+        specs: "Hafif Titanyum • Eylem Düğmesi • USB-C Hızlı Aktarım • Dinamik Ada"
+      },
+      {
+        id: 4,
+        brand: "XIAOMI",
+        name: "Xiaomi 14 Ultra",
+        tag: "LEICA PROFESYONEL LENS",
+        price: "₺56,999",
+        storage: ["512GB"],
+        selectedStorage: "512GB",
+        image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=700&q=80",
+        specs: "Leica Dörtlü Kamera • 1 inç Sensör • 90W Kablosuz Şarj • 3000 nit Ekran"
+      },
+      {
+        id: 5,
+        brand: "APPLE",
+        name: "iPad Pro M4 (13 inç)",
+        tag: "ULTRA RETINA XDR",
+        price: "₺52,499",
+        storage: ["256GB", "512GB", "1TB"],
+        selectedStorage: "256GB",
+        image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=700&q=80",
+        specs: "Apple M4 Çip • Tandem OLED Ekran • 5.1 mm Ultra İnce • Apple Pencil Pro Desteği"
+      },
+      {
+        id: 6,
+        brand: "APPLE",
+        name: "AirPods Max (Type-C)",
+        tag: "STÜDYO SES KALİTESİ",
+        price: "₺26,999",
+        storage: ["Uzay Grisi", "Gümüş", "Gece Yarısı"],
+        selectedStorage: "Uzay Grisi",
+        image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=700&q=80",
+        specs: "Aktif Gürültü Engelleme • Şeffaf Mod • Kişiselleştirilmiş Uzamsal Ses • USB-C"
+      }
+    ];
+
+    let currentLang = 'tr';
+    let isSoundMuted = false;
+
+    // 2. SYNTHETIC SOUND ENGINE (Web Audio API)
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+
+    function playSfx(type) {
+      if (isSoundMuted) return;
+      try {
+        const ctx = getAudioCtx();
+        const now = ctx.currentTime;
+        if (type === 'hover') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(380, now);
+          gain.gain.setValueAtTime(0.06, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.04);
+        } else if (type === 'click') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(180, now);
+          osc.frequency.exponentialRampToValueAtTime(40, now + 0.05);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.05);
+        } else if (type === 'success') {
+          const osc1 = ctx.createOscillator();
+          const osc2 = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc1.type = 'sine';
+          osc2.type = 'triangle';
+          osc1.frequency.setValueAtTime(660, now);
+          osc2.frequency.setValueAtTime(990, now + 0.07);
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+          osc1.connect(gain);
+          osc2.connect(gain);
+          gain.connect(ctx.destination);
+          osc1.start(now);
+          osc2.start(now + 0.07);
+          osc1.stop(now + 0.35);
+          osc2.stop(now + 0.35);
+        }
+      } catch(e){}
+    }
+
+    function toggleSound() {
+      isSoundMuted = !isSoundMuted;
+      const icon = document.getElementById('sound-icon');
+      const btn = document.getElementById('sound-btn');
+      if (isSoundMuted) {
+        icon.setAttribute('data-lucide', 'volume-x');
+        btn.classList.add('text-gray-500');
+        btn.classList.remove('text-cyan-400');
+      } else {
+        icon.setAttribute('data-lucide', 'volume-2');
+        btn.classList.add('text-cyan-400');
+        btn.classList.remove('text-gray-500');
+        playSfx('hover');
+      }
+      lucide.createIcons();
+    }
+
+    // 3. RENDER PRODUCTS WITH 3D TILT
+    function renderProducts() {
+      const container = document.getElementById('products-grid');
+      container.innerHTML = products.map((p, idx) => `
+        <div class="tilt-card-wrap">
+          <div class="tilt-card glass-panel rounded-3xl p-6 sm:p-7 flex flex-col justify-between h-full group relative overflow-hidden transition-all duration-300"
+               onmousemove="handleTilt(event, this)" 
+               onmouseleave="resetTilt(this)">
+            
+            <!-- Glow Accent Corner -->
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/25 transition-colors"></div>
+
+            <div>
+              <!-- Brand & Tag -->
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-[11px] font-mono font-bold tracking-widest text-cyan-400 uppercase">${p.brand}</span>
+                <span class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-semibold text-gray-300">${p.tag}</span>
+              </div>
+
+              <!-- Product Image with 3D Float -->
+              <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-black/40 p-4 mb-6 flex items-center justify-center">
+                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-contain filter drop-shadow-[0_20px_25px_rgba(0,212,255,0.2)] group-hover:scale-108 transition-transform duration-500">
+              </div>
+
+              <!-- Product Title & Specs -->
+              <h3 class="font-display font-extrabold text-xl text-white group-hover:text-cyan-400 transition-colors mb-2">${p.name}</h3>
+              <p class="text-xs text-gray-400 leading-relaxed mb-6">${p.specs}</p>
+
+              <!-- Storage Selector Chips -->
+              <div class="mb-6">
+                <span class="text-[10px] uppercase tracking-wider text-gray-400 block mb-2 font-semibold">Seçenek / Hafıza:</span>
+                <div class="flex flex-wrap gap-2">
+                  ${p.storage.map(s => `
+                    <button onclick="selectStorage(${p.id}, '${s}', this)" class="storage-btn-${p.id} px-3 py-1.5 rounded-xl border text-xs font-mono font-bold transition ${s === p.selectedStorage ? 'bg-cyan-500 text-black border-cyan-400 shadow-lg shadow-cyan-500/30' : 'bg-white/5 text-gray-300 border-white/10 hover:border-cyan-400/50'}">
+                      ${s}
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+
+            <!-- Price and WhatsApp Order Action -->
+            <div class="pt-5 border-t border-white/10 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-gray-400 uppercase tracking-widest block font-medium">Nakit / Havale</span>
+                <span class="font-display font-black text-cyan-400 text-xl tracking-tight">${p.price}</span>
+              </div>
+              <button onclick="orderPhoneWhatsApp(${p.id})" class="px-5 py-3 rounded-xl btn-electric text-xs font-bold tracking-wider uppercase flex items-center space-x-1.5 shadow-lg shadow-cyan-500/20">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                <span>Sipariş Ver</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    // 3D Tilt Physics
+    function handleTilt(e, card) {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -12;
+      const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 12;
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    }
+    function resetTilt(card) {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    }
+
+    function selectStorage(prodId, storageVal, btn) {
+      playSfx('hover');
+      const product = products.find(p => p.id === prodId);
+      if (product) product.selectedStorage = storageVal;
+      document.querySelectorAll(`.storage-btn-${prodId}`).forEach(b => {
+        b.className = `storage-btn-${prodId} px-3 py-1.5 rounded-xl border text-xs font-mono font-bold transition bg-white/5 text-gray-300 border-white/10 hover:border-cyan-400/50`;
+      });
+      btn.className = `storage-btn-${prodId} px-3 py-1.5 rounded-xl border text-xs font-mono font-bold transition bg-cyan-500 text-black border-cyan-400 shadow-lg shadow-cyan-500/30`;
+    }
+
+    // WhatsApp Direct Order Trigger
+    function orderPhoneWhatsApp(id) {
+      playSfx('success');
+      const p = products.find(item => item.id === id);
+      const storeNumber = "905551234567";
+      const message = `Merhaba! ${p.name} (${p.selectedStorage}) almak istiyorum. Stokta var mı?`;
+      window.open(`https://wa.me/${storeNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    // 4. THREE.JS 3D ROTATING PHONE MODEL (Interactive Hero Element)
+    function initThreeHeroPhone() {
+      const container = document.getElementById('three-phone-container');
+      if (!container) return;
+
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+      camera.position.z = 7;
+
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // Create 3D Phone Geometry
+      const phoneGroup = new THREE.Group();
+
+      // Main Titanium Body
+      const bodyGeo = new THREE.BoxGeometry(2.3, 4.8, 0.22);
+      const bodyMat = new THREE.MeshStandardMaterial({
+        color: 0x1A1A24,
+        metalness: 0.95,
+        roughness: 0.25,
+      });
+      const phoneBody = new THREE.Mesh(bodyGeo, bodyMat);
+      phoneGroup.add(phoneBody);
+
+      // Front Display Glass
+      const screenGeo = new THREE.PlaneGeometry(2.15, 4.6);
+      const screenMat = new THREE.MeshStandardMaterial({
+        color: 0x05050A,
+        emissive: 0x002244,
+        emissiveIntensity: 0.6,
+        metalness: 0.8,
+        roughness: 0.1
+      });
+      const screen = new THREE.Mesh(screenGeo, screenMat);
+      screen.position.z = 0.115;
+      phoneGroup.add(screen);
+
+      // Dynamic Island Pill
+      const pillGeo = new THREE.BoxGeometry(0.5, 0.12, 0.05);
+      const pillMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+      const pill = new THREE.Mesh(pillGeo, pillMat);
+      pill.position.set(0, 2.05, 0.12);
+      phoneGroup.add(pill);
+
+      // Rear Camera Bump
+      const bumpGeo = new THREE.BoxGeometry(1.0, 1.0, 0.12);
+      const bumpMat = new THREE.MeshStandardMaterial({
+        color: 0x12121A,
+        metalness: 0.9,
+        roughness: 0.3
+      });
+      const bump = new THREE.Mesh(bumpGeo, bumpMat);
+      bump.position.set(-0.55, 1.7, -0.12);
+      phoneGroup.add(bump);
+
+      // Camera Lenses with Blue Reflection
+      const lensGeo = new THREE.CylinderGeometry(0.2, 0.2, 0.15, 24);
+      const lensMat = new THREE.MeshStandardMaterial({
+        color: 0x001122,
+        metalness: 0.9,
+        roughness: 0.1,
+        emissive: 0x00D4FF,
+        emissiveIntensity: 0.3
+      });
+
+      const lens1 = new THREE.Mesh(lensGeo, lensMat);
+      lens1.rotation.x = Math.PI / 2;
+      lens1.position.set(-0.75, 1.9, -0.18);
+      phoneGroup.add(lens1);
+
+      const lens2 = new THREE.Mesh(lensGeo, lensMat);
+      lens2.rotation.x = Math.PI / 2;
+      lens2.position.set(-0.75, 1.45, -0.18);
+      phoneGroup.add(lens2);
+
+      const lens3 = new THREE.Mesh(lensGeo, lensMat);
+      lens3.rotation.x = Math.PI / 2;
+      lens3.position.set(-0.35, 1.68, -0.18);
+      phoneGroup.add(lens3);
+
+      scene.add(phoneGroup);
+
+      // Lights: Electric Blue & Purple Spotlights
+      const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.7);
+      scene.add(ambientLight);
+
+      const blueLight = new THREE.PointLight(0x00D4FF, 3, 20);
+      blueLight.position.set(4, 3, 4);
+      scene.add(blueLight);
+
+      const purpleLight = new THREE.PointLight(0x7B2FFF, 3, 20);
+      purpleLight.position.set(-4, -3, 3);
+      scene.add(purpleLight);
+
+      // Mouse Drag & Tilt Interaction
+      let isDragging = false;
+      let prevMousePos = { x: 0, y: 0 };
+
+      container.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        prevMousePos = { x: e.clientX, y: e.clientY };
+      });
+
+      window.addEventListener('mouseup', () => isDragging = false);
+
+      window.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+          const deltaX = e.clientX - prevMousePos.x;
+          const deltaY = e.clientY - prevMousePos.y;
+          phoneGroup.rotation.y += deltaX * 0.008;
+          phoneGroup.rotation.x += deltaY * 0.008;
+          prevMousePos = { x: e.clientX, y: e.clientY };
+        } else {
+          // Subtle mouse follow
+          const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+          const mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+          gsap.to(phoneGroup.rotation, {
+            y: mouseX * 0.4 + 0.2,
+            x: mouseY * -0.25 - 0.1,
+            duration: 1.5,
+            ease: "power2.out"
+          });
+        }
+      });
+
+      // Render Loop
+      function animate() {
+        requestAnimationFrame(animate);
+        if (!isDragging) {
+          phoneGroup.rotation.y += 0.003; // Smooth idle rotation
+        }
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Window Resize
+      window.addEventListener('resize', () => {
+        const newW = container.clientWidth;
+        const newH = container.clientHeight;
+        camera.aspect = newW / newH;
+        camera.updateProjectionMatrix();
+        renderer.setSize(newW, newH);
+      });
+    }
+
+    // 5. THREE.JS 3D BACKGROUND PARTICLE UNIVERSE
+    function initThreeParticles() {
+      const canvas = document.getElementById('bg-particles-canvas');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+      camera.position.z = 400;
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+      const particleCount = 180;
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(particleCount * 3);
+      const colors = new Float32Array(particleCount * 3);
+
+      const color1 = new THREE.Color(0x00D4FF);
+      const color2 = new THREE.Color(0x7B2FFF);
+
+      for (let i = 0; i < particleCount * 3; i += 3) {
+        positions[i] = (Math.random() - 0.5) * 800;
+        positions[i + 1] = (Math.random() - 0.5) * 800;
+        positions[i + 2] = (Math.random() - 0.5) * 800;
+
+        const mixedColor = color1.clone().lerp(color2, Math.random());
+        colors[i] = mixedColor.r;
+        colors[i + 1] = mixedColor.g;
+        colors[i + 2] = mixedColor.b;
+      }
+
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+      const material = new THREE.PointsMaterial({
+        size: 3,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.6,
+        blending: THREE.AdditiveBlending
+      });
+
+      const particleSystem = new THREE.Points(geometry, material);
+      scene.add(particleSystem);
+
+      function animateParticles() {
+        requestAnimationFrame(animateParticles);
+        particleSystem.rotation.y += 0.0005;
+        particleSystem.rotation.x += 0.0003;
+        renderer.render(scene, camera);
+      }
+      animateParticles();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    }
+
+    // 6. CUSTOM CURSOR FOLLOWER
+    function initCustomCursor() {
+      const dot = document.getElementById('custom-cursor');
+      const follower = document.getElementById('custom-cursor-follower');
+      if (!dot || !follower) return;
+
+      window.addEventListener('mousemove', (e) => {
+        dot.style.left = `${e.clientX}px`;
+        dot.style.top = `${e.clientY}px`;
+        follower.style.left = `${e.clientX}px`;
+        follower.style.top = `${e.clientY}px`;
+      });
+
+      document.querySelectorAll('a, button, .cursor-pointer').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          follower.style.transform = 'translate(-50%, -50%) scale(1.6)';
+          follower.style.borderColor = '#00D4FF';
+          dot.style.transform = 'translate(-50%, -50%) scale(1.8)';
+        });
+        el.addEventListener('mouseleave', () => {
+          follower.style.transform = 'translate(-50%, -50%) scale(1)';
+          follower.style.borderColor = 'rgba(0, 212, 255, 0.4)';
+          dot.style.transform = 'translate(-50%, -50%) scale(1)';
+        });
+      });
+    }
+
+    // 7. BACK TO TOP BUTTON LOGIC
+    window.addEventListener('scroll', () => {
+      const btt = document.getElementById('back-to-top');
+      if (window.scrollY > 450) {
+        btt.classList.remove('opacity-0', 'pointer-events-none');
+        btt.classList.add('opacity-100');
+      } else {
+        btt.classList.add('opacity-0', 'pointer-events-none');
+        btt.classList.remove('opacity-100');
+      }
+    });
+
+    // 8. PAGE LOAD AND INITIALIZATION
+    window.addEventListener('load', () => {
+      const loaderBar = document.getElementById('loader-bar');
+      const screen = document.getElementById('loading-screen');
+      loaderBar.style.width = '100%';
+      setTimeout(() => {
+        screen.classList.add('opacity-0', 'pointer-events-none');
+        playSfx('success');
+        setTimeout(() => screen.remove(), 700);
+      }, 500);
+
+      renderProducts();
+      initThreeHeroPhone();
+      initThreeParticles();
+      initCustomCursor();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
