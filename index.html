@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>aliWep™ — 3D & Motion Master Showroom (20 Ultra-Lüks Tasarım)</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Three.js for 3D Background Atmosphere -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            royal: ['"Cinzel"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"Space Grotesk"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              gold: '#D4AF37',
+              goldLight: '#F5E6CA',
+              goldDark: '#997E25',
+              cyan: '#00F5FF',
+              purple: '#A855F7',
+              coffee: '#D4A373',
+            },
+            noir: {
+              void: '#050508',
+              card: '#0D0D14',
+              surface: '#13131F',
+              border: 'rgba(255, 255, 255, 0.08)',
+              borderGold: 'rgba(212, 175, 55, 0.3)',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #050508;
+      color: #F3F4F6;
+      overflow-x: hidden;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Custom Glassmorphism */
+    .glass-nav {
+      background: rgba(8, 8, 14, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-card {
+      background: linear-gradient(135deg, rgba(18, 18, 28, 0.75) 0%, rgba(10, 10, 16, 0.85) 100%);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(212, 175, 55, 0.4);
+      box-shadow: 0 20px 40px -15px rgba(212, 175, 55, 0.15), 0 0 30px -10px rgba(0, 245, 255, 0.1);
+    }
+
+    /* Animated Gradient Text */
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #FFF6D6 0%, #D4AF37 50%, #AA820A 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .neon-gradient-text {
+      background: linear-gradient(135deg, #E0FFFF 0%, #00F5FF 50%, #0077B6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #050508;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1F1F2E;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #D4AF37;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen selection:bg-brand-gold selection:text-black">
+
+  <!-- 3D Background Canvas -->
+  <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+
+  <!-- Sticky Luxury Header -->
+  <header class="glass-nav sticky top-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-gold via-amber-600 to-amber-900 p-[1px] shadow-lg shadow-brand-gold/20 group-hover:scale-105 transition-transform">
+          <div class="w-full h-full bg-noir-void rounded-[11px] flex items-center justify-center">
+            <span class="font-royal text-xl font-black text-brand-gold tracking-wider">A</span>
+          </div>
+        </div>
+        <div>
+          <span class="font-royal text-2xl font-bold tracking-tight text-white flex items-center gap-1.5">
+            aliWep<span class="text-brand-gold text-sm tracking-widest font-mono">STUDIO</span>
+          </span>
+          <p class="text-[10px] text-gray-400 font-mono tracking-widest uppercase" id="sub-tagline">3D & Motion Showroom</p>
+        </div>
+      </a>
+
+      <!-- Center Status Badge -->
+      <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-gray-300">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="badge-live">20 Canlı Master Tasarım Yayında</span>
+      </div>
+
+      <!-- Right Controls: Language & Contact -->
+      <div class="flex items-center gap-3">
+        <!-- Language Switcher -->
+        <div class="flex items-center bg-noir-card border border-white/10 rounded-lg p-1 text-xs font-mono">
+          <button onclick="setLanguage('tr')" id="btn-lang-tr" class="px-2.5 py-1 rounded font-bold transition-colors bg-brand-gold text-black">TR</button>
+          <button onclick="setLanguage('en')" id="btn-lang-en" class="px-2.5 py-1 rounded text-gray-400 hover:text-white transition-colors">EN</button>
+          <button onclick="setLanguage('uz')" id="btn-lang-uz" class="px-2.5 py-1 rounded text-gray-400 hover:text-white transition-colors">UZ</button>
+        </div>
+
+        <!-- Audio Toggle Button -->
+        <button onclick="toggleAudio()" id="btn-audio" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-brand-gold hover:border-brand-gold/40 transition-colors" title="Ses Efektleri">
+          <i data-lucide="volume-2" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Direct Telegram Bot Button -->
+        <a href="https://t.me/aliWep_code_Bot" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium text-xs hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 transition-all">
+          <i data-lucide="bot" class="w-4 h-4"></i>
+          <span id="btn-nav-bot">Telegram Asistan</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative z-10 pt-16 pb-12 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-mono tracking-wider uppercase mb-6 animate-pulse">
+      <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+      <span id="hero-badge">3D & MOTION ARCHITECTURE 2026</span>
+    </div>
+
+    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-royal font-black tracking-tight text-white mb-6 leading-tight">
+      <span class="gold-gradient-text" id="hero-title-1">İstanbul İşletmeleri İçin</span><br>
+      <span class="text-white" id="hero-title-2">Geleceğin 3D Web Siteleri</span>
+    </h1>
+
+    <p class="text-base sm:text-xl text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed font-light" id="hero-desc">
+      Google Maps'te kaybolmayın. Müşterilerinizi ilk saniyede büyüleyen 3D sanal mağazalar, gerçek buhar simülasyonlu dijital menüler ve interaktif sipariş sistemleri.
+    </p>
+
+    <!-- Key Guarantees Pills -->
+    <div class="flex flex-wrap items-center justify-center gap-4 text-xs font-mono text-gray-400 mb-12">
+      <span class="flex items-center gap-1.5 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
+        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+        <span id="pill-1">Ön Ödeme Yok — Beğenirseniz Alırsınız</span>
+      </span>
+      <span class="flex items-center gap-1.5 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
+        <i data-lucide="zap" class="w-4 h-4 text-amber-400"></i>
+        <span id="pill-2">5-10 Günde Canlı Teslimat</span>
+      </span>
+      <span class="flex items-center gap-1.5 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
+        <i data-lucide="wrench" class="w-4 h-4 text-blue-400"></i>
+        <span id="pill-3">30 Gün Ücretsiz Teknik Garanti</span>
+      </span>
+    </div>
+
+    <!-- Interactive Category Filter Tabs -->
+    <div class="inline-flex flex-wrap items-center justify-center gap-2 p-1.5 rounded-2xl bg-noir-card border border-white/10 max-w-4xl mx-auto shadow-2xl">
+      <button onclick="filterCategory('all')" id="tab-all" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all bg-brand-gold text-black font-semibold shadow-md">
+        ✨ <span id="tab-text-all">Tümü (20)</span>
+      </button>
+      <button onclick="filterCategory('cafe')" id="tab-cafe" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all">
+        ☕️ <span id="tab-text-cafe">Kafe & Roastery (5)</span>
+      </button>
+      <button onclick="filterCategory('clothing')" id="tab-clothing" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all">
+        👗 <span id="tab-text-clothing">Lüks Giyim & Butik (5)</span>
+      </button>
+      <button onclick="filterCategory('tech')" id="tab-tech" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all">
+        📱 <span id="tab-text-tech">Telefon & Teknoloji (5)</span>
+      </button>
+      <button onclick="filterCategory('restaurant')" id="tab-restaurant" class="cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all">
+        🍽 <span id="tab-text-restaurant">Restoran & Lounge (5)</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Templates Grid Section -->
+  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+    <div id="templates-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- 20 Interactive Cards Rendered Dynamically via JS -->
+    </div>
+  </main>
+
+  <!-- Live Demo Preview Modal (Device Viewport Simulator) -->
+  <div id="demo-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+    <div class="relative w-full max-w-6xl h-[90vh] bg-noir-card border border-white/20 rounded-2xl flex flex-col shadow-2xl overflow-hidden">
+      <!-- Modal Top Toolbar -->
+      <div class="px-5 py-3.5 bg-noir-surface border-b border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="flex gap-1.5">
+            <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+            <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+            <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+          </div>
+          <span id="modal-title" class="font-royal text-sm font-bold text-white tracking-wide">Demo Önizleme</span>
+        </div>
+
+        <!-- Viewport Switcher -->
+        <div class="hidden sm:flex items-center gap-1 bg-noir-void border border-white/10 rounded-lg p-1 text-xs">
+          <button onclick="setModalViewport('mobile')" class="px-3 py-1 rounded text-gray-400 hover:text-white flex items-center gap-1.5" title="Mobil Ekran">
+            <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> Mobil
+          </button>
+          <button onclick="setModalViewport('desktop')" class="px-3 py-1 rounded bg-white/10 text-white font-medium flex items-center gap-1.5" title="Masaüstü">
+            <i data-lucide="monitor" class="w-3.5 h-3.5"></i> Masaüstü
+          </button>
+        </div>
+
+        <!-- Close & Direct Open Buttons -->
+        <div class="flex items-center gap-2">
+          <a id="modal-direct-link" href="#" target="_blank" class="px-3 py-1.5 rounded-lg bg-brand-gold text-black font-semibold text-xs flex items-center gap-1.5 hover:bg-brand-goldLight transition-colors">
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Tam Ekran Aç
+          </a>
+          <button onclick="closeDemoModal()" class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Iframe Container -->
+      <div class="flex-1 bg-noir-void flex items-center justify-center p-2 overflow-hidden relative">
+        <iframe id="modal-iframe" src="" class="w-full h-full rounded-lg border border-white/5 transition-all duration-300" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Fast Order Pill -->
+  <div class="fixed bottom-6 right-6 z-40 flex items-center gap-2">
+    <a href="https://t.me/aliWep_code_Bot" target="_blank" class="flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-brand-gold via-amber-500 to-amber-600 text-black font-bold text-sm shadow-xl shadow-brand-gold/30 hover:scale-105 active:scale-95 transition-all">
+      <i data-lucide="message-square-plus" class="w-4 h-4"></i>
+      <span id="floating-btn-text">Ali ile Başla</span>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="relative z-10 border-t border-white/10 bg-noir-void py-12 px-4 sm:px-6 lg:px-8 text-center text-xs font-mono text-gray-400">
+    <div class="max-w-5xl mx-auto flex flex-col items-center gap-4">
+      <span class="font-royal text-lg text-white font-bold tracking-wider">aliWep™ Digital Studio</span>
+      <p class="max-w-md text-gray-400">
+        İstanbul ve küresel markalar için 3D web mimarisi, Three.js görsel efektleri ve Telegram AI satış botları.
+      </p>
+      <div class="flex items-center gap-6 text-gray-400">
+        <a href="https://t.me/aliWep_code_Bot" class="hover:text-brand-gold transition-colors">Telegram Bot (@aliWep_code_Bot)</a>
+        <span>•</span>
+        <a href="https://t.me/englishnextlevil" class="hover:text-brand-gold transition-colors">Doğrudan İletişim (@englishnextlevil)</a>
+      </div>
+      <p class="text-gray-500 text-[11px] mt-4">
+        © 2026 aliWep. Tüm hakları saklıdır.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Web Audio Synthesizer & Application Logic -->
+  <script>
+    // Audio FX Engine
+    let audioCtx = null;
+    let audioEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playSound(type) {
+      if (!audioEnabled) return;
+      try {
+        initAudio();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        const now = audioCtx.currentTime;
+
+        if (type === 'hover') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.exponentialRampToValueAtTime(880, now + 0.05);
+          gain.gain.setValueAtTime(0.02, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+          osc.start(now);
+          osc.stop(now + 0.05);
+        } else if (type === 'click') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(587.33, now); // D5
+          osc.frequency.exponentialRampToValueAtTime(880, now + 0.1);
+          gain.gain.setValueAtTime(0.06, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+          osc.start(now);
+          osc.stop(now + 0.1);
+        }
+      } catch (e) {
+        // audio fail silent
+      }
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      const btn = document.getElementById('btn-audio');
+      btn.innerHTML = audioEnabled 
+        ? '<i data-lucide="volume-2" class="w-4 h-4 text-brand-gold"></i>' 
+        : '<i data-lucide="volume-x" class="w-4 h-4 text-gray-500"></i>';
+      lucide.createIcons();
+    }
+
+    // --- 20 MASTER TEMPLATES DATASET ---
+    const TEMPLATES = [
+      // 1-5: KAFE & ROASTERY
+      {
+        id: "kofe_galata",
+        category: "cafe",
+        priceTL: "20.000 ₺",
+        tier: "VIP Masterpiece",
+        badge: "☕️ Gerçek Buhar Simülatörü",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/galata-coffee-roastery/",
+        imageBg: "from-amber-950/80 via-stone-900 to-black",
+        accent: "#D4A373",
+        tech: ["Three.js / Canvas", "Akustik Sesler", "10 Orijin Menü", "Parallax Su Damgası"],
+        titles: {
+          tr: "Galata Luxury Roastery",
+          en: "Galata Luxury Roastery",
+          uz: "Galata Luxury Roastery (20k VIP)"
+        },
+        desc: {
+          tr: "Fincandan yükselen gerçek fiziksel buhar, tarihi Galata atmosferi, özel kahve sesleri ve 10 çeşit artisan menü.",
+          en: "Real physics steam rising from cup, historic Galata acoustic sounds, and 10 exclusive artisan origins.",
+          uz: "Finjondan ko'tariluvchi real fizik bug' simulyatori, Galata akustik tovushlari va 10 xil eksklyuziv artisan menyu."
+        }
+      },
+      {
+        id: "kofe_nordic",
+        category: "cafe",
+        priceTL: "8.000 ₺",
+        tier: "Başlangıç Plus",
+        badge: "✨ Minimalist İskandinav",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/galata-coffee-roastery/",
+        imageBg: "from-stone-900 via-neutral-900 to-black",
+        accent: "#E5E5E5",
+        tech: ["İsviçre Tipografisi", "QR Hızlı Menü", "Lezzet Çarkı", "WhatsApp Sipariş"],
+        titles: {
+          tr: "Nordic Minimal Specialty Coffee",
+          en: "Nordic Minimal Specialty Coffee",
+          uz: "Nordic Minimalist Qahva Bar"
+        },
+        desc: {
+          tr: "Sade, temiz İskandinav çizgileri, çekirdek profilleri ve tek dokunuşla masadan QR sipariş sistemi.",
+          en: "Ultra-clean Scandinavian layout, coffee bean flavor profiles and instant contactless QR ordering.",
+          uz: "Oddiy va toza shvedcha dizayn, kofe profillari va bitta bosishda stol ustidan kontaktsiz QR menyu."
+        }
+      },
+      {
+        id: "kofe_darkgold",
+        category: "cafe",
+        priceTL: "14.000 ₺",
+        tier: "Standart Pro",
+        badge: "🌙 Koyu Altın Lounge",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/galata-coffee-roastery/",
+        imageBg: "from-amber-900/60 via-zinc-950 to-black",
+        accent: "#D4AF37",
+        tech: ["Altın Parçacıklar", "Gece Modu Atmosfer", "VIP Masa Rezervasyonu", "Canlı Dj Çalma Listesi"],
+        titles: {
+          tr: "Dark Gold Espresso & Lounge",
+          en: "Dark Gold Espresso & Lounge",
+          uz: "Dark Gold Espresso & Night Lounge"
+        },
+        desc: {
+          tr: "Karanlık lüks tasarım, parıldayan altın parçacıklar, nargile/lounge menüsü ve online VIP rezervasyon.",
+          en: "Dark luxury gold atmosphere, glowing embers, shisha/lounge menu and VIP table reservation.",
+          uz: "To'q qora va tillarang hashamatli dizayn, nargila/lounge menyusi va VIP stollarni bron qilish."
+        }
+      },
+      {
+        id: "kofe_bakery",
+        category: "cafe",
+        priceTL: "18.000 ₺",
+        tier: "Standart Pro",
+        badge: "🥐 Artisan Fırın & Kahve",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/galata-coffee-roastery/",
+        imageBg: "from-yellow-950/70 via-stone-900 to-black",
+        accent: "#F59E0B",
+        tech: ["Fırın Sayacı", "Kruvasan Vitrini", "Sabah Gel-Al Siparişi", "Google Maps"],
+        titles: {
+          tr: "Artisan Bakery & Pour-Over Lab",
+          en: "Artisan Bakery & Pour-Over Lab",
+          uz: "Artisan Novvoyxona & Pour-Over Lab"
+        },
+        desc: {
+          tr: "Taze çıkan sıcak kruvasan sayacı, sabah kahvesini önceden sipariş etme ve fırın menü vitrini.",
+          en: "Fresh baked pastries countdown, morning coffee pre-orders and live bakery menu.",
+          uz: "Yangi pishgan issiq kruvasanlar taymerli ko'rgazmasi, ertalabki qahvani oldindan buyurtma qilish."
+        }
+      },
+      {
+        id: "kofe_club",
+        category: "cafe",
+        priceTL: "25.000 ₺",
+        tier: "VIP Masterpiece",
+        badge: "☕️ Çekirdek Aboneliği & Kulüp",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/galata-coffee-roastery/",
+        imageBg: "from-orange-950/80 via-neutral-950 to-black",
+        accent: "#FB923C",
+        tech: ["3D Kahve Kavurma", "Aylık Çekirdek Aboneliği", "Sadakat Damgası", "Online Ödeme"],
+        titles: {
+          tr: "İstanbul Coffee Roasters Club",
+          en: "Istanbul Coffee Roasters Club",
+          uz: "Istanbul Coffee Club & Abonelik"
+        },
+        desc: {
+          tr: "3D dönen kahve kavurma tamburu simülasyonu, düzenli çekirdek aboneliği ve dijital kahve damgası.",
+          en: "3D roasting drum simulation, monthly recurring bean subscriptions and digital rewards card.",
+          uz: "3D aylanuvchi qahva qovurish simulyatori, oylik qahva donalari yetkazib berish obunasi va bonuslar."
+        }
+      },
+
+      // 6-10: LÜKS GİYİM & BUTİK
+      {
+        id: "butik_maison",
+        category: "clothing",
+        priceTL: "30.000 ₺+",
+        tier: "VIP Masterpiece",
+        badge: "👑 3D Walk-In Sanal Stilist",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/maison-istanbul-30k/",
+        imageBg: "from-yellow-950/90 via-zinc-950 to-black",
+        accent: "#D4AF37",
+        tech: ["3D Walk-In Mağaza", "Sanal Manken / Stilist", "50 Ürünlü Slide Drawer", "360° Flip Kart"],
+        titles: {
+          tr: "Maison İstanbul 3D Walk-In",
+          en: "Maison Istanbul 3D Walk-In",
+          uz: "Maison Istanbul 3D Walk-In Butik (30k VIP)"
+        },
+        desc: {
+          tr: "Mağazanın içine 3D adım atma, mankene canlı kıyafet giydirip kombin yapma ve tek tıkla sipariş.",
+          en: "Step inside a 3D store, style living virtual mannequin with combin generator and instant checkout.",
+          uz: "3D do'kon ichiga kirib yurish, sanal mankenga kiyim kiydirib kombinatsiya qilish va savat."
+        }
+      },
+      {
+        id: "butik_atelier",
+        category: "clothing",
+        priceTL: "6.000 ₺",
+        tier: "Başlangıç (2D Motion)",
+        badge: "⚡️ Akıcı 2D Lookbook",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/atelier-istanbul/",
+        imageBg: "from-stone-900 via-neutral-950 to-black",
+        accent: "#FAEDCD",
+        tech: ["GSAP Fluid Scroll", "Mobil Uyumlu", "WhatsApp Doğrudan Sipariş", "Hızlı Yüklenme"],
+        titles: {
+          tr: "Atelier İstanbul 2D Motion",
+          en: "Atelier Istanbul 2D Motion",
+          uz: "Atelier Istanbul 2D Motion Butik"
+        },
+        desc: {
+          tr: "Dergi tarzı akıcı kaydırma animasyonları, net ürün fotoğrafları ve yüksek dönüşümlü WhatsApp sipariş.",
+          en: "Editorial fluid magazine layout, high conversion direct WhatsApp shopping and fast loading.",
+          uz: "Jurnal uslubidagi animatsion qulay ko'rish, mahsulotlar katalogi va tezkor WhatsApp buyurtma."
+        }
+      },
+      {
+        id: "butik_runway",
+        category: "clothing",
+        priceTL: "16.000 ₺",
+        tier: "Standart Pro",
+        badge: "✨ 3D Podyum & Defile",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/maison-istanbul-30k/",
+        imageBg: "from-purple-950/70 via-black to-black",
+        accent: "#C084FC",
+        tech: ["Podyum Video Hero", "Kumaş Doku Önizleme", "Beden Rehberi", "Instagram Entegrasyonu"],
+        titles: {
+          tr: "Haute Couture 3D Runway",
+          en: "Haute Couture 3D Runway",
+          uz: "Haute Couture 3D Runway Defile"
+        },
+        desc: {
+          tr: "Podyum videosu arkaplanı, kumaşların yakından doku kalitesi ve Instagram koleksiyonu ile doğrudan bağlantı.",
+          en: "Runway catwalk video hero, microscopic fabric texture preview and synchronized Instagram shopping.",
+          uz: "Podyum video foni, gazlama matolarining yaqindan teksturasi va Instagram bilan sinxronizatsiya."
+        }
+      },
+      {
+        id: "butik_linen",
+        category: "clothing",
+        priceTL: "10.000 ₺",
+        tier: "Standart",
+        badge: "🌿 Organik Keten & İpek",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/atelier-istanbul/",
+        imageBg: "from-emerald-950/60 via-zinc-950 to-black",
+        accent: "#34D399",
+        tech: ["Toprak Tonları", "Sürdürülebilirlik Sayfası", "Katalog Filtreleme", "Boyut Seçici"],
+        titles: {
+          tr: "Minimalist Linen & Natural Silk",
+          en: "Minimalist Linen & Natural Silk",
+          uz: "Minimalist Zig'ir & Tabiiy Ipak Butik"
+        },
+        desc: {
+          tr: "Doğal toprak tonları, nefes alan keten elbiseler için sade estetik ve hızlı beden filtreleme.",
+          en: "Earthy organic aesthetic, breathable linen dresses catalog and instant sizing filter.",
+          uz: "Tabiiy ranglar, toza zig'ir va ipak liboslar uchun xotirjam dizayn va o'lchamlar filtri."
+        }
+      },
+      {
+        id: "butik_velvet",
+        category: "clothing",
+        priceTL: "24.000 ₺",
+        tier: "VIP Masterpiece",
+        badge: "💎 Gece Kıyafeti & Abiye VIP",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/maison-istanbul-30k/",
+        imageBg: "from-rose-950/70 via-neutral-950 to-black",
+        accent: "#FB7185",
+        tech: ["Işıltılı Parıltı Simülatörü", "Özel Prova Randevusu", "VIP Stilist Danışmanı", "Ses Efektleri"],
+        titles: {
+          tr: "Velvet & Diamond Eveningwear",
+          en: "Velvet & Diamond Eveningwear",
+          uz: "Velvet & Brilliant Oqshom Liboslari"
+        },
+        desc: {
+          tr: "Özel tasarım abiye ve gece kıyafetleri, ışıl ışıl simülasyon ve butikte özel prova randevu sistemi.",
+          en: "Exclusive gala eveningwear, shimmering particle reflections and private fitting room booking.",
+          uz: "Eksklyuziv kechki liboslar, yaltiraydigan partikllar va shaxsiy kiyib ko'rish bron tizimi."
+        }
+      },
+
+      // 11-15: TELEFON & TEKNOLOJİ
+      {
+        id: "tech_cyber",
+        category: "tech",
+        priceTL: "12.000 ₺",
+        tier: "Standart Pro",
+        badge: "🪐 3D Dönen Telefon & Parçacıklar",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/cybertech-istanbul/",
+        imageBg: "from-cyan-950/80 via-blue-950 to-black",
+        accent: "#00F5FF",
+        tech: ["Three.js 3D Model", "Etkileşimli Zarrachalar", "Apple / Samsung Karşılaştırma", "Web Audio API"],
+        titles: {
+          tr: "CyberTech 3D Particle Flagship",
+          en: "CyberTech 3D Particle Flagship",
+          uz: "CyberTech 3D Flagship Telefon Store"
+        },
+        desc: {
+          tr: "Three.js ile fareyi takip eden 3D telefon modeli, interaktif parçacık evreni ve Apple/Samsung seviyesinde görsel güç.",
+          en: "Interactive Three.js 3D phone model following cursor, particle universe and Apple-tier specs comparison.",
+          uz: "Three.js 3D aylanuvchi telefon modeli, sichqonchaga ergashuvchi zarrachalar koinoti va audio tovushlar."
+        }
+      },
+      {
+        id: "tech_gaming",
+        category: "tech",
+        priceTL: "18.000 ₺",
+        tier: "Standart Pro",
+        badge: "🎮 RGB Neon Oyuncu Üssü",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/cybertech-istanbul/",
+        imageBg: "from-purple-950/80 via-slate-950 to-black",
+        accent: "#A855F7",
+        tech: ["RGB Renk Değiştirici", "3D Kulaklık Görseli", "Mekanik Tuş Ses Testi", "Oyun Performans Testi"],
+        titles: {
+          tr: "Neon Cyber Gaming & Gear Hub",
+          en: "Neon Cyber Gaming & Gear Hub",
+          uz: "Neon Cyber Gaming & Aksessuarlar Hub"
+        },
+        desc: {
+          tr: "Oyuncular için RGB neon aydınlatmalar, mekanik klavye sesini canlı dinleme ve 3D ekipman vitrini.",
+          en: "Cyberpunk RGB lighting, interactive mechanical keyboard click sound tester and 3D gaming gear.",
+          uz: "Kiberpank RGB neon nurlari, klaviatura mexanik tovushini saytda eshitib ko'rish va 3D gadjetlar."
+        }
+      },
+      {
+        id: "tech_apple",
+        category: "tech",
+        priceTL: "10.000 ₺",
+        tier: "Standart",
+        badge: "🍏 Apple Tarzı Ultra Temiz",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/cybertech-istanbul/",
+        imageBg: "from-slate-900 via-neutral-950 to-black",
+        accent: "#38BDF8",
+        tech: ["Kusursuz Kaydırma", "Renk Seçici", "Eski Cihaz Takas Hesaplayıcı", "WhatsApp Taksit"],
+        titles: {
+          tr: "Cupertino Clean Apple Reseller",
+          en: "Cupertino Clean Apple Reseller",
+          uz: "Cupertino Minimal Apple Reseller"
+        },
+        desc: {
+          tr: "Apple resmi sitesi kadar pürüzsüz kaydırma, telefon renklerini canlı değiştirme ve takas fiyatı hesaplama.",
+          en: "Official Apple store silky smoothness, live device color changer and instant trade-in calculator.",
+          uz: "Apple rasmiy saytidek silliq animatsiyalar, ranglarni jonli o'zgartirish va eski telefonni almashtirish kalkulyatori."
+        }
+      },
+      {
+        id: "tech_smarthome",
+        category: "tech",
+        priceTL: "22.000 ₺",
+        tier: "VIP Masterpiece",
+        badge: "🏠 Akıllı Ev & IoT 3D Simülatör",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/cybertech-istanbul/",
+        imageBg: "from-blue-950/80 via-zinc-950 to-black",
+        accent: "#60A5FA",
+        tech: ["3D Ev Planı", "Işık & Sıcaklık Simülatörü", "Kamera Güvenlik Önizleme", "Tek Tıkla Teklif"],
+        titles: {
+          tr: "Smart Home & IoT Interactive Dome",
+          en: "Smart Home & IoT Interactive Dome",
+          uz: "Aqlli Uy & IoT 3D Interaktiv Markaz"
+        },
+        desc: {
+          tr: "3D daire planı üzerinde akıllı ışıkları açıp kapatma simülasyonu ve kurumsal otomasyon teklif modülü.",
+          en: "Interactive 3D apartment floorplan with lighting and temperature toggles and instant smart home quotes.",
+          uz: "3D xonadon chizmasi ustida aqlli chiroqlarni yoqib-o'chirish simulyatori va avtomatizatsiya taklifi."
+        }
+      },
+      {
+        id: "tech_repair",
+        category: "tech",
+        priceTL: "8.500 ₺",
+        tier: "Başlangıç Plus",
+        badge: "🔧 Telefon Tamir & Garanti Takip",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/cybertech-istanbul/",
+        imageBg: "from-indigo-950/70 via-stone-950 to-black",
+        accent: "#818CF8",
+        tech: ["Anında Ekran Fiyatı", "Arıza Tespit Formu", "Kurye ile Alım Talebi", "WhatsApp Canlı Destek"],
+        titles: {
+          tr: "Pro Phone Repair & Service Lab",
+          en: "Pro Phone Repair & Service Lab",
+          uz: "Professional Telefon Tamirlash & Servis"
+        },
+        desc: {
+          tr: "Müşterinin telefon modelini seçip ekran/batarya tamir ücretini hemen hesapladığı ve kurye çağırdığı sistem.",
+          en: "Instant screen/battery repair cost calculator by phone model and courier pickup booking.",
+          uz: "Telefon modelini tanlab ekran/akkumulyator narxini darhol hisoblovchi va kuryer chaqiruvchi tizim."
+        }
+      },
+
+      // 16-20: RESTORAN, STEAKHOUSE & LOUNGE
+      {
+        id: "resto_bosphorus",
+        category: "restaurant",
+        priceTL: "26.000 ₺",
+        tier: "VIP Masterpiece",
+        badge: "🌊 Boğaz Manzaralı 3D Masa",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/galata-coffee-roastery/",
+        imageBg: "from-sky-950/80 via-blue-950 to-black",
+        accent: "#38BDF8",
+        tech: ["Boğaz Günbatımı Geçişi", "3D Masa Seçimi", "Şarap & Menü Eşleşmesi", "VIP Rezervasyon"],
+        titles: {
+          tr: "Bosphorus Rooftop Dining & Sunset",
+          en: "Bosphorus Rooftop Dining & Sunset",
+          uz: "Bosphorus Rooftop & Dengiz Manzarali Restoran"
+        },
+        desc: {
+          tr: "Gündüzden geceye dönen Boğaz panoraması, deniz kenarındaki masayı seçme ve çok dilli dijital gurme menü.",
+          en: "Day-to-night Bosphorus panoramic sunset transitions, visual table selector and multilingual gourmet menu.",
+          uz: "Kunduzdan tunga o'tuvchi Bosfor panoramasi, stol tanlash va ko'p tilli restoran menyusi."
+        }
+      },
+      {
+        id: "resto_steak",
+        category: "restaurant",
+        priceTL: "18.000 ₺",
+        tier: "Standart Pro",
+        badge: "🔥 Dry-Aged Ateş & Izgara",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/galata-coffee-roastery/",
+        imageBg: "from-red-950/80 via-stone-950 to-black",
+        accent: "#EF4444",
+        tech: ["Cızırdayan Ateş Videosu", "Gramaj Seçici", "Şefin Masası Rezervasyonu", "Alerjen Filtresi"],
+        titles: {
+          tr: "Fire & Wood Ottoman Steakhouse",
+          en: "Fire & Wood Ottoman Steakhouse",
+          uz: "Fire & Wood Olovli Steakhouse"
+        },
+        desc: {
+          tr: "Kömür ateşinde pişen et videoları, dry-aged dinlendirilmiş et gramaj hesaplayıcı ve şef masası randevusu.",
+          en: "Charcoal grill sizzling video hero, dry-aged meat cut weight selector and chef's table reservation.",
+          uz: "Qaynoq olovda pishuvchi steyklar videolari, go'sht grammini tanlash va oshpaz stoli bron."
+        }
+      },
+      {
+        id: "resto_tokyo",
+        category: "restaurant",
+        priceTL: "15.000 ₺",
+        tier: "Standart Pro",
+        badge: "🍣 Tokyo 3D Sushi & Ramen Bar",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/galata-coffee-roastery/",
+        imageBg: "from-rose-950/70 via-zinc-950 to-black",
+        accent: "#F43F5E",
+        tech: ["3D Dönen Sushi", "Kendi Ramenini Oluştur", "Canlı Mutfak Kamerası", "QR Paket Servis"],
+        titles: {
+          tr: "Tokyo Street 3D Sushi & Ramen Bar",
+          en: "Tokyo Street 3D Sushi & Ramen Bar",
+          uz: "Tokyo Street 3D Sushi & Ramen Bar"
+        },
+        desc: {
+          tr: "3D dönen sushi ruloları, kendi ramen kasesini interaktif hazırlama ve saniyeler içinde teslimat siparişi.",
+          en: "3D floating sushi rolls, build-your-own ramen bowl builder and rapid WhatsApp delivery.",
+          uz: "3D aylanuvchi sushi rollari, o'z ramen kosasini yig'ish konstruktori va tezkor yetkazish."
+        }
+      },
+      {
+        id: "resto_pasta",
+        category: "restaurant",
+        priceTL: "12.000 ₺",
+        tier: "Standart",
+        badge: "🍝 El Yapımı Trüflü Makarna",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/galata-coffee-roastery/",
+        imageBg: "from-amber-950/70 via-stone-950 to-black",
+        accent: "#FBBF24",
+        tech: ["Mevsimlik Tadım Menüsü", "Günün Şef Özel Panosu", "Temassız QR Menü", "Google Harita Yol"],
+        titles: {
+          tr: "Artisan Truffle & Handmade Pasta Atelier",
+          en: "Artisan Truffle & Handmade Pasta Atelier",
+          uz: "Artisan Qo'lda Tayyorlangan Pasta & Trüfel"
+        },
+        desc: {
+          tr: "Her sabah taze açılan İtalyan makarnaları, günün şef spesiyalleri panosu ve QR kodlu dokunmatik menü.",
+          en: "Handcrafted fresh pasta of the morning, chef's daily specials board and touch-friendly digital menu.",
+          uz: "Har kuni yangi tayyorlanadigan pasta turlari, bosh oshpaz maxsus taomlari va kontaktsiz QR menyu."
+        }
+      },
+      {
+        id: "resto_seafood",
+        category: "restaurant",
+        priceTL: "22.000 ₺",
+        tier: "VIP Masterpiece",
+        badge: "🐟 Günlük Taze Ege Balıkçısı",
+        liveUrl: "https://azamatishmurodov8-hub.github.io/galata-coffee-roastery/",
+        imageBg: "from-teal-950/80 via-slate-950 to-black",
+        accent: "#2DD4BF",
+        tech: ["Dalga Animasyonları", "Günün Balık Tezgahı", "Meze Tepsisi Seçici", "Masa Rezervasyonu"],
+        titles: {
+          tr: "Aegean Waterfront Seafood & Meze",
+          en: "Aegean Waterfront Seafood & Meze",
+          uz: "Egey Dengiz Mahsulotlari & Meze Restoran"
+        },
+        desc: {
+          tr: "Deniz dalgaları arka planı, günün taze balık vitrini, interaktif meze tepsisi ve günbatımı masası rezervasyonu.",
+          en: "Mediterranean gentle sea waves, daily fresh catch visual showcase and sunset dinner reservation.",
+          uz: "Dengiz to'lqinlari foni, kunlik yangi baliqlar ko'rgazmasi va quyosh botishini tomosha qilish stollari."
+        }
+      }
+    ];
+
+    // Current State
+    let currentLang = 'tr';
+    let currentFilter = 'all';
+
+    // Translations for UI Chrome
+    const UI_TEXTS = {
+      tr: {
+        badgeLive: "20 Canlı Master Tasarım Yayında",
+        navBot: "Telegram Asistan",
+        heroBadge: "3D & MOTION ARCHITECTURE 2026",
+        heroTitle1: "İstanbul İşletmeleri İçin",
+        heroTitle2: "Geleceğin 3D Web Siteleri",
+        heroDesc: "Google Maps'te kaybolmayın. Müşterilerinizi ilk saniyede büyüleyen 3D sanal mağazalar, gerçek buhar simülasyonlu dijital menüler ve interaktif sipariş sistemleri.",
+        pill1: "Ön Ödeme Yok — Beğenirseniz Alırsınız",
+        pill2: "5-10 Günde Canlı Teslimat",
+        pill3: "30 Gün Ücretsiz Teknik Garanti",
+        tabAll: "Tümü (20)",
+        tabCafe: "Kafe & Roastery (5)",
+        tabClothing: "Lüks Giyim & Butik (5)",
+        tabTech: "Telefon & Teknoloji (5)",
+        tabResto: "Restoran & Lounge (5)",
+        btnLive: "Canlı İncele",
+        btnSelect: "Bu Tasarımı İstiyorum",
+        floatingBtn: "Ali ile Başla"
+      },
+      en: {
+        badgeLive: "20 Live Master Designs Active",
+        navBot: "Telegram Assistant",
+        heroBadge: "3D & MOTION ARCHITECTURE 2026",
+        heroTitle1: "For Luxury Istanbul Venues",
+        heroTitle2: "Next-Gen 3D Websites",
+        heroDesc: "Don't get lost on Google Maps. Captivate clients within the first second with 3D walk-in boutiques, physics steam menus, and interactive ordering.",
+        pill1: "Zero Upfront Risk — Pay After You Like It",
+        pill2: "5-10 Days Fast Delivery",
+        pill3: "30 Days Free Technical Guarantee",
+        tabAll: "All (20)",
+        tabCafe: "Cafe & Roastery (5)",
+        tabClothing: "Luxury Boutique (5)",
+        tabTech: "Phones & Tech (5)",
+        tabResto: "Dining & Lounge (5)",
+        btnLive: "Live Demo",
+        btnSelect: "I Want This Design",
+        floatingBtn: "Start With Ali"
+      },
+      uz: {
+        badgeLive: "20 Ta Jonli Master Namuna Yayinda",
+        navBot: "Telegram Yordamchi",
+        heroBadge: "3D & MOTION ARCHITECTURE 2026",
+        heroTitle1: "Bizneslar Uchun",
+        heroTitle2: "Kelajakning 3D Veb-Saytlari",
+        heroDesc: "Google Maps'da yo'qolib ketmang. Mijozlarni birinchi soniyadayoq lol qoldiruvchi 3D virtual do'konlar, real bug'li menyular va interaktiv buyurtma tizimlari.",
+        pill1: "Oldindan To'lov Yo'q — Yoqqanidan Keyin To'laysiz",
+        pill2: "5-10 Kunda To'liq Topshirish",
+        pill3: "30 Kun Bepul Texnik Kafolat",
+        tabAll: "Barchasi (20)",
+        tabCafe: "Kofe & Roastery (5)",
+        tabClothing: "Lüks Kiyim & Butik (5)",
+        tabTech: "Telefon & Gadjet (5)",
+        tabResto: "Restoran & Lounge (5)",
+        btnLive: "Jonli Ko'rish",
+        btnSelect: "Menga Shu Sayt Yoqdi",
+        floatingBtn: "Ali bilan Bog'lanish"
+      }
+    };
+
+    function setLanguage(lang) {
+      playSound('click');
+      currentLang = lang;
+
+      // Update button styles
+      ['tr', 'en', 'uz'].forEach(l => {
+        const btn = document.getElementById(`btn-lang-${l}`);
+        if (l === lang) {
+          btn.className = "px-2.5 py-1 rounded font-bold transition-colors bg-brand-gold text-black";
+        } else {
+          btn.className = "px-2.5 py-1 rounded text-gray-400 hover:text-white transition-colors";
+        }
+      });
+
+      // Update UI elements
+      const t = UI_TEXTS[lang];
+      document.getElementById('badge-live').innerText = t.badgeLive;
+      document.getElementById('btn-nav-bot').innerText = t.navBot;
+      document.getElementById('hero-badge').innerText = t.heroBadge;
+      document.getElementById('hero-title-1').innerText = t.heroTitle1;
+      document.getElementById('hero-title-2').innerText = t.heroTitle2;
+      document.getElementById('hero-desc').innerText = t.heroDesc;
+      document.getElementById('pill-1').innerText = t.pill1;
+      document.getElementById('pill-2').innerText = t.pill2;
+      document.getElementById('pill-3').innerText = t.pill3;
+      document.getElementById('tab-text-all').innerText = t.tabAll;
+      document.getElementById('tab-text-cafe').innerText = t.tabCafe;
+      document.getElementById('tab-text-clothing').innerText = t.tabClothing;
+      document.getElementById('tab-text-tech').innerText = t.tabTech;
+      document.getElementById('tab-text-restaurant').innerText = t.tabResto;
+      document.getElementById('floating-btn-text').innerText = t.floatingBtn;
+
+      renderCards();
+    }
+
+    function filterCategory(cat) {
+      playSound('click');
+      currentFilter = cat;
+
+      // Update Tab Styles
+      ['all', 'cafe', 'clothing', 'tech', 'restaurant'].forEach(c => {
+        const btn = document.getElementById(`tab-${c}`);
+        if (c === cat) {
+          btn.className = "cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-brand-gold text-black shadow-md";
+        } else {
+          btn.className = "cat-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all";
+        }
+      });
+
+      renderCards();
+    }
+
+    function renderCards() {
+      const grid = document.getElementById('templates-grid');
+      grid.innerHTML = '';
+
+      const filtered = currentFilter === 'all' 
+        ? TEMPLATES 
+        : TEMPLATES.filter(t => t.category === currentFilter);
+
+      const ui = UI_TEXTS[currentLang];
+
+      filtered.forEach((item, index) => {
+        const title = item.titles[currentLang] || item.titles.tr;
+        const description = item.desc[currentLang] || item.desc.tr;
+        const tgDeepLink = `https://t.me/aliWep_code_Bot?start=secim_${item.id}`;
+
+        const card = document.createElement('div');
+        card.className = "glass-card rounded-2xl overflow-hidden flex flex-col group relative";
+        card.onmouseenter = () => playSound('hover');
+
+        card.innerHTML = `
+          <!-- Card Visual Header -->
+          <div class="h-52 w-full bg-gradient-to-br ${item.imageBg} relative p-5 flex flex-col justify-between overflow-hidden border-b border-white/5">
+            <!-- Glow Sphere -->
+            <div class="absolute -top-12 -right-12 w-36 h-36 rounded-full blur-3xl opacity-30 pointer-events-none" style="background-color: ${item.accent}"></div>
+            
+            <!-- Top Badges -->
+            <div class="flex items-center justify-between z-10">
+              <span class="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[11px] font-mono text-gray-200">
+                ${item.badge}
+              </span>
+              <span class="px-2.5 py-1 rounded-lg bg-brand-gold/15 border border-brand-gold/30 text-brand-gold text-xs font-mono font-bold">
+                ${item.priceTL}
+              </span>
+            </div>
+
+            <!-- Center Visual Motif -->
+            <div class="z-10 flex flex-col items-start">
+              <span class="text-[10px] font-mono uppercase tracking-widest text-gray-400">#${index + 1} • ${item.tier}</span>
+              <h3 class="font-royal text-xl sm:text-2xl font-bold text-white group-hover:text-brand-gold transition-colors line-clamp-1 mt-0.5">
+                ${title}
+              </h3>
+            </div>
+          </div>
+
+          <!-- Card Body -->
+          <div class="p-6 flex-1 flex flex-col justify-between gap-5">
+            <div>
+              <p class="text-xs sm:text-sm text-gray-400 line-clamp-2 leading-relaxed mb-4">
+                ${description}
+              </p>
+
+              <!-- Tech Badges -->
+              <div class="flex flex-wrap gap-1.5">
+                ${item.tech.map(t => `
+                  <span class="px-2 py-0.5 rounded bg-white/5 border border-white/5 text-[10px] font-mono text-gray-300">
+                    ${t}
+                  </span>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Dual Action Buttons -->
+            <div class="pt-4 border-t border-white/5 flex flex-col sm:flex-row items-center gap-2.5">
+              <!-- Live Demo Viewer Button -->
+              <button onclick="openDemoModal('${item.liveUrl}', '${title.replace(/'/g, "\\'")}')" class="w-full sm:w-1/2 py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-medium flex items-center justify-center gap-1.5 transition-all">
+                <i data-lucide="eye" class="w-3.5 h-3.5 text-brand-gold"></i>
+                <span>${ui.btnLive}</span>
+              </button>
+
+              <!-- Deep Link Order Button -->
+              <a href="${tgDeepLink}" target="_blank" onclick="playSound('click')" class="w-full sm:w-1/2 py-2.5 px-3 rounded-xl bg-gradient-to-r from-brand-gold to-amber-500 hover:brightness-110 text-black font-semibold text-xs flex items-center justify-center gap-1.5 shadow-md shadow-brand-gold/20 transition-all">
+                <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                <span>${ui.btnSelect}</span>
+              </a>
+            </div>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    // Modal Live Preview Logic
+    function openDemoModal(url, title) {
+      playSound('click');
+      const modal = document.getElementById('demo-modal');
+      const iframe = document.getElementById('modal-iframe');
+      const modalTitle = document.getElementById('modal-title');
+      const directLink = document.getElementById('modal-direct-link');
+
+      modalTitle.innerText = title;
+      iframe.src = url;
+      directLink.href = url;
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeDemoModal() {
+      playSound('click');
+      const modal = document.getElementById('demo-modal');
+      const iframe = document.getElementById('modal-iframe');
+      iframe.src = '';
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function setModalViewport(mode) {
+      playSound('click');
+      const iframe = document.getElementById('modal-iframe');
+      if (mode === 'mobile') {
+        iframe.style.maxWidth = '390px';
+        iframe.style.height = '844px';
+      } else {
+        iframe.style.maxWidth = '100%';
+        iframe.style.height = '100%';
+      }
+    }
+
+    // Simple 3D Starfield / Particle Background (Three.js)
+    function initThreeBackground() {
+      const canvas = document.getElementById('bg-canvas');
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+      camera.position.z = 400;
+
+      const geometry = new THREE.BufferGeometry();
+      const count = 700;
+      const positions = new Float32Array(count * 3);
+      const colors = new Float32Array(count * 3);
+
+      const goldColor = new THREE.Color('#D4AF37');
+      const cyanColor = new THREE.Color('#00F5FF');
+
+      for (let i = 0; i < count; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 1200;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 1200;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 1000;
+
+        const mixed = Math.random() > 0.5 ? goldColor : cyanColor;
+        colors[i * 3] = mixed.r;
+        colors[i * 3 + 1] = mixed.g;
+        colors[i * 3 + 2] = mixed.b;
+      }
+
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+      const material = new THREE.PointsMaterial({
+        size: 2.2,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.75,
+      });
+
+      const particles = new THREE.Points(geometry, material);
+      scene.add(particles);
+
+      let mouseX = 0, mouseY = 0;
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX - window.innerWidth / 2) * 0.05;
+        mouseY = (e.clientY - window.innerHeight / 2) * 0.05;
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        particles.rotation.y += 0.0006;
+        particles.rotation.x += 0.0003;
+        camera.position.x += (mouseX - camera.position.x) * 0.02;
+        camera.position.y += (-mouseY - camera.position.y) * 0.02;
+        renderer.render(scene, camera);
+      }
+
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      initThreeBackground();
+      renderCards();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
