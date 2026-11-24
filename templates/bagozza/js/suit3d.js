@@ -1,8 +1,9 @@
 /**
- * BAGOZZA 3D Atelier — Museum-Grade Real-Time Three.js WebGL Bespoke Suit
- * Continuous sculptural curved sleeves, Savile Row torso silhouette, satin/velvet lapels,
- * seamless trouser drape, polished Italian Oxfords on a tiered Carrara marble pedestal
- * inside a sunlit Milanese Galleria archway.
+ * BAGOZZA 3D Hero Centerpiece — Monumental Real-Time Three.js WebGL Bespoke Suit
+ * Seamlessly rendered directly onto the pure-white architectural hero canvas (alpha: true),
+ * with procedural Studio Softbox Environment reflections (PMREM), satin lapels, curved
+ * seamless tailored sleeves, golden lapel pin, sculpted Italian Oxfords, and a luminous
+ * gold-trimmed Carrara marble turntable pedestal.
  */
 window.BagozzaSuit3D = (function () {
   const PRESETS = {
@@ -11,18 +12,18 @@ window.BagozzaSuit3D = (function () {
       name_tr: 'Milano Black-Tie Smokin',
       name_en: 'Milano Black-Tie Tuxedo',
       price: 42000,
-      jacket: 0x0d0e12,
-      trouser: 0x0b0c10,
-      lapel: 0x060709,
-      sheen: 0x1c1e26,
+      jacket: 0x0b0c10,
+      trouser: 0x090a0d,
+      lapel: 0x050608,
+      sheen: 0x252834,
       lapelGloss: true,
       stripe: false,
       doubleBreasted: false,
       bowTie: true,
-      tieColor: 0x09090c,
+      tieColor: 0x070709,
       pocketSquare: 0xffffff,
-      shoeColor: 0x070709,
-      shoeGloss: 0.95,
+      shoeColor: 0x060608,
+      shoeGloss: 0.98,
       fabric_tr: '%100 Super 160s Barathea Yünü & İpek Saten Klapa',
       fabric_en: '100% Super 160s Barathea Wool & Silk Satin Lapel'
     },
@@ -31,18 +32,18 @@ window.BagozzaSuit3D = (function () {
       name_tr: 'Napoli Royal Navy Takım',
       name_en: 'Napoli Royal Navy Suit',
       price: 37800,
-      jacket: 0x142038,
-      trouser: 0x121d33,
-      lapel: 0x142038,
-      sheen: 0x263b63,
+      jacket: 0x13203b,
+      trouser: 0x111c34,
+      lapel: 0x13203b,
+      sheen: 0x2b4474,
       lapelGloss: false,
       stripe: false,
       doubleBreasted: false,
       bowTie: false,
-      tieColor: 0x6b1826,
-      pocketSquare: 0xf7f5f0,
-      shoeColor: 0x3b2013,
-      shoeGloss: 0.72,
+      tieColor: 0x721928,
+      pocketSquare: 0xf8f6f1,
+      shoeColor: 0x3e2113,
+      shoeGloss: 0.78,
       fabric_tr: '%100 Super 150s Loro Piana Lacivert Saf Yün',
       fabric_en: '100% Super 150s Loro Piana Royal Navy Wool'
     },
@@ -51,18 +52,18 @@ window.BagozzaSuit3D = (function () {
       name_tr: 'Ivory Gala Kruvaze Smokin',
       name_en: 'Ivory Gala Double-Breasted Tuxedo',
       price: 41500,
-      jacket: 0xf0ebe0,
-      trouser: 0x0d0e12,
-      lapel: 0xf7f3ea,
+      jacket: 0xf2ede3,
+      trouser: 0x0b0c10,
+      lapel: 0xf9f6ef,
       sheen: 0xffffff,
       lapelGloss: true,
       stripe: false,
       doubleBreasted: true,
       bowTie: true,
-      tieColor: 0x0a0a0d,
-      pocketSquare: 0x0a0a0d,
-      shoeColor: 0x08080a,
-      shoeGloss: 0.95,
+      tieColor: 0x08080b,
+      pocketSquare: 0x08080b,
+      shoeColor: 0x070709,
+      shoeGloss: 0.98,
       fabric_tr: '%100 Fildişi İnce İtalyan Yünü & Siyah Smokin Pantolonu',
       fabric_en: '100% Ivory Fine Italian Wool & Jet Black Tuxedo Trousers'
     },
@@ -71,18 +72,18 @@ window.BagozzaSuit3D = (function () {
       name_tr: 'Roma Çizgili Kruvaze Takım',
       name_en: 'Roma Chalk-Stripe Double-Breasted',
       price: 34900,
-      jacket: 0x152238,
-      trouser: 0x142034,
-      lapel: 0x152238,
-      sheen: 0x283e63,
+      jacket: 0x142138,
+      trouser: 0x121d32,
+      lapel: 0x142138,
+      sheen: 0x2a416b,
       lapelGloss: false,
       stripe: true,
       doubleBreasted: true,
       bowTie: false,
-      tieColor: 0x5c1a24,
+      tieColor: 0x631926,
       pocketSquare: 0xffffff,
       shoeColor: 0x181311,
-      shoeGloss: 0.78,
+      shoeGloss: 0.82,
       fabric_tr: '%100 Cerruti 1881 İnce Çizgili Saf İtalyan Yünü',
       fabric_en: '100% Cerruti 1881 Chalk-Stripe Pure Wool'
     },
@@ -91,18 +92,18 @@ window.BagozzaSuit3D = (function () {
       name_tr: 'Torino Antrasit Flanel Takım',
       name_en: 'Torino Anthracite Flannel Suit',
       price: 35400,
-      jacket: 0x2c2f34,
-      trouser: 0x272a2f,
-      lapel: 0x2c2f34,
-      sheen: 0x454952,
+      jacket: 0x282b30,
+      trouser: 0x23262b,
+      lapel: 0x282b30,
+      sheen: 0x454a54,
       lapelGloss: false,
       stripe: false,
       doubleBreasted: false,
       bowTie: false,
-      tieColor: 0x162238,
+      tieColor: 0x15233c,
       pocketSquare: 0xf2f0eb,
-      shoeColor: 0x261710,
-      shoeGloss: 0.7,
+      shoeColor: 0x28170f,
+      shoeGloss: 0.74,
       fabric_tr: '%100 İtalyan Antrasit Flanel Yünü, El Dikimi',
       fabric_en: '100% Italian Anthracite Flannel Wool, Hand-Finished'
     },
@@ -111,32 +112,32 @@ window.BagozzaSuit3D = (function () {
       name_tr: 'Bologna Bordo Kadife Smokin',
       name_en: 'Bologna Velvet Gala Tuxedo',
       price: 44500,
-      jacket: 0x451122,
-      trouser: 0x0c0d11,
-      lapel: 0x07080a,
-      sheen: 0x7c2540,
+      jacket: 0x4a1124,
+      trouser: 0x0b0c10,
+      lapel: 0x060709,
+      sheen: 0x8f294a,
       lapelGloss: true,
       stripe: false,
       doubleBreasted: false,
       bowTie: true,
-      tieColor: 0x08080b,
-      pocketSquare: 0xf5efe6,
-      shoeColor: 0x08080a,
-      shoeGloss: 0.95,
+      tieColor: 0x070709,
+      pocketSquare: 0xf7f2ea,
+      shoeColor: 0x070709,
+      shoeGloss: 0.98,
       fabric_tr: '%100 İtalyan İpek Kadife & Kontrast Siyah Saten Klapa',
       fabric_en: '100% Italian Silk Velvet & Contrast Black Satin Lapel'
     }
   };
 
   const BODY_SCALES = {
-    athletic: { torsoX: 1.075, torsoZ: 1.04, legX: 1.03 },
-    classic:  { torsoX: 1.00,  torsoZ: 1.00, legX: 1.00 },
-    comfort:  { torsoX: 1.135, torsoZ: 1.16, legX: 1.09 }
+    athletic: { torsoX: 1.08, torsoZ: 1.045, legX: 1.03 },
+    classic:  { torsoX: 1.00, torsoZ: 1.00,  legX: 1.00 },
+    comfort:  { torsoX: 1.14, torsoZ: 1.16,  legX: 1.09 }
   };
 
   let container = null;
   let renderer, scene, camera;
-  let suitPivot, upperBodyGroup, lowerBodyGroup;
+  let suitPivot, plinthGroup, upperBodyGroup, lowerBodyGroup;
   let jacketMat, trouserMat, lapelMat, tieMat, pocketMat, shoeMat;
   let necktieGroup, bowtieGroup, singleBtnsGroup, doubleBtnsGroup, frontSeamMesh;
   let dustParticles;
@@ -145,29 +146,59 @@ window.BagozzaSuit3D = (function () {
   let currentPreset = 'tuxedo';
   let currentBody = 'classic';
   let autoRotate = true;
-  let targetRotY = 0.28;
-  let currentRotY = 0.28;
-  let targetRotX = 0.04;
-  let currentRotX = 0.04;
-  let targetCamZ = 5.55;
-  let currentCamZ = 5.55;
+  let targetRotY = 0.24;
+  let currentRotY = 0.24;
+  let targetRotX = 0.03;
+  let currentRotX = 0.03;
+  let targetCamZ = 5.48;
+  let currentCamZ = 5.48;
   let targetBodyScale = { ...BODY_SCALES.classic };
   let currentBodyScale = { ...BODY_SCALES.classic };
 
   let isDragging = false;
   let prevX = 0, prevY = 0;
   let isVisible = true;
+  let clockT = 0;
+
+  function makeStudioEnvMap(ren) {
+    try {
+      const pmrem = new THREE.PMREMGenerator(ren);
+      const envScene = new THREE.Scene();
+      envScene.background = new THREE.Color(0xffffff);
+
+      // Soft studio softbox light panels for glossy satin, gold & patent leather reflections
+      const panels = [
+        { pos: [4, 4, 4], scale: [6, 4, 0.2], color: 0xfffcf5 },
+        { pos: [-5, 3, 2], scale: [5, 4, 0.2], color: 0xeef4ff },
+        { pos: [0, 6, -3], scale: [7, 2, 0.2], color: 0xffeacc },
+        { pos: [0, -3, 0], scale: [8, 0.2, 8], color: 0xd8d5ce }
+      ];
+      panels.forEach((p) => {
+        const m = new THREE.Mesh(
+          new THREE.BoxGeometry(p.scale[0], p.scale[1], p.scale[2]),
+          new THREE.MeshBasicMaterial({ color: p.color })
+        );
+        m.position.set(p.pos[0], p.pos[1], p.pos[2]);
+        envScene.add(m);
+      });
+
+      const rt = pmrem.fromScene(envScene, 0.04);
+      pmrem.dispose();
+      return rt.texture;
+    } catch (_) {
+      return null;
+    }
+  }
 
   function makeWoolTexture(pinstripe = false) {
     const c = document.createElement('canvas');
     c.width = 256;
     c.height = 256;
     const g = c.getContext('2d');
-    g.fillStyle = '#e8e8e8';
+    g.fillStyle = '#e5e5e5';
     g.fillRect(0, 0, 256, 256);
 
-    // Fine Italian diagonal Super 150s twill weave
-    g.strokeStyle = 'rgba(0,0,0,0.08)';
+    g.strokeStyle = 'rgba(0,0,0,0.09)';
     g.lineWidth = 1;
     for (let i = -256; i < 512; i += 4) {
       g.beginPath();
@@ -176,13 +207,13 @@ window.BagozzaSuit3D = (function () {
       g.stroke();
     }
     for (let y = 0; y < 256; y += 3) {
-      g.fillStyle = y % 6 === 0 ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)';
+      g.fillStyle = y % 6 === 0 ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.045)';
       g.fillRect(0, y, 256, 1);
     }
 
     if (pinstripe) {
       for (let x = 8; x < 256; x += 22) {
-        g.fillStyle = 'rgba(255,255,255,0.58)';
+        g.fillStyle = 'rgba(255,255,255,0.62)';
         g.fillRect(x, 0, 1.8, 256);
       }
     }
@@ -198,11 +229,10 @@ window.BagozzaSuit3D = (function () {
     c.width = 512;
     c.height = 512;
     const g = c.getContext('2d');
-    g.fillStyle = '#f8f7f3';
+    g.fillStyle = '#fbfaf7';
     g.fillRect(0, 0, 512, 512);
 
-    // Subtle Carrara marble veining
-    for (let i = 0; i < 22; i++) {
+    for (let i = 0; i < 24; i++) {
       g.beginPath();
       let x = Math.random() * 512;
       let y = Math.random() * 512;
@@ -212,7 +242,7 @@ window.BagozzaSuit3D = (function () {
         y += (Math.random() - 0.35) * 85;
         g.lineTo(x, y);
       }
-      g.strokeStyle = i % 4 === 0 ? 'rgba(181, 148, 91, 0.22)' : 'rgba(110, 112, 118, 0.13)';
+      g.strokeStyle = i % 4 === 0 ? 'rgba(181, 148, 91, 0.25)' : 'rgba(110, 112, 118, 0.14)';
       g.lineWidth = Math.random() * 2.4 + 0.6;
       g.stroke();
     }
@@ -222,104 +252,76 @@ window.BagozzaSuit3D = (function () {
     return tex;
   }
 
-  function buildGalleryStage() {
-    const stageGroup = new THREE.Group();
+  function buildMarbleTurntable() {
+    plinthGroup = new THREE.Group();
     const marbleTex = makeMarbleTexture();
 
     const marbleMat = new THREE.MeshStandardMaterial({
       map: marbleTex,
-      roughness: 0.24,
-      metalness: 0.04
+      roughness: 0.18,
+      metalness: 0.05
     });
 
     const goldMat = new THREE.MeshStandardMaterial({
-      color: 0xc9a86a,
-      roughness: 0.20,
-      metalness: 0.90
+      color: 0xd0ae6e,
+      roughness: 0.18,
+      metalness: 0.94
     });
 
-    const plasterMat = new THREE.MeshStandardMaterial({
-      color: 0xf4f2ec,
-      roughness: 0.90,
-      metalness: 0.0
-    });
-
-    // Multi-tiered Carrara Marble Pedestal
-    const topPlinth = new THREE.Mesh(new THREE.CylinderGeometry(1.12, 1.18, 0.18, 64), marbleMat);
-    topPlinth.position.y = -1.68;
+    // Sleek Architectural Carrara Marble Turntable Plinth
+    const topPlinth = new THREE.Mesh(new THREE.CylinderGeometry(0.98, 1.04, 0.14, 64), marbleMat);
+    topPlinth.position.y = -1.66;
     topPlinth.receiveShadow = true;
     topPlinth.castShadow = true;
-    stageGroup.add(topPlinth);
+    plinthGroup.add(topPlinth);
 
-    const basePlinth = new THREE.Mesh(new THREE.CylinderGeometry(1.38, 1.46, 0.20, 64), marbleMat);
-    basePlinth.position.y = -1.87;
+    const basePlinth = new THREE.Mesh(new THREE.CylinderGeometry(1.22, 1.30, 0.15, 64), marbleMat);
+    basePlinth.position.y = -1.81;
     basePlinth.receiveShadow = true;
-    stageGroup.add(basePlinth);
+    plinthGroup.add(basePlinth);
 
-    // Brushed Champagne Gold Trim Rings
-    const ringTop = new THREE.Mesh(new THREE.TorusGeometry(1.13, 0.016, 16, 80), goldMat);
+    // Gleaming Brushed Champagne Gold Trim Rings
+    const ringTop = new THREE.Mesh(new THREE.TorusGeometry(0.99, 0.015, 16, 96), goldMat);
     ringTop.rotation.x = Math.PI / 2;
-    ringTop.position.y = -1.595;
-    stageGroup.add(ringTop);
+    ringTop.position.y = -1.59;
+    plinthGroup.add(ringTop);
 
-    const ringBot = new THREE.Mesh(new THREE.TorusGeometry(1.39, 0.014, 16, 80), goldMat);
+    const ringBot = new THREE.Mesh(new THREE.TorusGeometry(1.23, 0.013, 16, 96), goldMat);
     ringBot.rotation.x = Math.PI / 2;
-    ringBot.position.y = -1.775;
-    stageGroup.add(ringBot);
+    ringBot.position.y = -1.735;
+    plinthGroup.add(ringBot);
 
-    // Bright Gallery Floor receiving studio shadows
-    const floor = new THREE.Mesh(
-      new THREE.CircleGeometry(15, 64),
-      new THREE.MeshStandardMaterial({ color: 0xf3f2ee, roughness: 0.78, metalness: 0.02 })
+    // Transparent Shadow-Only Ground Receiver Plane (so white Hero background blends 100% seamlessly!)
+    const shadowFloor = new THREE.Mesh(
+      new THREE.CircleGeometry(4.5, 64),
+      new THREE.ShadowMaterial({ opacity: 0.13 })
     );
-    floor.rotation.x = -Math.PI / 2;
-    floor.position.y = -1.97;
-    floor.receiveShadow = true;
-    stageGroup.add(floor);
+    shadowFloor.rotation.x = -Math.PI / 2;
+    shadowFloor.position.y = -1.89;
+    shadowFloor.receiveShadow = true;
+    plinthGroup.add(shadowFloor);
 
-    // Minimalist Milanese Galleria Arch Alcove & Fluted Columns
-    const archWall = new THREE.Mesh(
-      new THREE.CylinderGeometry(4.6, 4.6, 6.8, 48, 1, true, Math.PI * 0.72, Math.PI * 0.56),
-      new THREE.MeshStandardMaterial({ color: 0xf7f6f1, roughness: 0.92, side: THREE.BackSide })
-    );
-    archWall.position.set(0, 0.9, 0.5);
-    stageGroup.add(archWall);
-
-    [-2.15, 2.15].forEach((xPos) => {
-      const col = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.16, 5.4, 24), plasterMat);
-      col.position.set(xPos, 0.5, -2.35);
-      col.receiveShadow = true;
-      stageGroup.add(col);
-
-      const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.21, 0.15, 0.12, 24), goldMat);
-      cap.position.set(xPos, 3.15, -2.35);
-      stageGroup.add(cap);
-    });
-
-    // Architectural Brass Arch Halo behind mannequin
-    const halo = new THREE.Mesh(new THREE.TorusGeometry(1.75, 0.014, 16, 96, Math.PI), goldMat);
-    halo.position.set(0, 0.85, -2.28);
-    stageGroup.add(halo);
-
-    // Floating delicate golden studio motes
-    const moteCount = 46;
+    // Delicate floating golden studio particles orbiting softly around the bespoke suit
+    const moteCount = 38;
     const positions = new Float32Array(moteCount * 3);
     for (let i = 0; i < moteCount; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 4.8;
-      positions[i * 3 + 1] = Math.random() * 3.8 - 1.5;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 3.2;
+      const ang = Math.random() * Math.PI * 2;
+      const rad = 1.05 + Math.random() * 1.15;
+      positions[i * 3] = Math.cos(ang) * rad;
+      positions[i * 3 + 1] = Math.random() * 3.4 - 1.5;
+      positions[i * 3 + 2] = Math.sin(ang) * rad;
     }
     const moteGeo = new THREE.BufferGeometry();
     moteGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     dustParticles = new THREE.Points(moteGeo, new THREE.PointsMaterial({
       color: 0xc9a86a,
-      size: 0.03,
+      size: 0.032,
       transparent: true,
-      opacity: 0.45
+      opacity: 0.5
     }));
-    stageGroup.add(dustParticles);
+    plinthGroup.add(dustParticles);
 
-    scene.add(stageGroup);
+    scene.add(plinthGroup);
   }
 
   function buildSculptedSuit() {
@@ -333,48 +335,51 @@ window.BagozzaSuit3D = (function () {
     stripeTex = makeWoolTexture(true);
 
     jacketMat = new THREE.MeshPhysicalMaterial({
-      color: 0x0d0e12,
-      map: woolTex,
-      bumpMap: woolTex,
-      bumpScale: 0.008,
-      roughness: 0.74,
-      metalness: 0.03,
-      sheen: 0.55,
-      sheenRoughness: 0.5,
-      sheenColor: new THREE.Color(0x1c1e26)
-    });
-
-    trouserMat = new THREE.MeshPhysicalMaterial({
       color: 0x0b0c10,
       map: woolTex,
       bumpMap: woolTex,
-      bumpScale: 0.007,
+      bumpScale: 0.009,
       roughness: 0.78,
+      metalness: 0.03,
+      envMapIntensity: 0.22,
+      sheen: 0.55,
+      sheenRoughness: 0.52,
+      sheenColor: new THREE.Color(0x252834)
+    });
+
+    trouserMat = new THREE.MeshPhysicalMaterial({
+      color: 0x090a0d,
+      map: woolTex,
+      bumpMap: woolTex,
+      bumpScale: 0.008,
+      roughness: 0.80,
       metalness: 0.02,
+      envMapIntensity: 0.20,
       sheen: 0.4,
       sheenRoughness: 0.55,
-      sheenColor: new THREE.Color(0x191b22)
+      sheenColor: new THREE.Color(0x20222c)
     });
 
     lapelMat = new THREE.MeshPhysicalMaterial({
-      color: 0x060709,
-      roughness: 0.16,
-      metalness: 0.14,
-      clearcoat: 0.85,
-      clearcoatRoughness: 0.14
+      color: 0x050608,
+      roughness: 0.14,
+      metalness: 0.18,
+      envMapIntensity: 1.15,
+      clearcoat: 0.94,
+      clearcoatRoughness: 0.10
     });
 
     const shirtMat = new THREE.MeshStandardMaterial({
-      color: 0xfefefe,
-      roughness: 0.52,
+      color: 0xffffff,
+      roughness: 0.5,
       metalness: 0.01
     });
 
     tieMat = new THREE.MeshPhysicalMaterial({
-      color: 0x09090c,
-      roughness: 0.22,
-      metalness: 0.12,
-      clearcoat: 0.6
+      color: 0x070709,
+      roughness: 0.18,
+      metalness: 0.14,
+      clearcoat: 0.75
     });
 
     pocketMat = new THREE.MeshStandardMaterial({
@@ -383,45 +388,45 @@ window.BagozzaSuit3D = (function () {
     });
 
     shoeMat = new THREE.MeshPhysicalMaterial({
-      color: 0x070709,
-      roughness: 0.14,
-      metalness: 0.10,
-      clearcoat: 0.95,
-      clearcoatRoughness: 0.10
+      color: 0x060608,
+      roughness: 0.12,
+      metalness: 0.12,
+      clearcoat: 0.98,
+      clearcoatRoughness: 0.08
     });
 
     const goldMat = new THREE.MeshStandardMaterial({
-      color: 0xc9a86a,
-      roughness: 0.22,
-      metalness: 0.90
+      color: 0xd0ae6e,
+      roughness: 0.18,
+      metalness: 0.94
     });
 
     const walnutMat = new THREE.MeshStandardMaterial({
-      color: 0x2c1b12,
-      roughness: 0.30,
+      color: 0x2b1910,
+      roughness: 0.28,
       metalness: 0.08
     });
 
     const buttonMat = new THREE.MeshStandardMaterial({
-      color: 0x16161a,
-      roughness: 0.22,
-      metalness: 0.4
+      color: 0x16161b,
+      roughness: 0.2,
+      metalness: 0.45
     });
 
-    // 1. ANATOMICALLY SCULPTED TAILORED JACKET TORSO (Lower skirt gracefully drapes over trouser waist)
+    // 1. ANATOMICALLY SCULPTED TAILORED JACKET TORSO
     const torsoPts = [
-      new THREE.Vector2(0.01, -0.44),
-      new THREE.Vector2(0.415, -0.43), // longer Savile Row tailored jacket hem covering pelvis cleanly
-      new THREE.Vector2(0.395, -0.22), // hip drape
-      new THREE.Vector2(0.335, 0.06),  // sculpted natural Italian waist suppression
-      new THREE.Vector2(0.385, 0.34),  // ribcage
-      new THREE.Vector2(0.455, 0.64),  // full structured chest
-      new THREE.Vector2(0.495, 0.86),  // structured Italian shoulder line
-      new THREE.Vector2(0.355, 0.97),  // trapezius slope
-      new THREE.Vector2(0.175, 1.01),  // collar base
+      new THREE.Vector2(0.01, -0.45),
+      new THREE.Vector2(0.418, -0.44),
+      new THREE.Vector2(0.398, -0.22),
+      new THREE.Vector2(0.335, 0.06),
+      new THREE.Vector2(0.388, 0.34),
+      new THREE.Vector2(0.460, 0.65),
+      new THREE.Vector2(0.500, 0.87),
+      new THREE.Vector2(0.355, 0.97),
+      new THREE.Vector2(0.175, 1.01),
       new THREE.Vector2(0.01, 1.02)
     ];
-    const torsoGeo = new THREE.LatheGeometry(torsoPts, 52);
+    const torsoGeo = new THREE.LatheGeometry(torsoPts, 56);
     const torsoMesh = new THREE.Mesh(torsoGeo, jacketMat);
     torsoMesh.scale.set(1.06, 1.0, 0.62);
     torsoMesh.position.y = 0.28;
@@ -429,19 +434,19 @@ window.BagozzaSuit3D = (function () {
     torsoMesh.receiveShadow = true;
     upperBodyGroup.add(torsoMesh);
 
-    // Subtle Center Front Closure Seam & Rear Double-Vent Lines (authentic when rotated 180°)
     const seamMat = new THREE.MeshStandardMaterial({ color: 0x050507, roughness: 0.9 });
     frontSeamMesh = new THREE.Mesh(new THREE.BoxGeometry(0.006, 0.54, 0.012), seamMat);
     frontSeamMesh.position.set(0, 0.12, 0.258);
     upperBodyGroup.add(frontSeamMesh);
 
+    // Authentic Italian Double Rear Vents (visible when rotating 180°)
     [-0.145, 0.145].forEach((vx) => {
       const vent = new THREE.Mesh(new THREE.BoxGeometry(0.012, 0.36, 0.018), seamMat);
-      vent.position.set(vx, 0.04, -0.252);
+      vent.position.set(vx, 0.04, -0.254);
       upperBodyGroup.add(vent);
     });
 
-    // 2. CRISP EGYPTIAN COTTON DRESS SHIRT V-PLASTRON & SPREAD COLLAR
+    // 2. CRISP WHITE EGYPTIAN COTTON SHIRT V-PLASTRON & COLLAR
     const shirtShape = new THREE.Shape();
     shirtShape.moveTo(0, 0.45);
     shirtShape.lineTo(0.175, 1.24);
@@ -471,13 +476,13 @@ window.BagozzaSuit3D = (function () {
     jacketCollar.rotation.y = Math.PI;
     upperBodyGroup.add(jacketCollar);
 
-    // 3. SCULPTED 3D PEAK / SHAWL LAPELS
+    // 3. SCULPTED 3D PEAK LAPELS + GOLDEN BAGOZZA LAPEL PIN
     function createLapel(side) {
       const s = new THREE.Shape();
       s.moveTo(0, 0.42);
       s.quadraticCurveTo(side * 0.068, 0.72, side * 0.155, 1.235);
       s.lineTo(side * 0.215, 1.185);
-      s.quadraticCurveTo(side * 0.275, 0.94, side * 0.25, 0.84);
+      s.quadraticCurveTo(side * 0.278, 0.94, side * 0.252, 0.84);
       s.quadraticCurveTo(side * 0.165, 0.64, side * 0.015, 0.40);
       s.closePath();
 
@@ -498,7 +503,13 @@ window.BagozzaSuit3D = (function () {
     upperBodyGroup.add(createLapel(1));
     upperBodyGroup.add(createLapel(-1));
 
-    // 4. SILK NECKTIE & SATIN BOW-TIE (Switchable per preset)
+    // Signature Bagozza Brushed Gold Lapel Emblem Pin on wearer's left lapel
+    const lapelPin = new THREE.Mesh(new THREE.CylinderGeometry(0.019, 0.019, 0.01, 20), goldMat);
+    lapelPin.rotation.x = Math.PI / 2;
+    lapelPin.position.set(0.185, 0.99, 0.282);
+    upperBodyGroup.add(lapelPin);
+
+    // 4. NECKTIE & SATIN BOW-TIE
     necktieGroup = new THREE.Group();
     const knot = new THREE.Mesh(new THREE.ConeGeometry(0.044, 0.085, 6), tieMat);
     knot.rotation.x = Math.PI;
@@ -535,7 +546,7 @@ window.BagozzaSuit3D = (function () {
     });
     upperBodyGroup.add(bowtieGroup);
 
-    // 5. WELT BREAST POCKET + FOLDED SILK POCKET SQUARE
+    // 5. WELT BREAST POCKET + SILK POCKET SQUARE + HIP FLAPS
     const welt = new THREE.Mesh(new THREE.BoxGeometry(0.145, 0.018, 0.02), lapelMat);
     welt.position.set(0.245, 0.87, 0.270);
     welt.rotation.z = 0.09;
@@ -549,10 +560,7 @@ window.BagozzaSuit3D = (function () {
     sqShape.lineTo(0.036, 0.052);
     sqShape.lineTo(0.056, 0);
     sqShape.closePath();
-    const pocketSq = new THREE.Mesh(
-      new THREE.ExtrudeGeometry(sqShape, { depth: 0.008, bevelEnabled: false }),
-      pocketMat
-    );
+    const pocketSq = new THREE.Mesh(new THREE.ExtrudeGeometry(sqShape, { depth: 0.008, bevelEnabled: false }), pocketMat);
     pocketSq.position.set(0.246, 0.875, 0.267);
     pocketSq.rotation.z = 0.09;
     pocketSq.rotation.y = 0.34;
@@ -565,7 +573,7 @@ window.BagozzaSuit3D = (function () {
       upperBodyGroup.add(flap);
     });
 
-    // 6. FRONT BUTTONS (Single-Breasted 2-btn & Double-Breasted 6-btn)
+    // 6. FRONT CLOSURE BUTTONS
     singleBtnsGroup = new THREE.Group();
     [0.37, 0.19].forEach((by) => {
       const b = new THREE.Mesh(new THREE.CylinderGeometry(0.021, 0.021, 0.014, 20), buttonMat);
@@ -586,11 +594,9 @@ window.BagozzaSuit3D = (function () {
     });
     upperBodyGroup.add(doubleBtnsGroup);
 
-    // 7. CONTINUOUS SEAMLESS CURVED TAILORED SLEEVES (Zero visible joint seams!)
+    // 7. CONTINUOUS SEAMLESS CURVED TAILORED SLEEVES + SURGEON CUFF BUTTONS + FRENCH CUFFS
     [-1, 1].forEach((side) => {
       const sleeveGroup = new THREE.Group();
-
-      // Smooth organic sleeve curve from shoulder pad through subtle natural elbow bend to tapered wrist
       const curve = new THREE.CatmullRomCurve3([
         new THREE.Vector3(side * 0.45, 1.07, -0.01),
         new THREE.Vector3(side * 0.54, 0.82, -0.005),
@@ -598,8 +604,7 @@ window.BagozzaSuit3D = (function () {
         new THREE.Vector3(side * 0.57, 0.22, 0.06),
         new THREE.Vector3(side * 0.56, 0.02, 0.095)
       ]);
-      const tubeGeo = new THREE.TubeGeometry(curve, 36, 0.115, 24, false);
-      // Taper tube radius cleanly from shoulder (1.15x) to cuff (0.72x)
+      const tubeGeo = new THREE.TubeGeometry(curve, 40, 0.115, 24, false);
       const posAttr = tubeGeo.attributes.position;
       const tmp = new THREE.Vector3();
       const center = new THREE.Vector3();
@@ -618,20 +623,17 @@ window.BagozzaSuit3D = (function () {
       sleeveMesh.receiveShadow = true;
       sleeveGroup.add(sleeveMesh);
 
-      // Smooth rounded shoulder head cap blended cleanly
-      const shoulderCap = new THREE.Mesh(new THREE.SphereGeometry(0.134, 24, 24), jacketMat);
+      const shoulderCap = new THREE.Mesh(new THREE.SphereGeometry(0.135, 24, 24), jacketMat);
       shoulderCap.scale.set(1.0, 0.9, 0.94);
       shoulderCap.position.set(side * 0.455, 1.07, -0.01);
       shoulderCap.castShadow = true;
       sleeveGroup.add(shoulderCap);
 
-      // Crisp White Shirt French Cuff peeking cleanly past jacket sleeve
       const cuff = new THREE.Mesh(new THREE.CylinderGeometry(0.076, 0.074, 0.065, 24), shirtMat);
       cuff.position.set(side * 0.56, -0.01, 0.102);
       cuff.rotation.x = -0.16;
       sleeveGroup.add(cuff);
 
-      // 4 Kissing Surgeon's Cuff Buttons
       for (let bi = 0; bi < 4; bi++) {
         const cb = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, 0.008, 14), buttonMat);
         cb.rotation.z = Math.PI / 2;
@@ -662,14 +664,14 @@ window.BagozzaSuit3D = (function () {
     finialOrb.castShadow = true;
     upperBodyGroup.add(finialOrb);
 
-    // 9. SEAMLESS TAILORED CREASED TROUSERS (No protruding cylinder seam!)
+    // 9. SEAMLESS TAILORED CREASED TROUSERS + POLISHED ITALIAN OXFORD SHOES
     const legPts = [
       new THREE.Vector2(0.01, -0.78),
-      new THREE.Vector2(0.102, -0.77), // crisp tailored ankle hem
-      new THREE.Vector2(0.118, -0.45), // calf
-      new THREE.Vector2(0.135, -0.08), // knee
-      new THREE.Vector2(0.172, 0.36),  // upper thigh
-      new THREE.Vector2(0.195, 0.72),  // seamlessly tucked inside tailored jacket skirt!
+      new THREE.Vector2(0.102, -0.77),
+      new THREE.Vector2(0.118, -0.45),
+      new THREE.Vector2(0.135, -0.08),
+      new THREE.Vector2(0.172, 0.36),
+      new THREE.Vector2(0.195, 0.72),
       new THREE.Vector2(0.01, 0.74)
     ];
     const legGeo = new THREE.LatheGeometry(legPts, 36);
@@ -683,7 +685,6 @@ window.BagozzaSuit3D = (function () {
       leg.receiveShadow = true;
       lowerBodyGroup.add(leg);
 
-      // 10. POLISHED ITALIAN LEATHER OXFORD SHOES resting directly on Carrara Marble Plinth
       const shoeGroup = new THREE.Group();
       const vamp = new THREE.Mesh(new THREE.SphereGeometry(0.114, 26, 18), shoeMat);
       vamp.scale.set(0.82, 0.50, 1.98);
@@ -724,8 +725,8 @@ window.BagozzaSuit3D = (function () {
     trouserMat.needsUpdate = true;
 
     lapelMat.color.setHex(p.lapel);
-    lapelMat.roughness = p.lapelGloss ? 0.15 : 0.68;
-    lapelMat.clearcoat = p.lapelGloss ? 0.88 : 0.05;
+    lapelMat.roughness = p.lapelGloss ? 0.14 : 0.68;
+    lapelMat.clearcoat = p.lapelGloss ? 0.92 : 0.06;
     lapelMat.needsUpdate = true;
 
     tieMat.color.setHex(p.tieColor);
@@ -753,7 +754,7 @@ window.BagozzaSuit3D = (function () {
   function setAngle(deg) {
     autoRotate = false;
     targetRotY = (deg * Math.PI) / 180;
-    targetRotX = 0.04;
+    targetRotX = 0.03;
   }
 
   function toggleAutoRotate() {
@@ -762,7 +763,7 @@ window.BagozzaSuit3D = (function () {
   }
 
   function adjustZoom(delta) {
-    targetCamZ = Math.max(3.4, Math.min(6.4, targetCamZ + delta));
+    targetCamZ = Math.max(3.3, Math.min(6.0, targetCamZ + delta));
   }
 
   function bindPointerEvents(el) {
@@ -776,8 +777,8 @@ window.BagozzaSuit3D = (function () {
       if (!isDragging) return;
       const dx = clientX - prevX;
       const dy = clientY - prevY;
-      targetRotY += dx * 0.0115;
-      targetRotX = Math.max(-0.22, Math.min(0.24, targetRotX + dy * 0.0045));
+      targetRotY += dx * 0.012;
+      targetRotX = Math.max(-0.20, Math.min(0.24, targetRotX + dy * 0.0045));
       prevX = clientX;
       prevY = clientY;
     };
@@ -802,12 +803,13 @@ window.BagozzaSuit3D = (function () {
     requestAnimationFrame(animate);
     if (!isVisible || !renderer) return;
 
+    clockT += 0.016;
     if (autoRotate && !isDragging) {
-      targetRotY += 0.0052;
+      targetRotY += 0.0068; // Silky smooth continuous 360° turntable motion
     }
 
-    currentRotY += (targetRotY - currentRotY) * 0.09;
-    currentRotX += (targetRotX - currentRotX) * 0.09;
+    currentRotY += (targetRotY - currentRotY) * 0.085;
+    currentRotX += (targetRotX - currentRotX) * 0.085;
     currentCamZ += (targetCamZ - currentCamZ) * 0.08;
 
     currentBodyScale.torsoX += (targetBodyScale.torsoX - currentBodyScale.torsoX) * 0.08;
@@ -816,18 +818,20 @@ window.BagozzaSuit3D = (function () {
 
     if (suitPivot) {
       suitPivot.rotation.y = currentRotY;
-      suitPivot.rotation.x = currentRotX * 0.30;
+      suitPivot.rotation.x = currentRotX * 0.28;
+      // Subtle luxury breathing motion on the upper garment
+      suitPivot.position.y = Math.sin(clockT * 1.4) * 0.012;
       upperBodyGroup.scale.set(currentBodyScale.torsoX, 1, currentBodyScale.torsoZ);
       lowerBodyGroup.scale.set(currentBodyScale.legX, 1, currentBodyScale.torsoZ * 0.96);
     }
 
     if (dustParticles) {
-      dustParticles.rotation.y += 0.0007;
+      dustParticles.rotation.y -= 0.0012;
     }
 
     camera.position.z = currentCamZ;
-    camera.position.y = -0.05 + currentRotX * 0.6;
-    camera.lookAt(0, -0.14, 0);
+    camera.position.y = 0.02 + currentRotX * 0.55;
+    camera.lookAt(0, -0.05, 0);
 
     renderer.render(scene, camera);
   }
@@ -836,8 +840,8 @@ window.BagozzaSuit3D = (function () {
     container = document.getElementById(elementId);
     if (!container || typeof THREE === 'undefined') return false;
 
-    const w = container.clientWidth || 640;
-    const h = container.clientHeight || 540;
+    const w = container.clientWidth || 720;
+    const h = container.clientHeight || 620;
 
     try {
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
@@ -847,28 +851,29 @@ window.BagozzaSuit3D = (function () {
 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(w, h);
+    renderer.setClearColor(0x000000, 0); // Pure transparent canvas over white Hero!
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.02;
+    renderer.toneMappingExposure = 1.04;
 
     container.innerHTML = '';
     container.appendChild(renderer.domElement);
 
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xf5f4f0);
-    scene.fog = new THREE.Fog(0xf5f4f0, 7.5, 16.5);
+    const envTex = makeStudioEnvMap(renderer);
+    if (envTex) scene.environment = envTex;
 
     camera = new THREE.PerspectiveCamera(36, w / h, 0.1, 40);
-    camera.position.set(0, -0.05, currentCamZ);
+    camera.position.set(0, -0.02, currentCamZ);
 
-    // Sculpted Architectural Studio Lighting (Balanced for deep blacks + luminous marble!)
-    const hemi = new THREE.HemisphereLight(0xffffff, 0xdcd7cb, 0.72);
+    // High-Fashion Editorial 3-Point Studio Lighting
+    const hemi = new THREE.HemisphereLight(0xffffff, 0xe0dcd2, 0.68);
     scene.add(hemi);
 
-    const keyLight = new THREE.DirectionalLight(0xfffdf8, 1.38);
-    keyLight.position.set(3.4, 5.4, 4.4);
+    const keyLight = new THREE.DirectionalLight(0xfffdf8, 1.45);
+    keyLight.position.set(3.4, 5.6, 4.4);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.width = 1024;
     keyLight.shadow.mapSize.height = 1024;
@@ -877,23 +882,23 @@ window.BagozzaSuit3D = (function () {
     keyLight.shadow.bias = -0.0005;
     scene.add(keyLight);
 
-    const fillLight = new THREE.DirectionalLight(0xeef3ff, 0.42);
-    fillLight.position.set(-4.0, 2.2, 2.2);
+    const fillLight = new THREE.DirectionalLight(0xeef3ff, 0.45);
+    fillLight.position.set(-4.2, 2.2, 2.5);
     scene.add(fillLight);
 
-    const rimLight = new THREE.SpotLight(0xffe7c2, 1.35, 16, Math.PI / 3.2, 0.55);
-    rimLight.position.set(-1.4, 4.8, -3.6);
+    const rimLight = new THREE.SpotLight(0xffe7c2, 1.4, 16, Math.PI / 3.0, 0.55);
+    rimLight.position.set(-1.6, 4.8, -3.6);
     scene.add(rimLight);
 
-    buildGalleryStage();
+    buildMarbleTurntable();
     buildSculptedSuit();
     applyPreset('tuxedo');
     bindPointerEvents(renderer.domElement);
 
     const handleResize = () => {
       if (!container || !renderer) return;
-      const nw = container.clientWidth || 640;
-      const nh = container.clientHeight || 540;
+      const nw = container.clientWidth || 720;
+      const nh = container.clientHeight || 620;
       camera.aspect = nw / nh;
       camera.updateProjectionMatrix();
       renderer.setSize(nw, nh);

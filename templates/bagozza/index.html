@@ -85,202 +85,123 @@
   </header>
 
   <!-- ======================================================================
-       SECTION 1: MONUMENTAL PURE-WHITE HERO + 5-SECOND LIVE MOTION LOOKBOOK
-       (Giant Designer BAGOZZA Typography + Real Full-Body Suit Model)
+       SECTION 1: MONUMENTAL PURE-WHITE HERO + GIANT 360° MOTION 3D SUIT
+       (Giant Designer BAGOZZA Logo + Massive Seamless 3D Rotating Suit — ZERO Video Box!)
        ====================================================================== -->
-  <section id="hero" class="relative pt-24 pb-12 sm:pt-28 sm:pb-16 px-4 sm:px-8 bg-white overflow-hidden">
-    <div class="max-w-7xl mx-auto">
+  <section id="hero" class="relative pt-24 pb-10 sm:pt-26 sm:pb-14 px-4 sm:px-8 bg-white overflow-hidden border-b border-neutral-200/80">
+    <!-- Subtle Architectural Background Radial Glow -->
+    <div class="pointer-events-none absolute inset-x-0 top-16 h-[640px] bg-[radial-gradient(ellipse_at_center,rgba(208,174,110,0.08)_0%,rgba(255,255,255,0)_66%)]"></div>
+
+    <div class="max-w-7xl mx-auto relative">
 
       <!-- Editorial Micro Eyebrow -->
-      <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-semibold tracking-[0.28em] uppercase text-neutral-400 mb-4 sm:mb-6">
+      <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-semibold tracking-[0.28em] uppercase text-neutral-400 mb-2 sm:mb-3">
         <span data-i18n="hero_badge">MİLANO • ŞİŞLİ / OSMANBEY • 1970</span>
-        <span class="hidden sm:inline">SPRING / WINTER 2026–2027</span>
+        <span class="hidden sm:inline">360° 3D SARTORIAL ATELIER</span>
       </div>
 
-      <!-- GIANT ARCHITECTURAL DESIGNER TITLE + CENTERED LIVE 5-SEC LOOKBOOK STAGE -->
-      <div class="relative flex flex-col items-center justify-center py-2 sm:py-4">
+      <!-- GIANT ARCHITECTURAL DESIGNER BAGOZZA WORDMARK -->
+      <h1 class="hero-giant-title text-center w-full relative z-10 tracking-[0.14em] mb-1">
+        BAGOZZA
+      </h1>
 
-        <!-- Giant Typographic Backplate ("Galaxy Home" architectural scale) -->
-        <h1 class="hero-giant-title text-center w-full relative z-10 tracking-[0.14em]">
-          BAGOZZA
-        </h1>
+      <!-- MONUMENTAL 3D SUIT HERO STAGE (Seamless on Pure White!) -->
+      <div id="studio3d" class="scroll-mt-24 relative z-20 -mt-2 sm:-mt-8 md:-mt-12 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-center">
 
-        <!-- Overlapping Central Editorial Lookbook Canvas (5-Second Live Motion Reel) -->
-        <div class="relative z-20 mt-3 sm:-mt-10 md:-mt-16 w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-
-          <!-- Left Architectural Manifesto -->
-          <div class="lg:col-span-4 order-2 lg:order-1 text-center lg:text-left space-y-5">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-[10px] font-bold tracking-[0.2em] uppercase text-neutral-800">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
-              <span data-i18n="reel_label">5 SANİYELİK CANLI LOOKBOOK</span>
+        <!-- Left 3 Cols: Fabric Swatches + Live 3D Body Morphing -->
+        <div class="lg:col-span-3 order-2 lg:order-1 space-y-5 bg-white/80 backdrop-blur-sm p-5 rounded-3xl border border-neutral-200/80">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-[10px] font-bold tracking-[0.18em] uppercase text-neutral-800 mb-3">
+              <span class="text-[#b5945b]">⟳</span>
+              <span data-i18n="s3d_drag_hint">360° Çevirmek İçin Sürükleyin</span>
             </div>
-
-            <p class="font-display text-2xl sm:text-3xl leading-snug text-neutral-900 font-medium" data-i18n="hero_sub">
-              İtalyan terzilik mirası, 3D interaktif kostüm deneyimi ve 60 parçalık özel koleksiyon.
+            <p class="font-display text-xl leading-snug text-neutral-900" data-i18n="hero_sub">
+              İtalyan terzilik mirası, 360° interaktif 3D kostüm deneyimi ve 60 parçalık koleksiyon.
             </p>
+          </div>
 
-            <!-- Compact Motion CTAs -->
-            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-1">
-              <a href="#studio3d" onclick="BagozzaAudio.play('tap')" class="btn-motion px-5 py-3 rounded-full bg-black text-white text-xs font-semibold tracking-wider uppercase shadow-md" data-i18n="hero_cta_3d">
-                3D Kostümü İncele
+          <!-- 6 Live Italian Fabric Swatches -->
+          <div>
+            <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 mb-2">İtalyan Kumaş & Stil</div>
+            <div id="suit3dPresets" class="flex flex-wrap gap-1.5"></div>
+          </div>
+
+          <!-- Live 3D Body Build Morphing -->
+          <div>
+            <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 mb-2">Canlı 3D Vücut Tipi</div>
+            <div class="flex flex-wrap gap-1.5">
+              <button data-3d-body="athletic" onclick="BagozzaApp.select3DBody('athletic')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border bg-white text-neutral-700 border-neutral-200 hover:border-black" data-i18n="body_athletic">Atletik / Geniş Omuz</button>
+              <button data-3d-body="classic" onclick="BagozzaApp.select3DBody('classic')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border bg-black text-white border-black" data-i18n="body_classic">Klasik / Slim</button>
+              <button data-3d-body="comfort" onclick="BagozzaApp.select3DBody('comfort')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border bg-white text-neutral-700 border-neutral-200 hover:border-black" data-i18n="body_comfort">Büyük Beden / Comfort</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CENTER 6 COLS: GIGANTIC, SEAMLESS 360° MOTION-ROTATING 3D SUIT ON CARRARA MARBLE -->
+        <div class="lg:col-span-6 order-1 lg:order-2 relative flex flex-col items-center justify-center">
+          <!-- Subtle Architectural Golden Halo Arch Behind the Giant 3D Suit -->
+          <div class="pointer-events-none absolute top-8 w-[300px] sm:w-[410px] h-[380px] sm:h-[490px] rounded-t-full border border-[#d0ae6e]/40 bg-gradient-to-b from-[#faf9f5]/70 via-white/30 to-transparent"></div>
+
+          <!-- Top-Right Subtle Zoom Controls -->
+          <div class="absolute top-3 right-2 sm:right-6 z-20 flex items-center gap-1.5">
+            <button onclick="BagozzaApp.zoom3D(-0.45)" aria-label="Yakınlaştır" class="btn-motion w-9 h-9 rounded-full bg-white/95 border border-neutral-200 hover:border-black text-black font-bold text-sm flex items-center justify-center shadow-sm">+</button>
+            <button onclick="BagozzaApp.zoom3D(0.45)" aria-label="Uzaklaştır" class="btn-motion w-9 h-9 rounded-full bg-white/95 border border-neutral-200 hover:border-black text-black font-bold text-sm flex items-center justify-center shadow-sm">−</button>
+          </div>
+
+          <!-- GIGANTIC Transparent Three.js WebGL Canvas Mount -->
+          <div id="suit3dCanvasWrap" class="relative z-10 w-full h-[480px] sm:h-[600px]"></div>
+
+          <!-- Fallback if WebGL disabled -->
+          <div id="suit3dFallback" class="hidden absolute inset-0 flex items-center justify-center p-6">
+            <img src="assets/suits/suit_01_model.jpg" alt="Bagozza 3D Suit" class="h-full max-h-[520px] object-contain rounded-2xl shadow-xl" />
+          </div>
+
+          <!-- Sleek Floating 360° Motion Orbit Bar -->
+          <div class="relative z-20 -mt-3 flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap bg-white/95 backdrop-blur-md px-3 py-2 rounded-full border border-neutral-200 shadow-sm">
+            <button onclick="BagozzaApp.rotate3D(0)" class="btn-motion px-3 py-1.5 rounded-full bg-white border border-neutral-200 text-[11px] font-semibold text-black hover:bg-black hover:text-white">Ön 0°</button>
+            <button onclick="BagozzaApp.rotate3D(90)" class="btn-motion px-3 py-1.5 rounded-full bg-white border border-neutral-200 text-[11px] font-semibold text-black hover:bg-black hover:text-white">Yan 90°</button>
+            <button onclick="BagozzaApp.rotate3D(180)" class="btn-motion px-3 py-1.5 rounded-full bg-white border border-neutral-200 text-[11px] font-semibold text-black hover:bg-black hover:text-white">Arka 180°</button>
+            <button id="s3dAutoBtn" onclick="BagozzaApp.toggle3DAuto()" class="btn-motion px-3.5 py-1.5 rounded-full bg-black text-white border border-black text-[11px] font-semibold">⟳ 360° Motion</button>
+          </div>
+        </div>
+
+        <!-- Right 3 Cols: Active 3D Suit Spec, Size Picker & Instant Paket CTA -->
+        <div class="lg:col-span-3 order-3 space-y-5 bg-white/80 backdrop-blur-sm p-5 rounded-3xl border border-neutral-200/80">
+          <div>
+            <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-[#b5945b]">SEÇİLİ 3D MODEL</div>
+            <h2 id="s3dPresetName" class="font-brand text-xl font-bold text-black mt-1">Milano Black-Tie Smokin</h2>
+            <div id="s3dPresetPrice" class="text-xl font-bold text-[#c62828] mt-1">42.000₺</div>
+            <p id="s3dPresetFabric" class="text-[11px] text-neutral-500 mt-1.5 leading-relaxed">%100 Super 160s Barathea Yünü & İpek Saten Klapa</p>
+          </div>
+
+          <!-- Italian Size Picker -->
+          <div>
+            <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 mb-2">İtalyan Beden</div>
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <button data-3d-size="46" onclick="BagozzaApp.select3DSize('46')" class="size-pill w-9 h-9 text-xs">46</button>
+              <button data-3d-size="48" onclick="BagozzaApp.select3DSize('48')" class="size-pill w-9 h-9 text-xs">48</button>
+              <button data-3d-size="50" onclick="BagozzaApp.select3DSize('50')" class="size-pill w-9 h-9 text-xs active">50</button>
+              <button data-3d-size="52" onclick="BagozzaApp.select3DSize('52')" class="size-pill w-9 h-9 text-xs">52</button>
+              <button data-3d-size="54" onclick="BagozzaApp.select3DSize('54')" class="size-pill w-9 h-9 text-xs">54</button>
+              <button data-3d-size="56" onclick="BagozzaApp.select3DSize('56')" class="size-pill w-9 h-9 text-xs">56</button>
+            </div>
+          </div>
+
+          <div class="space-y-2.5 pt-1">
+            <button onclick="BagozzaApp.add3DSuitToBag()" class="btn-motion w-full py-3.5 rounded-xl bg-black text-white text-[11px] font-bold tracking-[0.16em] uppercase hover:bg-neutral-800 shadow-md flex items-center justify-center gap-2">
+              <span>🛍</span>
+              <span data-i18n="s3d_add_btn">3D Kostümü Pakete Ekle</span>
+            </button>
+
+            <div class="grid grid-cols-2 gap-2">
+              <a href="#runwaySection" onclick="BagozzaAudio.play('tap')" class="btn-motion py-2.5 rounded-xl bg-white border border-neutral-200 hover:border-black text-[10px] font-bold uppercase tracking-wider text-center text-black">
+                Sanal Stilist ↓
               </a>
-              <a href="#runwaySection" onclick="BagozzaAudio.play('tap')" class="btn-motion px-5 py-3 rounded-full bg-white text-black border border-neutral-300 hover:border-black text-xs font-semibold tracking-wider uppercase" data-i18n="hero_cta_runway">
-                Sanal Stilist (Giydir)
+              <a href="#catalogSection" onclick="BagozzaAudio.play('tap')" class="btn-motion py-2.5 rounded-xl bg-white border border-neutral-200 hover:border-black text-[10px] font-bold uppercase tracking-wider text-center text-black">
+                60 Parça ↓
               </a>
             </div>
           </div>
-
-          <!-- Centerpiece: Real Full-Body Suit Model (5-Second Kinetic Motion Lookbook Reel) -->
-          <div class="lg:col-span-4 order-1 lg:order-2 flex justify-center">
-            <div class="relative w-[300px] sm:w-[340px] h-[430px] sm:h-[490px] rounded-[28px] overflow-hidden bg-neutral-100 shadow-[0_32px_80px_-24px_rgba(0,0,0,0.22)] border border-neutral-200/80 group">
-              <!-- Live 5s Crossfade Motion Frames -->
-              <div id="heroReelStage" onclick="BagozzaApp.inspectCurrentReelLook()" class="absolute inset-0 cursor-pointer"></div>
-
-              <!-- Crisp Frosted Pearl Top Badge -->
-              <div class="absolute top-3.5 inset-x-3.5 z-10 flex items-center justify-between">
-                <span id="heroReelLookTag" class="px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-bold tracking-widest uppercase text-black shadow-sm border border-black/5">
-                  LOOK 01 • IVORY GALA
-                </span>
-                <button onclick="BagozzaApp.toggleReelPlay()" aria-label="Reel Oynat/Durdur" class="btn-motion w-8 h-8 rounded-full bg-white/95 backdrop-blur-md text-black text-[10px] font-bold flex items-center justify-center shadow-sm border border-black/5">
-                  <span id="reelPlayIcon">❚❚</span>
-                </button>
-              </div>
-
-              <!-- Crisp Frosted Pearl Bottom 5-Second Progress Bar + Dots -->
-              <div class="absolute bottom-3.5 inset-x-4 z-10 bg-white/95 backdrop-blur-md rounded-2xl p-2.5 shadow-md border border-black/5">
-                <div class="h-0.5 w-full bg-black/15 rounded-full overflow-hidden mb-2">
-                  <div id="heroReelProgress" class="reel-progress-bar h-full w-full bg-black"></div>
-                </div>
-                <div class="flex items-center justify-between">
-                  <div id="heroReelDots" class="flex items-center gap-1.5"></div>
-                  <button onclick="BagozzaApp.inspectCurrentReelLook()" class="text-[10px] font-bold uppercase tracking-wider text-black hover:underline">
-                    İncele →
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Editorial Spec Column -->
-          <div class="lg:col-span-4 order-3 hidden lg:flex flex-col items-end text-right space-y-6">
-            <div>
-              <div class="font-brand text-3xl font-bold text-black">60</div>
-              <div class="text-[11px] uppercase tracking-[0.2em] text-neutral-500 mt-0.5">20 Takım • 20 Pantolon • 20 Ayakkabı</div>
-            </div>
-            <div class="w-16 h-px bg-neutral-200"></div>
-            <div>
-              <div class="font-brand text-3xl font-bold text-black">360°</div>
-              <div class="text-[11px] uppercase tracking-[0.2em] text-neutral-500 mt-0.5">WebGL 3D & Canlı Açı Döndürme</div>
-            </div>
-            <div class="w-16 h-px bg-neutral-200"></div>
-            <a href="#catalogSection" onclick="BagozzaAudio.play('tap')" class="btn-motion inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-black hover:opacity-70">
-              <span data-i18n="hero_cta_shop">60 Parça Koleksiyon</span>
-              <span>↓</span>
-            </a>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ======================================================================
-       SECTION 2: ONE BIG 3D INTERACTIVE SUIT ON CARRARA MARBLE GALLERY STAGE
-       ("bitta katta kastum va uni aylantib 3d formatda korisi va juda chiroyli joyda")
-       ====================================================================== -->
-  <section id="studio3d" class="scroll-mt-24 pt-20 pb-14 sm:pt-24 sm:pb-16 px-4 sm:px-8 bg-[#fafaf8] border-y border-neutral-200/80">
-    <div class="max-w-7xl mx-auto">
-
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
-        <div>
-          <span class="text-[11px] font-bold tracking-[0.26em] uppercase text-[#b5945b] block mb-1.5" data-i18n="s3d_eyebrow">MİLANO MERMER GALERİ • 360° WEBGL</span>
-          <h2 class="font-brand text-2xl sm:text-4xl font-bold tracking-wider text-black" data-i18n="s3d_title">3D ÖZEL DİKİM KOSTÜM</h2>
-        </div>
-        <p class="text-xs sm:text-sm text-neutral-500 max-w-md" data-i18n="s3d_desc">
-          Kostümü parmağınızla veya farenizle 360° çevirin, İtalyan kumaşlarını ve vücut tipinizi canlı değiştirin.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-
-        <!-- Left 7 Cols: Live 3D Three.js Marble Gallery Pedestal Stage -->
-        <div class="lg:col-span-7 stage-3d-shell rounded-3xl relative overflow-hidden min-h-[460px] sm:min-h-[540px] flex flex-col">
-
-          <!-- Top-Left Subtle Drag Hint -->
-          <div class="absolute top-4 left-4 z-10 pointer-events-none flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur border border-black/8 shadow-sm text-[11px] font-semibold text-neutral-800">
-            <span class="text-[#b5945b]">⟳</span>
-            <span data-i18n="s3d_drag_hint">360° Çevirmek İçin Sürükleyin</span>
-          </div>
-
-          <!-- Top-Right Zoom Controls -->
-          <div class="absolute top-4 right-4 z-10 flex items-center gap-1.5">
-            <button onclick="BagozzaApp.zoom3D(-0.45)" aria-label="Yakınlaştır" class="btn-motion w-9 h-9 rounded-full bg-white/90 backdrop-blur border border-black/10 text-black font-bold text-sm flex items-center justify-center shadow-sm">+</button>
-            <button onclick="BagozzaApp.zoom3D(0.45)" aria-label="Uzaklaştır" class="btn-motion w-9 h-9 rounded-full bg-white/90 backdrop-blur border border-black/10 text-black font-bold text-sm flex items-center justify-center shadow-sm">−</button>
-          </div>
-
-          <!-- Three.js WebGL Mount -->
-          <div id="suit3dCanvasWrap" class="w-full flex-1 min-h-[460px] sm:min-h-[540px]"></div>
-
-          <!-- Graceful fallback if WebGL is disabled -->
-          <div id="suit3dFallback" class="hidden absolute inset-0 bg-[#f6f5f1] flex items-center justify-center p-6">
-            <img src="assets/suits/suit_01_model.jpg" alt="Bagozza 3D Suit" class="h-full max-h-[460px] object-contain rounded-2xl shadow-xl" />
-          </div>
-
-          <!-- Bottom Floating 360° Angle Bar -->
-          <div class="absolute bottom-4 inset-x-4 z-10 flex items-center justify-center gap-2 flex-wrap">
-            <button onclick="BagozzaApp.rotate3D(0)" class="btn-motion px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur border border-black/10 text-[11px] font-semibold text-black hover:bg-black hover:text-white shadow-sm">Ön 0°</button>
-            <button onclick="BagozzaApp.rotate3D(90)" class="btn-motion px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur border border-black/10 text-[11px] font-semibold text-black hover:bg-black hover:text-white shadow-sm">Yan 90°</button>
-            <button onclick="BagozzaApp.rotate3D(180)" class="btn-motion px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur border border-black/10 text-[11px] font-semibold text-black hover:bg-black hover:text-white shadow-sm">Arka 180°</button>
-            <button id="s3dAutoBtn" onclick="BagozzaApp.toggle3DAuto()" class="btn-motion px-3.5 py-1.5 rounded-full bg-black text-white border border-black text-[11px] font-semibold shadow-sm">360° Auto</button>
-          </div>
-        </div>
-
-        <!-- Right 5 Cols: Clean Pure-White Studio Configurator Card -->
-        <div class="lg:col-span-5 bg-white rounded-3xl border border-neutral-200/90 p-6 sm:p-7 flex flex-col justify-between gap-6 shadow-sm">
-          <div class="space-y-6">
-            <div>
-              <div class="flex items-start justify-between gap-3">
-                <h3 id="s3dPresetName" class="font-brand text-xl sm:text-2xl font-bold text-black">Milano Black-Tie Smokin</h3>
-                <span id="s3dPresetPrice" class="font-sans text-lg font-bold text-[#c62828] shrink-0">42.000₺</span>
-              </div>
-              <p id="s3dPresetFabric" class="text-xs text-neutral-500 mt-1.5">%100 Super 160s Barathea Yünü & İpek Saten Klapa</p>
-            </div>
-
-            <!-- 6 Live Italian Fabric Swatches -->
-            <div>
-              <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-400 mb-2.5">İtalyan Kumaş & Stil</div>
-              <div id="suit3dPresets" class="flex flex-wrap gap-2"></div>
-            </div>
-
-            <!-- Live 3D Body Build Morphing -->
-            <div>
-              <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-400 mb-2.5">Canlı 3D Vücut Tipi (Gavda)</div>
-              <div class="flex flex-wrap gap-2">
-                <button data-3d-body="athletic" onclick="BagozzaApp.select3DBody('athletic')" class="btn-motion px-3.5 py-2 rounded-full text-xs font-medium border bg-white text-neutral-700 border-neutral-200 hover:border-black" data-i18n="body_athletic">Atletik / Keng Yelka</button>
-                <button data-3d-body="classic" onclick="BagozzaApp.select3DBody('classic')" class="btn-motion px-3.5 py-2 rounded-full text-xs font-medium border bg-black text-white border-black" data-i18n="body_classic">Klasik / Slim</button>
-                <button data-3d-body="comfort" onclick="BagozzaApp.select3DBody('comfort')" class="btn-motion px-3.5 py-2 rounded-full text-xs font-medium border bg-white text-neutral-700 border-neutral-200 hover:border-black" data-i18n="body_comfort">Katta Gavda / Comfort</button>
-              </div>
-            </div>
-
-            <!-- Italian Suit Size Selector -->
-            <div>
-              <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-400 mb-2.5">İtalyan Beden</div>
-              <div class="flex items-center gap-2 flex-wrap">
-                <button data-3d-size="46" onclick="BagozzaApp.select3DSize('46')" class="size-pill w-10 h-10 text-xs">46</button>
-                <button data-3d-size="48" onclick="BagozzaApp.select3DSize('48')" class="size-pill w-10 h-10 text-xs">48</button>
-                <button data-3d-size="50" onclick="BagozzaApp.select3DSize('50')" class="size-pill w-10 h-10 text-xs active">50</button>
-                <button data-3d-size="52" onclick="BagozzaApp.select3DSize('52')" class="size-pill w-10 h-10 text-xs">52</button>
-                <button data-3d-size="54" onclick="BagozzaApp.select3DSize('54')" class="size-pill w-10 h-10 text-xs">54</button>
-                <button data-3d-size="56" onclick="BagozzaApp.select3DSize('56')" class="size-pill w-10 h-10 text-xs">56</button>
-              </div>
-            </div>
-          </div>
-
-          <button onclick="BagozzaApp.add3DSuitToBag()" class="btn-motion w-full py-4 rounded-xl bg-black text-white text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 shadow-lg flex items-center justify-center gap-2.5">
-            <span>🛍</span>
-            <span data-i18n="s3d_add_btn">Bu 3D Kostümü Pakete Ekle</span>
-          </button>
         </div>
 
       </div>

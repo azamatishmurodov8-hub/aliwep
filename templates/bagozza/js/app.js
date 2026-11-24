@@ -102,9 +102,6 @@ window.BagozzaApp = (function () {
 
   // UI Runtime State
   const ui = {
-    reelIdx: 0,
-    reelPaused: false,
-    reelTimer: null,
     activeCat: 'suits',
     activeBodyFilter: 'all',
     searchQuery: '',
@@ -198,90 +195,7 @@ window.BagozzaApp = (function () {
   }
 
   /* ========================================================================
-     2. HERO 5-SECOND LIVE MOTION LOOKBOOK REEL
-     ======================================================================== */
-  const REEL_LOOKS = [
-    { img: 'assets/hero/reel_1.jpg', tag: 'LOOK 01 • IVORY GALA SMOKİN', suitId: 'suit_02' },
-    { img: 'assets/hero/reel_2.jpg', tag: 'LOOK 02 • MILANO BLACK-TIE', suitId: 'suit_01' },
-    { img: 'assets/hero/reel_3.jpg', tag: 'LOOK 03 • FIRENZE SAND 3-PIECE', suitId: 'suit_04' },
-    { img: 'assets/hero/reel_4.jpg', tag: 'LOOK 04 • COMO WHITE SHAWL', suitId: 'suit_07' },
-    { img: 'assets/hero/reel_5.jpg', tag: 'LOOK 05 • NAPOLI ROYAL NAVY', suitId: 'suit_03' },
-    { img: 'assets/hero/reel_6.jpg', tag: 'LOOK 06 • BOLOGNA VELVET GALA', suitId: 'suit_09' }
-  ];
-
-  function initHeroReel() {
-    const stage = document.getElementById('heroReelStage');
-    const dots = document.getElementById('heroReelDots');
-    if (!stage || !dots) return;
-
-    stage.innerHTML = REEL_LOOKS.map((r, i) => `
-      <img src="${r.img}" alt="${r.tag}" class="reel-frame ${i === 0 ? 'active' : ''}" data-reel-idx="${i}" />
-    `).join('');
-
-    dots.innerHTML = REEL_LOOKS.map((_, i) => `
-      <button onclick="BagozzaApp.setReel(${i})" aria-label="Look ${i + 1}" class="h-1.5 rounded-full transition-all duration-300 ${i === 0 ? 'w-7 bg-black' : 'w-2 bg-black/25 hover:bg-black/50'}" data-reel-dot="${i}"></button>
-    `).join('');
-
-    updateReelUI();
-    startReelTimer();
-  }
-
-  function startReelTimer() {
-    clearInterval(ui.reelTimer);
-    ui.reelTimer = setInterval(() => {
-      if (!ui.reelPaused) {
-        ui.reelIdx = (ui.reelIdx + 1) % REEL_LOOKS.length;
-        updateReelUI();
-      }
-    }, 5000);
-  }
-
-  function updateReelUI() {
-    document.querySelectorAll('[data-reel-idx]').forEach((img) => {
-      const idx = Number(img.getAttribute('data-reel-idx'));
-      img.classList.toggle('active', idx === ui.reelIdx);
-    });
-    document.querySelectorAll('[data-reel-dot]').forEach((btn) => {
-      const idx = Number(btn.getAttribute('data-reel-dot'));
-      btn.className = `h-1.5 rounded-full transition-all duration-300 ${idx === ui.reelIdx ? 'w-7 bg-black' : 'w-2 bg-black/25 hover:bg-black/50'}`;
-    });
-    const tagEl = document.getElementById('heroReelLookTag');
-    if (tagEl) tagEl.textContent = REEL_LOOKS[ui.reelIdx].tag;
-
-    // Restart 5s progress bar cleanly
-    const bar = document.getElementById('heroReelProgress');
-    if (bar) {
-      bar.style.animation = 'none';
-      void bar.offsetWidth;
-      bar.style.animation = '';
-      bar.classList.toggle('paused', ui.reelPaused);
-    }
-  }
-
-  function setReel(idx) {
-    BagozzaAudio.play('tap');
-    ui.reelIdx = idx;
-    updateReelUI();
-    startReelTimer();
-  }
-
-  function toggleReelPlay() {
-    BagozzaAudio.play('tap');
-    ui.reelPaused = !ui.reelPaused;
-    const icon = document.getElementById('reelPlayIcon');
-    if (icon) icon.textContent = ui.reelPaused ? '▶' : '❚❚';
-    const bar = document.getElementById('heroReelProgress');
-    if (bar) bar.classList.toggle('paused', ui.reelPaused);
-  }
-
-  function inspectCurrentReelLook() {
-    BagozzaAudio.play('fabric');
-    const look = REEL_LOOKS[ui.reelIdx];
-    if (look && look.suitId) openPDP(look.suitId);
-  }
-
-  /* ========================================================================
-     3. 3D BESPOKE SUIT STUDIO BINDINGS
+     2. 3D BESPOKE SUIT HERO STAGE BINDINGS
      ======================================================================== */
   function init3DSection() {
     const ok = BagozzaSuit3D.init('suit3dCanvasWrap');
@@ -1459,7 +1373,6 @@ window.BagozzaApp = (function () {
     ui.runwayBody = BagozzaStore.getSettings().defaultBody || 'classic';
 
     applyTranslations();
-    initHeroReel();
     init3DSection();
     renderRunway();
     bindRunwayDragTurn();
@@ -1486,9 +1399,6 @@ window.BagozzaApp = (function () {
   document.addEventListener('DOMContentLoaded', boot);
 
   return {
-    setReel,
-    toggleReelPlay,
-    inspectCurrentReelLook,
     select3DPreset,
     select3DBody,
     select3DSize,
