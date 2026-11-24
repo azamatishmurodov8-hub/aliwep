@@ -1,950 +1,931 @@
 <!DOCTYPE html>
-<html lang="tr" class="dark">
+<html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BAGOZZA Milano & İstanbul | Sartorial Luxury Since 1970</title>
-  <meta name="description" content="Bagozza resmi dijital vitrini. Şişli / Osmanbey lüks erkek giyim, İtalyan kesim özel dikim takım elbiseler, smokinler ve kış koleksiyonu.">
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind CSS CDN -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BAGOZZA — Milano & İstanbul | 3D Sartorial Luxury</title>
+  <meta name="description" content="BAGOZZA Şişli resmi dijital vitrini. 3D interaktif kostüm stüdyosu, Maison Runway sanal stilist ve 60 parçalık İtalyan erkek giyim koleksiyonu." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%230a0a0a'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='Georgia,serif' font-size='26' font-weight='bold' fill='%23c9a86a'%3EBG%3C/text%3E%3C/svg%3E" />
+
+  <!-- Editorial Luxury Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            gold: {
-              300: '#f5df9e',
-              400: '#e5c06b',
-              500: '#d4af37',
-              600: '#b89428',
-              700: '#94741c',
-            },
-            obsidian: {
-              950: '#07080a',
-              900: '#0b0c10',
-              850: '#111318',
-              800: '#171922',
-              700: '#222634',
-            }
-          },
-          fontFamily: {
-            serif: ['Cinzel', 'serif'],
-            sans: ['Plus Jakarta Sans', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
 
-  <style>
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #07080a; }
-    ::-webkit-scrollbar-thumb { background: #2a2618; border-radius: 4px; border: 1px solid #d4af37; }
-    
-    /* Luxury Glows & Shimmers */
-    .gold-gradient-text {
-      background: linear-gradient(135deg, #fff2cc 0%, #d4af37 50%, #aa8420 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .gold-border-glow {
-      box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
-      border: 1px solid rgba(212, 175, 55, 0.35);
-    }
-    .glass-luxury {
-      background: rgba(15, 17, 24, 0.75);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(212, 175, 55, 0.18);
-    }
-    .perspective-card {
-      perspective: 1200px;
-    }
-    .tilt-inner {
-      transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
-    }
-    
-    /* Background subtle mesh */
-    .luxury-radial {
-      background: radial-gradient(circle at 50% 10%, rgba(212, 175, 55, 0.08) 0%, rgba(7, 8, 10, 0.98) 70%);
-    }
-
-    /* Mannequin 3D Float Animation */
-    @keyframes subtleFloat {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-8px) rotate(0.5deg); }
-    }
-    .floating-mannequin {
-      animation: subtleFloat 6s ease-in-out infinite;
-    }
-  </style>
+  <!-- Custom Pure-White Luxury & Motion CSS -->
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="bg-obsidian-950 text-stone-200 font-sans antialiased selection:bg-gold-500 selection:text-black min-h-screen overflow-x-hidden">
+<body class="bg-white text-[#0a0a0a]">
 
-  <!-- Audio Context Sound Effects -->
-  <script>
-    const playLuxurySound = (type = 'click') => {
-      try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        
-        if (type === 'click') {
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(820, audioCtx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.08);
-          gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
-          osc.start();
-          osc.stop(audioCtx.currentTime + 0.08);
-        } else if (type === 'chime') {
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
-          osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1); // A5
-          gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
-          osc.start();
-          osc.stop(audioCtx.currentTime + 0.35);
-        }
-      } catch(e) {}
-    };
-  </script>
+  <!-- ======================================================================
+       FLOATING GLASS PILL NAVBAR (Aether Lane inspired — White Luxury Edition)
+       ====================================================================== -->
+  <header class="fixed top-3 sm:top-4 inset-x-0 z-40 px-2.5 sm:px-6 pointer-events-none">
+    <div id="pillNavbar" class="pill-nav pointer-events-auto max-w-6xl mx-auto h-14 sm:h-16 px-2.5 sm:px-5 rounded-full flex items-center justify-between gap-1.5 sm:gap-2">
 
-  <!-- Top VIP Announcement Bar -->
-  <div class="bg-gradient-to-r from-obsidian-950 via-stone-900 to-obsidian-950 border-b border-gold-500/20 py-2 px-4 text-xs tracking-widest text-center flex items-center justify-between z-50 relative">
-    <div class="hidden sm:flex items-center space-x-2 text-stone-400">
-      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-      <span data-tr="Şişli Showroom: Açık (09:00 - 18:45)" data-en="Şişli Showroom: Open (09:00 - 18:45)">Şişli Showroom: Açık (09:00 - 18:45)</span>
-    </div>
-    <div class="mx-auto font-serif text-gold-400 font-medium">
-      <span data-tr="✦ 2026/2027 İTALYAN ÖZEL DİKİM & SMOKİN KOLEKSİYONU ✦" data-en="✦ 2026/2027 ITALIAN BESPOKE & TUXEDO COLLECTION ✦">✦ 2026/2027 İTALYAN ÖZEL DİKİM & SMOKİN KOLEKSİYONU ✦</span>
-    </div>
-    <div class="flex items-center space-x-3 text-xs">
-      <!-- Language Switcher -->
-      <button onclick="toggleLang()" class="px-2.5 py-1 rounded bg-obsidian-800 border border-gold-500/30 text-gold-400 font-semibold hover:bg-gold-500 hover:text-black transition">
-        <span id="langLabel">EN</span>
-      </button>
-      <!-- Admin Link -->
-      <button onclick="openAdminModal()" class="text-stone-400 hover:text-gold-400 transition" title="Yönetici Paneli">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- Primary Luxury Navigation -->
-  <header class="sticky top-0 z-40 glass-luxury border-b border-gold-500/20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      
-      <!-- Logo & Monogram -->
-      <a href="#hero" class="flex items-center space-x-3 group" onclick="playLuxurySound('click')">
-        <div class="w-11 h-11 rounded-full border border-gold-500/50 flex items-center justify-center bg-obsidian-900 group-hover:border-gold-400 transition shadow-[0_0_15px_rgba(212,175,55,0.2)]">
-          <span class="font-serif text-lg font-extrabold text-gold-400">BG</span>
+      <!-- Designer Monogram + Brand Wordmark -->
+      <a href="#hero" onclick="BagozzaAudio.play('tap')" class="flex items-center gap-2 sm:gap-2.5 pl-0.5 sm:pl-1 group shrink-0">
+        <!-- Custom Crisp BG Vector Monogram -->
+        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition duration-300">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M9 8h8.5c3.2 0 5.5 1.8 5.5 4.6 0 2-1.2 3.5-3.1 4.1 2.4.6 4.1 2.4 4.1 4.9 0 3.3-2.6 5.4-6.3 5.4H9V8zm4 7.4h4.1c1.3 0 2.1-.8 2.1-2s-.8-1.9-2.1-1.9H13v3.9zm0 8.1h4.6c1.6 0 2.5-.9 2.5-2.2 0-1.4-.9-2.2-2.5-2.2H13v4.4z" fill="currentColor"/>
+            <path d="M27.5 15.8c-.7-1.6-2.2-2.7-4.3-2.7-3.1 0-5.1 2.2-5.1 5.4 0 3.3 2 5.5 5.1 5.5 2.1 0 3.6-1 4.1-2.8h-3.8v-2.6h7.4v8.4h-2.5l-.4-2.2c-1.1 1.6-2.9 2.6-5.2 2.6-5 0-8.6-3.7-8.6-8.9s3.6-8.9 8.8-8.9c3.6 0 6.5 1.9 7.6 4.9l-3.1 1.3z" fill="#c9a86a" opacity="0.92"/>
+          </svg>
         </div>
-        <div>
-          <span class="font-serif text-2xl font-bold tracking-[0.25em] text-white block group-hover:text-gold-300 transition">BAGOZZA</span>
-          <span class="text-[9px] uppercase tracking-[0.3em] text-gold-500/80 block font-sans">Milano &bull; İstanbul &bull; 1970</span>
-        </div>
+        <span class="font-brand text-xs sm:text-base font-bold tracking-[0.16em] sm:tracking-[0.26em] text-black">BAGOZZA</span>
       </a>
 
-      <!-- Desktop Menu -->
-      <nav class="hidden md:flex items-center space-x-8 text-sm tracking-wider uppercase font-medium">
-        <a href="#stylist" onclick="playLuxurySound('click')" class="text-stone-300 hover:text-gold-400 transition py-1 border-b border-transparent hover:border-gold-400" data-tr="Sanal Stilist (3D)" data-en="Virtual Stylist (3D)">Sanal Stilist (3D)</a>
-        <a href="#collection" onclick="playLuxurySound('click')" class="text-stone-300 hover:text-gold-400 transition py-1 border-b border-transparent hover:border-gold-400" data-tr="Lookbook" data-en="Lookbook">Lookbook</a>
-        <a href="#bespoke" onclick="playLuxurySound('click')" class="text-stone-300 hover:text-gold-400 transition py-1 border-b border-transparent hover:border-gold-400" data-tr="Özel Dikim" data-en="Bespoke Tailoring">Özel Dikim</a>
-        <a href="#boutique360" onclick="playLuxurySound('click')" class="text-stone-300 hover:text-gold-400 transition py-1 border-b border-transparent hover:border-gold-400" data-tr="360° Butik Turu" data-en="360° Boutique Tour">360° Butik Turu</a>
-        <a href="#location" onclick="playLuxurySound('click')" class="text-stone-300 hover:text-gold-400 transition py-1 border-b border-transparent hover:border-gold-400" data-tr="Şişli Mağaza" data-en="Şişli Store">Şişli Mağaza</a>
+      <!-- Center Compact Navigation -->
+      <nav class="hidden md:flex items-center gap-7" aria-label="Primary">
+        <a href="#studio3d" onclick="BagozzaAudio.play('tap')" class="nav-link" data-i18n="nav_3d">3D Kostüm</a>
+        <a href="#runwaySection" onclick="BagozzaAudio.play('tap')" class="nav-link" data-i18n="nav_runway">Sanal Stilist</a>
+        <a href="#catalogSection" onclick="BagozzaAudio.play('tap')" class="nav-link" data-i18n="nav_catalog">Koleksiyon</a>
       </nav>
 
-      <!-- Action Button -->
-      <div class="flex items-center space-x-3">
-        <a href="https://wa.me/902122347088?text=Merhabalar%2C%20Bagozza%20%C5%9Ei%C5%9Fli%20ma%C4%9Fazan%C4%B1zdan%20%C3%B6zel%20dikim%20ve%20tak%C4%B1m%20elbise%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" onclick="playLuxurySound('chime')" class="relative inline-flex items-center justify-center px-5 py-2.5 text-xs font-semibold uppercase tracking-widest text-black bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 rounded-sm shadow-[0_0_20px_rgba(212,175,55,0.35)] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)] hover:brightness-110 transition duration-300">
-          <span class="mr-2">💬</span>
-          <span data-tr="WhatsApp Randevu" data-en="WhatsApp Booking">WhatsApp Randevu</span>
+      <!-- Right Utility Actions -->
+      <div class="flex items-center gap-1 sm:gap-2 shrink-0">
+        <!-- Quick Language Pill (TR / EN) -->
+        <button onclick="BagozzaApp.toggleQuickLang()" aria-label="Dil Değiştir" class="btn-motion h-9 sm:h-10 px-2.5 sm:px-3 rounded-full border border-neutral-200 bg-white hover:border-black text-[10px] sm:text-[11px] font-bold tracking-wider text-black">
+          <span id="navLangLabel">TR</span>
+        </button>
+
+        <!-- Compact Official Google Maps Logo Pin (Direct to Google Maps App!) -->
+        <a href="https://maps.app.goo.gl/U2z7qZpVpbjofQgu7" target="_blank" rel="noopener" onclick="BagozzaAudio.play('tap')" aria-label="Google Maps Mağaza Konumu" title="Bagozza Şişli — Google Maps" class="js-maps-link btn-motion w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-neutral-200 bg-white hover:border-black flex items-center justify-center">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#EA4335" d="M12 2C8.13 2 5 5.13 5 9c0 1.74.5 3.37 1.41 4.84.95 1.54 2.2 2.86 3.16 4.4.47.75.81 1.45 1.17 2.26.26.55.47 1.5 1.26 1.5s1-.95 1.26-1.5c.36-.81.7-1.51 1.17-2.26.96-1.54 2.21-2.86 3.16-4.4C18.5 12.37 19 10.74 19 9c0-3.87-3.13-7-7-7z"/>
+            <path fill="#4285F4" d="M12 2v7l4.95-4.95C15.68 2.78 13.93 2 12 2z"/>
+            <path fill="#FBBC05" d="M7.05 4.05L12 9V2c-1.93 0-3.68.78-4.95 2.05z"/>
+            <path fill="#34A853" d="M12 9l4.95-4.95C18.22 5.32 19 7.07 19 9c0 1.74-.5 3.37-1.41 4.84L12 9z"/>
+            <circle cx="12" cy="9" r="3" fill="#ffffff"/>
+          </svg>
         </a>
+
+        <!-- Settings / Nastroyka Button -->
+        <button onclick="BagozzaApp.openSettings()" aria-label="Ayarlar" title="Ayarlar / Nastroyka" class="btn-motion w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-neutral-200 bg-white hover:border-black flex items-center justify-center text-neutral-800">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </button>
+
+        <!-- Shopping Bag ("Paket") Pill -->
+        <button onclick="BagozzaApp.openCart()" aria-label="Paket" class="btn-motion h-9 sm:h-10 px-3 sm:px-4 rounded-full bg-black text-white text-xs font-semibold tracking-wider uppercase flex items-center gap-1.5 sm:gap-2 shadow-sm hover:bg-neutral-800">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <span class="hidden sm:inline" data-i18n="paket">Paket</span>
+          <span class="js-cart-count min-w-[20px] h-5 px-1.5 rounded-full bg-white text-black text-[10px] font-bold flex items-center justify-center">0</span>
+        </button>
       </div>
+
     </div>
   </header>
 
-  <!-- Hero Section with Real Facade Background & Grand Typography -->
-  <section id="hero" class="relative min-h-[92vh] flex items-center justify-center overflow-hidden luxury-radial px-4 sm:px-6 lg:px-8">
-    
-    <!-- Background Real Facade with Dark Elegance Overlay -->
-    <div class="absolute inset-0 z-0">
-      <img src="assets/facade_illuminated.jpg" alt="Bagozza Şişli Storefront" class="w-full h-full object-cover object-center opacity-25 filter scale-105 transform motion-safe:animate-[pulse_10s_ease-in-out_infinite]" />
-      <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/85 to-obsidian-950/60"></div>
-      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold-500/10 via-transparent to-transparent"></div>
-    </div>
-
-    <!-- Hero Content -->
-    <div class="relative z-10 max-w-5xl mx-auto text-center pt-8 pb-16">
-      
-      <div class="inline-flex items-center space-x-3 px-4 py-1.5 rounded-full bg-obsidian-900/80 border border-gold-500/40 text-gold-400 text-xs tracking-[0.25em] uppercase mb-8 shadow-[0_0_20px_rgba(212,175,55,0.15)]">
-        <span>Milano &bull; Şişli / Osmanbey</span>
-        <span class="text-gold-500">&bull;</span>
-        <span data-tr="Hrant Dink Sok. No:39" data-en="Hrant Dink St. No:39">Hrant Dink Sok. No:39</span>
-      </div>
-
-      <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white mb-6 leading-none">
-        KUSURSUZ <span class="gold-gradient-text block sm:inline">İTALYAN KESİMİ</span>
-      </h1>
-
-      <p class="max-w-2xl mx-auto text-stone-300 text-base sm:text-lg md:text-xl font-light tracking-wide mb-10 leading-relaxed" data-tr="1970'ten bugüne Napoli ve Milano terzilik geleneklerini İstanbul'un kalbi Şişli'de yaşatıyoruz. 100% saf İtalyan kumaşları, el dikimi takım elbiseler ve lüks smokinler." data-en="Bringing the tailoring heritage of Naples & Milan to Şişli, Istanbul since 1970. 100% pure Italian fabrics, handcrafted bespoke suits, and luxury tuxedos.">
-        1970'ten bugüne Napoli ve Milano terzilik geleneklerini İstanbul'un kalbi Şişli'de yaşatıyoruz. 100% saf İtalyan kumaşları, el dikimi takım elbiseler ve lüks smokinler.
-      </p>
-
-      <!-- CTAs -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-        <a href="#stylist" onclick="playLuxurySound('chime')" class="w-full sm:w-auto px-8 py-4 rounded-sm bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 text-black font-semibold text-sm uppercase tracking-widest hover:brightness-110 shadow-[0_0_25px_rgba(212,175,55,0.4)] transition flex items-center justify-center">
-          <span class="mr-2">✨</span>
-          <span data-tr="Sanal Manken İle Kombin Yap" data-en="Interactive 3D Virtual Stylist">Sanal Manken İle Kombin Yap</span>
-        </a>
-        <a href="#boutique360" onclick="playLuxurySound('click')" class="w-full sm:w-auto px-8 py-4 rounded-sm bg-obsidian-900/90 border border-gold-500/50 text-gold-300 font-semibold text-sm uppercase tracking-widest hover:bg-gold-500/10 hover:border-gold-400 transition flex items-center justify-center">
-          <span class="mr-2">🏛️</span>
-          <span data-tr="360° Butiği Gez" data-en="Tour 360° Boutique">360° Butiği Gez</span>
-        </a>
-      </div>
-
-      <!-- Trust Badges -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-10 border-t border-gold-500/20 text-center">
-        <div>
-          <div class="font-serif text-2xl font-bold text-gold-400">1970</div>
-          <div class="text-xs text-stone-400 tracking-wider uppercase mt-1" data-tr="Yarım Asırlık Tecrübe" data-en="Half Century Heritage">Yarım Asırlık Tecrübe</div>
-        </div>
-        <div>
-          <div class="font-serif text-2xl font-bold text-gold-400">Super 150s</div>
-          <div class="text-xs text-stone-400 tracking-wider uppercase mt-1" data-tr="Saf İtalyan Yünü & İpek" data-en="Pure Italian Wool & Silk">Saf İtalyan Yünü & İpek</div>
-        </div>
-        <div>
-          <div class="font-serif text-2xl font-bold text-gold-400">Su Misura</div>
-          <div class="text-xs text-stone-400 tracking-wider uppercase mt-1" data-tr="Kişiye Özel Dikim" data-en="Bespoke Tailoring">Kişiye Özel Dikim</div>
-        </div>
-        <div>
-          <div class="font-serif text-2xl font-bold text-gold-400">4.3 ★</div>
-          <div class="text-xs text-stone-400 tracking-wider uppercase mt-1" data-tr="Google Müşteri Memnuniyeti" data-en="Google Verified Rating">Google Müşteri Memnuniyeti</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3D VIRTUAL STYLIST & MANNEQUIN FITTING ROOM -->
-  <section id="stylist" class="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-obsidian-950 via-obsidian-900 to-obsidian-950 border-t border-gold-500/20 relative">
+  <!-- ======================================================================
+       SECTION 1: MONUMENTAL PURE-WHITE HERO + 5-SECOND LIVE MOTION LOOKBOOK
+       (Giant Designer BAGOZZA Typography + Real Full-Body Suit Model)
+       ====================================================================== -->
+  <section id="hero" class="relative pt-24 pb-12 sm:pt-28 sm:pb-16 px-4 sm:px-8 bg-white overflow-hidden">
     <div class="max-w-7xl mx-auto">
-      
-      <div class="text-center max-w-3xl mx-auto mb-16">
-        <span class="text-gold-400 text-xs font-semibold tracking-[0.3em] uppercase block mb-2" data-tr="INTERAKTİF DİJİTAL DENEYİM" data-en="INTERACTIVE DIGITAL EXPERIENCE">INTERAKTİF DİJİTAL DENEYİM</span>
-        <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mb-4">
-          BAGOZZA <span class="gold-gradient-text">SANAL STİLİST</span>
-        </h2>
-        <p class="text-stone-400 text-sm sm:text-base" data-tr="Özel İtalyan koleksiyonumuzdan tarzınızı seçin, kumaş detaylarını canlı inceleyin ve tek dokunuşla Şişli mağazamızdan randevu oluşturun." data-en="Select your style from our bespoke Italian collection, inspect fabric specifications, and book an appointment with our master tailors in Şişli.">
-          Özel İtalyan koleksiyonumuzdan tarzınızı seçin, kumaş detaylarını canlı inceleyin ve tek dokunuşla Şişli mağazamızdan randevu oluşturun.
-        </p>
+
+      <!-- Editorial Micro Eyebrow -->
+      <div class="flex items-center justify-between text-[10px] sm:text-[11px] font-semibold tracking-[0.28em] uppercase text-neutral-400 mb-4 sm:mb-6">
+        <span data-i18n="hero_badge">MİLANO • ŞİŞLİ / OSMANBEY • 1970</span>
+        <span class="hidden sm:inline">SPRING / WINTER 2026–2027</span>
       </div>
 
-      <!-- Stylist Workbench: 2-Column interactive studio -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-        
-        <!-- Left: Dynamic Mannequin Stage -->
-        <div class="lg:col-span-6 relative">
-          <div class="relative rounded-2xl p-6 glass-luxury gold-border-glow overflow-hidden text-center">
-            
-            <!-- Stage Lighting & Background Ambience -->
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gold-500/15 via-obsidian-900/60 to-obsidian-950 -z-10"></div>
-            <div class="absolute top-4 left-4 z-20 flex items-center space-x-2 px-3 py-1 rounded bg-black/60 border border-gold-500/30 text-[11px] text-gold-300">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-              <span id="activeStyleBadge">Milano Black-Tie Smokin</span>
+      <!-- GIANT ARCHITECTURAL DESIGNER TITLE + CENTERED LIVE 5-SEC LOOKBOOK STAGE -->
+      <div class="relative flex flex-col items-center justify-center py-2 sm:py-4">
+
+        <!-- Giant Typographic Backplate ("Galaxy Home" architectural scale) -->
+        <h1 class="hero-giant-title text-center w-full relative z-10 tracking-[0.14em]">
+          BAGOZZA
+        </h1>
+
+        <!-- Overlapping Central Editorial Lookbook Canvas (5-Second Live Motion Reel) -->
+        <div class="relative z-20 mt-3 sm:-mt-10 md:-mt-16 w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+          <!-- Left Architectural Manifesto -->
+          <div class="lg:col-span-4 order-2 lg:order-1 text-center lg:text-left space-y-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-[10px] font-bold tracking-[0.2em] uppercase text-neutral-800">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+              <span data-i18n="reel_label">5 SANİYELİK CANLI LOOKBOOK</span>
             </div>
 
-            <!-- Mannequin Image Display Container -->
-            <div class="relative w-full max-w-sm mx-auto h-[480px] sm:h-[540px] flex items-center justify-center my-4 overflow-hidden rounded-xl">
-              <img id="mannequinImg" src="assets/model_purple_tuxedo.jpg" alt="Bagozza Bespoke Suit" class="w-full h-full object-cover object-top rounded-xl shadow-2xl transition-all duration-700 transform scale-100 filter brightness-105 floating-mannequin" />
-              
-              <!-- Subtle Fabric Watermark Badge -->
-              <div class="absolute bottom-4 left-4 right-4 bg-obsidian-950/85 backdrop-blur-md p-3 rounded-lg border border-gold-500/30 flex items-center justify-between text-left text-xs">
-                <div>
-                  <div class="text-stone-400" data-tr="Mato & Terzilik:" data-en="Fabric & Craft:">Mato & Terzilik:</div>
-                  <div id="fabricSpec" class="font-serif text-gold-300 font-semibold">İtalyan İpek & Saten Yaka (Loro Piana)</div>
-                </div>
-                <div class="text-right">
-                  <div class="text-stone-400" data-tr="Tahmini Fiyat:" data-en="Est. Value:">Tahmini Fiyat:</div>
-                  <div id="priceSpec" class="font-serif text-lg font-bold text-white">₺45,000</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Interactive 3D Room Switch Buttons -->
-            <div class="flex items-center justify-center space-x-3 mt-4 text-xs">
-              <span class="text-stone-400" data-tr="Açı / Vitrin:" data-en="Perspective:">Açı / Vitrin:</span>
-              <button onclick="setOutfitAngle('front')" class="px-3 py-1 rounded bg-obsidian-800 border border-gold-500/30 text-stone-300 hover:text-gold-400 active:scale-95 transition" data-tr="Ön Vitrin" data-en="Front View">Ön Vitrin</button>
-              <button onclick="setOutfitAngle('showroom')" class="px-3 py-1 rounded bg-obsidian-800 border border-gold-500/30 text-stone-300 hover:text-gold-400 active:scale-95 transition" data-tr="İç Showroom" data-en="Interior Showroom">İç Showroom</button>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Right: Outfit Customizer Selector -->
-        <div class="lg:col-span-6 space-y-6">
-          <div class="p-6 sm:p-8 rounded-2xl glass-luxury border border-gold-500/30">
-            
-            <h3 class="font-serif text-2xl font-bold text-white mb-2" data-tr="Kombin & Modelinizi Seçin" data-en="Select Your Bespoke Look">Kombin & Modelinizi Seçin</h3>
-            <p class="text-stone-400 text-xs sm:text-sm mb-6" data-tr="Her bir parça Şişli atölyemizde ustalarımız tarafından kişisel ölçülerinize göre uyarlanabilir." data-en="Every garment can be tailored to your precise measurements in our Şişli atelier.">
-              Her bir parça Şişli atölyemizde ustalarımız tarafından kişisel ölçülerinize göre uyarlanabilir.
+            <p class="font-display text-2xl sm:text-3xl leading-snug text-neutral-900 font-medium" data-i18n="hero_sub">
+              İtalyan terzilik mirası, 3D interaktif kostüm deneyimi ve 60 parçalık özel koleksiyon.
             </p>
 
-            <!-- Outfit Options List -->
-            <div class="space-y-3">
-              
-              <!-- Option 1: Purple Velvet Tuxedo -->
-              <div onclick="selectOutfit('purple_tuxedo')" id="opt-purple_tuxedo" class="outfit-card p-4 rounded-xl border border-gold-500/40 bg-gold-500/10 cursor-pointer hover:border-gold-400 transition flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                  <div class="w-12 h-12 rounded-lg overflow-hidden border border-gold-500/30 shrink-0">
-                    <img src="assets/model_purple_tuxedo.jpg" class="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <h4 class="font-serif font-bold text-white text-sm sm:text-base">Milano Black-Tie Smokin</h4>
-                    <p class="text-xs text-stone-400" data-tr="Saten Şal Yaka, İtalyan İpek & Yün Karışımı" data-en="Satin Shawl Lapel, Silk & Wool Blend">Saten Şal Yaka, İtalyan İpek & Yün Karışımı</p>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span class="text-gold-400 font-serif font-bold text-sm sm:text-base">₺45,000</span>
-                  <span class="block text-[10px] text-emerald-400" data-tr="Özel Dikim" data-en="Bespoke">Özel Dikim</span>
-                </div>
-              </div>
-
-              <!-- Option 2: Royal Blue 3-Piece -->
-              <div onclick="selectOutfit('blue_suit')" id="opt-blue_suit" class="outfit-card p-4 rounded-xl border border-stone-800 bg-obsidian-900/60 cursor-pointer hover:border-gold-500/50 transition flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                  <div class="w-12 h-12 rounded-lg overflow-hidden border border-gold-500/30 shrink-0">
-                    <img src="assets/model_blue_suit.jpg" class="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <h4 class="font-serif font-bold text-white text-sm sm:text-base">Napoli Royal Navy 3-Piece</h4>
-                    <p class="text-xs text-stone-400" data-tr="Yelekli Klasik İtalyan Kesim, Super 150s Yün" data-en="3-Piece Italian Classic, Super 150s Wool">Yelekli Klasik İtalyan Kesim, Super 150s Yün</p>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span class="text-gold-400 font-serif font-bold text-sm sm:text-base">₺38,500</span>
-                  <span class="block text-[10px] text-emerald-400" data-tr="Özel Dikim" data-en="Bespoke">Özel Dikim</span>
-                </div>
-              </div>
-
-              <!-- Option 3: Grey Glen Plaid Double-Breasted -->
-              <div onclick="selectOutfit('grey_suit')" id="opt-grey_suit" class="outfit-card p-4 rounded-xl border border-stone-800 bg-obsidian-900/60 cursor-pointer hover:border-gold-500/50 transition flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                  <div class="w-12 h-12 rounded-lg overflow-hidden border border-gold-500/30 shrink-0">
-                    <img src="assets/model_grey_suit.jpg" class="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <h4 class="font-serif font-bold text-white text-sm sm:text-base">Roma Glen Plaid Kruvaze</h4>
-                    <p class="text-xs text-stone-400" data-tr="Modern İtalyan Kruvaze, Saf Ekose Yün" data-en="Modern Italian Double-Breasted Plaid">Modern İtalyan Kruvaze, Saf Ekose Yün</p>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span class="text-gold-400 font-serif font-bold text-sm sm:text-base">₺32,000</span>
-                  <span class="block text-[10px] text-emerald-400" data-tr="Özel Dikim" data-en="Bespoke">Özel Dikim</span>
-                </div>
-              </div>
-
-              <!-- Option 4: Fur & Cashmere Overcoat -->
-              <div onclick="selectOutfit('fur_coat')" id="opt-fur_coat" class="outfit-card p-4 rounded-xl border border-stone-800 bg-obsidian-900/60 cursor-pointer hover:border-gold-500/50 transition flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                  <div class="w-12 h-12 rounded-lg overflow-hidden border border-gold-500/30 shrink-0">
-                    <img src="assets/model_fur_coat.jpg" class="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <h4 class="font-serif font-bold text-white text-sm sm:text-base">Firenze Lüks Kaşmir Palto</h4>
-                    <p class="text-xs text-stone-400" data-tr="Kürklü Yaka, %100 Saf Kaşmir Kış Zarafeti" data-en="Fur Collar, 100% Pure Cashmere Winter Luxury">Kürklü Yaka, %100 Saf Kaşmir Kış Zarafeti</p>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span class="text-gold-400 font-serif font-bold text-sm sm:text-base">₺42,000</span>
-                  <span class="block text-[10px] text-emerald-400" data-tr="Yeni Sezon" data-en="New Season">Yeni Sezon</span>
-                </div>
-              </div>
-
+            <!-- Compact Motion CTAs -->
+            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-1">
+              <a href="#studio3d" onclick="BagozzaAudio.play('tap')" class="btn-motion px-5 py-3 rounded-full bg-black text-white text-xs font-semibold tracking-wider uppercase shadow-md" data-i18n="hero_cta_3d">
+                3D Kostümü İncele
+              </a>
+              <a href="#runwaySection" onclick="BagozzaAudio.play('tap')" class="btn-motion px-5 py-3 rounded-full bg-white text-black border border-neutral-300 hover:border-black text-xs font-semibold tracking-wider uppercase" data-i18n="hero_cta_runway">
+                Sanal Stilist (Giydir)
+              </a>
             </div>
-
-            <!-- Instant WhatsApp Dispatch Button for Selected Look -->
-            <div class="pt-4">
-              <button onclick="orderActiveOutfit()" class="w-full py-4 rounded-sm bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:brightness-110 text-white font-semibold text-sm uppercase tracking-widest shadow-[0_0_20px_rgba(16,185,129,0.3)] transition flex items-center justify-center space-x-2">
-                <span>💬</span>
-                <span id="orderBtnText" data-tr="Seçilen Modeli WhatsApp'ta Rezerve Et" data-en="Reserve Selected Look via WhatsApp">Seçilen Modeli WhatsApp'ta Rezerve Et</span>
-              </button>
-              <p class="text-center text-[11px] text-stone-500 mt-2" data-tr="Şişli mağazamızdaki terzimiz 15 dakika içinde ölçü ve prova için dönüş yapar." data-en="Our tailor in Şişli boutique will respond within 15 minutes for fitting details.">
-                Şişli mağazamızdaki terzimiz 15 dakika içinde ölçü ve prova için dönüş yapar.
-              </p>
-            </div>
-
           </div>
-        </div>
 
+          <!-- Centerpiece: Real Full-Body Suit Model (5-Second Kinetic Motion Lookbook Reel) -->
+          <div class="lg:col-span-4 order-1 lg:order-2 flex justify-center">
+            <div class="relative w-[300px] sm:w-[340px] h-[430px] sm:h-[490px] rounded-[28px] overflow-hidden bg-neutral-100 shadow-[0_32px_80px_-24px_rgba(0,0,0,0.22)] border border-neutral-200/80 group">
+              <!-- Live 5s Crossfade Motion Frames -->
+              <div id="heroReelStage" onclick="BagozzaApp.inspectCurrentReelLook()" class="absolute inset-0 cursor-pointer"></div>
+
+              <!-- Crisp Frosted Pearl Top Badge -->
+              <div class="absolute top-3.5 inset-x-3.5 z-10 flex items-center justify-between">
+                <span id="heroReelLookTag" class="px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-bold tracking-widest uppercase text-black shadow-sm border border-black/5">
+                  LOOK 01 • IVORY GALA
+                </span>
+                <button onclick="BagozzaApp.toggleReelPlay()" aria-label="Reel Oynat/Durdur" class="btn-motion w-8 h-8 rounded-full bg-white/95 backdrop-blur-md text-black text-[10px] font-bold flex items-center justify-center shadow-sm border border-black/5">
+                  <span id="reelPlayIcon">❚❚</span>
+                </button>
+              </div>
+
+              <!-- Crisp Frosted Pearl Bottom 5-Second Progress Bar + Dots -->
+              <div class="absolute bottom-3.5 inset-x-4 z-10 bg-white/95 backdrop-blur-md rounded-2xl p-2.5 shadow-md border border-black/5">
+                <div class="h-0.5 w-full bg-black/15 rounded-full overflow-hidden mb-2">
+                  <div id="heroReelProgress" class="reel-progress-bar h-full w-full bg-black"></div>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div id="heroReelDots" class="flex items-center gap-1.5"></div>
+                  <button onclick="BagozzaApp.inspectCurrentReelLook()" class="text-[10px] font-bold uppercase tracking-wider text-black hover:underline">
+                    İncele →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Editorial Spec Column -->
+          <div class="lg:col-span-4 order-3 hidden lg:flex flex-col items-end text-right space-y-6">
+            <div>
+              <div class="font-brand text-3xl font-bold text-black">60</div>
+              <div class="text-[11px] uppercase tracking-[0.2em] text-neutral-500 mt-0.5">20 Takım • 20 Pantolon • 20 Ayakkabı</div>
+            </div>
+            <div class="w-16 h-px bg-neutral-200"></div>
+            <div>
+              <div class="font-brand text-3xl font-bold text-black">360°</div>
+              <div class="text-[11px] uppercase tracking-[0.2em] text-neutral-500 mt-0.5">WebGL 3D & Canlı Açı Döndürme</div>
+            </div>
+            <div class="w-16 h-px bg-neutral-200"></div>
+            <a href="#catalogSection" onclick="BagozzaAudio.play('tap')" class="btn-motion inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-black hover:opacity-70">
+              <span data-i18n="hero_cta_shop">60 Parça Koleksiyon</span>
+              <span>↓</span>
+            </a>
+          </div>
+
+        </div>
       </div>
 
     </div>
   </section>
 
-  <!-- OFFICIAL LOOKBOOK (3D TILT CARDS & REAL ASSETS) -->
-  <section id="collection" class="py-24 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/20 relative">
+  <!-- ======================================================================
+       SECTION 2: ONE BIG 3D INTERACTIVE SUIT ON CARRARA MARBLE GALLERY STAGE
+       ("bitta katta kastum va uni aylantib 3d formatda korisi va juda chiroyli joyda")
+       ====================================================================== -->
+  <section id="studio3d" class="scroll-mt-24 pt-20 pb-14 sm:pt-24 sm:pb-16 px-4 sm:px-8 bg-[#fafaf8] border-y border-neutral-200/80">
     <div class="max-w-7xl mx-auto">
-      
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
         <div>
-          <span class="text-gold-400 text-xs font-semibold tracking-[0.3em] uppercase block mb-2" data-tr="ŞİŞLİ SHOWROOM KOLEKSİYONU" data-en="ŞİŞLİ SHOWROOM COLLECTION">ŞİŞLİ SHOWROOM KOLEKSİYONU</span>
-          <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white">
-            SEZONUN <span class="gold-gradient-text">ÖNE ÇIKANLARI</span>
-          </h2>
+          <span class="text-[11px] font-bold tracking-[0.26em] uppercase text-[#b5945b] block mb-1.5" data-i18n="s3d_eyebrow">MİLANO MERMER GALERİ • 360° WEBGL</span>
+          <h2 class="font-brand text-2xl sm:text-4xl font-bold tracking-wider text-black" data-i18n="s3d_title">3D ÖZEL DİKİM KOSTÜM</h2>
         </div>
-        <p class="text-stone-400 text-sm max-w-md mt-4 md:mt-0" data-tr="Her bir parça İtalya'nın en seçkin kumaş üreticilerinden temin edilen saf yün, kaşmir ve ipek karışımlarıyla üretilmiştir." data-en="Each piece is crafted using pure wool, cashmere, and silk blends sourced from Italy's finest textile mills.">
-          Her bir parça İtalya'nın en seçkin kumaş üreticilerinden temin edilen saf yün, kaşmir ve ipek karışımlarıyla üretilmiştir.
+        <p class="text-xs sm:text-sm text-neutral-500 max-w-md" data-i18n="s3d_desc">
+          Kostümü parmağınızla veya farenizle 360° çevirin, İtalyan kumaşlarını ve vücut tipinizi canlı değiştirin.
         </p>
       </div>
 
-      <!-- Grid of 4 Master Luxury Cards with Real Photos -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        
-        <!-- Card 1: Official Lookbook 01 -->
-        <div class="perspective-card group">
-          <div class="tilt-inner rounded-xl overflow-hidden glass-luxury border border-gold-500/25 group-hover:border-gold-400/70 group-hover:shadow-[0_0_25px_rgba(212,175,55,0.25)] transition duration-500">
-            <div class="h-96 overflow-hidden relative">
-              <img src="assets/bagozza_home01.jpg" alt="Bagozza Lookbook 01" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" />
-              <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-transparent to-transparent opacity-80"></div>
-              <span class="absolute top-3 right-3 px-2.5 py-1 rounded bg-black/70 border border-gold-500/40 text-[10px] text-gold-300 font-serif uppercase tracking-widest">Bespoke Suit</span>
-            </div>
-            <div class="p-5">
-              <h3 class="font-serif font-bold text-lg text-white group-hover:text-gold-300 transition">İtalyan Klasik Smokin</h3>
-              <p class="text-xs text-stone-400 mt-1" data-tr="Kusursuz kalıp, saten klapa ve ipek astar." data-en="Flawless silhouette, satin lapel, silk lining.">Kusursuz kalıp, saten klapa ve ipek astar.</p>
-              <div class="flex items-center justify-between mt-4 pt-3 border-t border-gold-500/20 text-xs">
-                <span class="font-serif text-gold-400 font-bold">₺39,000</span>
-                <a href="https://wa.me/902122347088?text=Lookbook%20Model%2001%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="text-stone-300 hover:text-gold-400 font-semibold" data-tr="İncele &rarr;" data-en="Inquire &rarr;">İncele &rarr;</a>
-              </div>
-            </div>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+
+        <!-- Left 7 Cols: Live 3D Three.js Marble Gallery Pedestal Stage -->
+        <div class="lg:col-span-7 stage-3d-shell rounded-3xl relative overflow-hidden min-h-[460px] sm:min-h-[540px] flex flex-col">
+
+          <!-- Top-Left Subtle Drag Hint -->
+          <div class="absolute top-4 left-4 z-10 pointer-events-none flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur border border-black/8 shadow-sm text-[11px] font-semibold text-neutral-800">
+            <span class="text-[#b5945b]">⟳</span>
+            <span data-i18n="s3d_drag_hint">360° Çevirmek İçin Sürükleyin</span>
+          </div>
+
+          <!-- Top-Right Zoom Controls -->
+          <div class="absolute top-4 right-4 z-10 flex items-center gap-1.5">
+            <button onclick="BagozzaApp.zoom3D(-0.45)" aria-label="Yakınlaştır" class="btn-motion w-9 h-9 rounded-full bg-white/90 backdrop-blur border border-black/10 text-black font-bold text-sm flex items-center justify-center shadow-sm">+</button>
+            <button onclick="BagozzaApp.zoom3D(0.45)" aria-label="Uzaklaştır" class="btn-motion w-9 h-9 rounded-full bg-white/90 backdrop-blur border border-black/10 text-black font-bold text-sm flex items-center justify-center shadow-sm">−</button>
+          </div>
+
+          <!-- Three.js WebGL Mount -->
+          <div id="suit3dCanvasWrap" class="w-full flex-1 min-h-[460px] sm:min-h-[540px]"></div>
+
+          <!-- Graceful fallback if WebGL is disabled -->
+          <div id="suit3dFallback" class="hidden absolute inset-0 bg-[#f6f5f1] flex items-center justify-center p-6">
+            <img src="assets/suits/suit_01_model.jpg" alt="Bagozza 3D Suit" class="h-full max-h-[460px] object-contain rounded-2xl shadow-xl" />
+          </div>
+
+          <!-- Bottom Floating 360° Angle Bar -->
+          <div class="absolute bottom-4 inset-x-4 z-10 flex items-center justify-center gap-2 flex-wrap">
+            <button onclick="BagozzaApp.rotate3D(0)" class="btn-motion px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur border border-black/10 text-[11px] font-semibold text-black hover:bg-black hover:text-white shadow-sm">Ön 0°</button>
+            <button onclick="BagozzaApp.rotate3D(90)" class="btn-motion px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur border border-black/10 text-[11px] font-semibold text-black hover:bg-black hover:text-white shadow-sm">Yan 90°</button>
+            <button onclick="BagozzaApp.rotate3D(180)" class="btn-motion px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur border border-black/10 text-[11px] font-semibold text-black hover:bg-black hover:text-white shadow-sm">Arka 180°</button>
+            <button id="s3dAutoBtn" onclick="BagozzaApp.toggle3DAuto()" class="btn-motion px-3.5 py-1.5 rounded-full bg-black text-white border border-black text-[11px] font-semibold shadow-sm">360° Auto</button>
           </div>
         </div>
 
-        <!-- Card 2: Official Lookbook 02 -->
-        <div class="perspective-card group">
-          <div class="tilt-inner rounded-xl overflow-hidden glass-luxury border border-gold-500/25 group-hover:border-gold-400/70 group-hover:shadow-[0_0_25px_rgba(212,175,55,0.25)] transition duration-500">
-            <div class="h-96 overflow-hidden relative">
-              <img src="assets/bagozza_home02.jpg" alt="Bagozza Lookbook 02" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" />
-              <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-transparent to-transparent opacity-80"></div>
-              <span class="absolute top-3 right-3 px-2.5 py-1 rounded bg-black/70 border border-gold-500/40 text-[10px] text-gold-300 font-serif uppercase tracking-widest">Tuxedo Elegance</span>
-            </div>
-            <div class="p-5">
-              <h3 class="font-serif font-bold text-lg text-white group-hover:text-gold-300 transition">Siyah Kravat Damatlık</h3>
-              <p class="text-xs text-stone-400 mt-1" data-tr="Özel davetler ve düğünler için el işçiliği." data-en="Handcrafted for galas and black-tie ceremonies.">Özel davetler ve düğünler için el işçiliği.</p>
-              <div class="flex items-center justify-between mt-4 pt-3 border-t border-gold-500/20 text-xs">
-                <span class="font-serif text-gold-400 font-bold">₺44,500</span>
-                <a href="https://wa.me/902122347088?text=Damatl%C4%B1k%20ve%20smokin%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="text-stone-300 hover:text-gold-400 font-semibold" data-tr="İncele &rarr;" data-en="Inquire &rarr;">İncele &rarr;</a>
+        <!-- Right 5 Cols: Clean Pure-White Studio Configurator Card -->
+        <div class="lg:col-span-5 bg-white rounded-3xl border border-neutral-200/90 p-6 sm:p-7 flex flex-col justify-between gap-6 shadow-sm">
+          <div class="space-y-6">
+            <div>
+              <div class="flex items-start justify-between gap-3">
+                <h3 id="s3dPresetName" class="font-brand text-xl sm:text-2xl font-bold text-black">Milano Black-Tie Smokin</h3>
+                <span id="s3dPresetPrice" class="font-sans text-lg font-bold text-[#c62828] shrink-0">42.000₺</span>
               </div>
+              <p id="s3dPresetFabric" class="text-xs text-neutral-500 mt-1.5">%100 Super 160s Barathea Yünü & İpek Saten Klapa</p>
             </div>
-          </div>
-        </div>
 
-        <!-- Card 3: Official Lookbook 03 (Tailor Made) -->
-        <div class="perspective-card group">
-          <div class="tilt-inner rounded-xl overflow-hidden glass-luxury border border-gold-500/25 group-hover:border-gold-400/70 group-hover:shadow-[0_0_25px_rgba(212,175,55,0.25)] transition duration-500">
-            <div class="h-96 overflow-hidden relative">
-              <img src="assets/bagozza_home03.jpg" alt="Bagozza Lookbook 03" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" />
-              <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-transparent to-transparent opacity-80"></div>
-              <span class="absolute top-3 right-3 px-2.5 py-1 rounded bg-black/70 border border-gold-500/40 text-[10px] text-gold-300 font-serif uppercase tracking-widest">Tailor Made</span>
+            <!-- 6 Live Italian Fabric Swatches -->
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-400 mb-2.5">İtalyan Kumaş & Stil</div>
+              <div id="suit3dPresets" class="flex flex-wrap gap-2"></div>
             </div>
-            <div class="p-5">
-              <h3 class="font-serif font-bold text-lg text-white group-hover:text-gold-300 transition">Kişiye Özel Dikim Takım</h3>
-              <p class="text-xs text-stone-400 mt-1" data-tr="Super 150s saf yün, 40 saatlik el emeği." data-en="Super 150s pure virgin wool, 40 hours craftsmanship.">Super 150s saf yün, 40 saatlik el emeği.</p>
-              <div class="flex items-center justify-between mt-4 pt-3 border-t border-gold-500/20 text-xs">
-                <span class="font-serif text-gold-400 font-bold">₺36,000</span>
-                <a href="https://wa.me/902122347088?text=%C3%96zel%20dikim%20tak%C4%B1m%20elbise%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="text-stone-300 hover:text-gold-400 font-semibold" data-tr="İncele &rarr;" data-en="Inquire &rarr;">İncele &rarr;</a>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Card 4: Official Lookbook 04 (Smart Casual Blazer) -->
-        <div class="perspective-card group">
-          <div class="tilt-inner rounded-xl overflow-hidden glass-luxury border border-gold-500/25 group-hover:border-gold-400/70 group-hover:shadow-[0_0_25px_rgba(212,175,55,0.25)] transition duration-500">
-            <div class="h-96 overflow-hidden relative">
-              <img src="assets/bagozza_home04.jpg" alt="Bagozza Lookbook 04" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" />
-              <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-transparent to-transparent opacity-80"></div>
-              <span class="absolute top-3 right-3 px-2.5 py-1 rounded bg-black/70 border border-gold-500/40 text-[10px] text-gold-300 font-serif uppercase tracking-widest">Smart Casual</span>
+            <!-- Live 3D Body Build Morphing -->
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-400 mb-2.5">Canlı 3D Vücut Tipi (Gavda)</div>
+              <div class="flex flex-wrap gap-2">
+                <button data-3d-body="athletic" onclick="BagozzaApp.select3DBody('athletic')" class="btn-motion px-3.5 py-2 rounded-full text-xs font-medium border bg-white text-neutral-700 border-neutral-200 hover:border-black" data-i18n="body_athletic">Atletik / Keng Yelka</button>
+                <button data-3d-body="classic" onclick="BagozzaApp.select3DBody('classic')" class="btn-motion px-3.5 py-2 rounded-full text-xs font-medium border bg-black text-white border-black" data-i18n="body_classic">Klasik / Slim</button>
+                <button data-3d-body="comfort" onclick="BagozzaApp.select3DBody('comfort')" class="btn-motion px-3.5 py-2 rounded-full text-xs font-medium border bg-white text-neutral-700 border-neutral-200 hover:border-black" data-i18n="body_comfort">Katta Gavda / Comfort</button>
+              </div>
             </div>
-            <div class="p-5">
-              <h3 class="font-serif font-bold text-lg text-white group-hover:text-gold-300 transition">İtalyan Blazer & Pantolon</h3>
-              <p class="text-xs text-stone-400 mt-1" data-tr="Hafif ve nefes alan kumaş, şehir zarafeti." data-en="Breathable lightweight fabric, urban elegance.">Hafif ve nefes alan kumaş, şehir zarafeti.</p>
-              <div class="flex items-center justify-between mt-4 pt-3 border-t border-gold-500/20 text-xs">
-                <span class="font-serif text-gold-400 font-bold">₺27,500</span>
-                <a href="https://wa.me/902122347088?text=Blazer%20ceket%20koleksiyonu%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" class="text-stone-300 hover:text-gold-400 font-semibold" data-tr="İncele &rarr;" data-en="Inquire &rarr;">İncele &rarr;</a>
+
+            <!-- Italian Suit Size Selector -->
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-400 mb-2.5">İtalyan Beden</div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <button data-3d-size="46" onclick="BagozzaApp.select3DSize('46')" class="size-pill w-10 h-10 text-xs">46</button>
+                <button data-3d-size="48" onclick="BagozzaApp.select3DSize('48')" class="size-pill w-10 h-10 text-xs">48</button>
+                <button data-3d-size="50" onclick="BagozzaApp.select3DSize('50')" class="size-pill w-10 h-10 text-xs active">50</button>
+                <button data-3d-size="52" onclick="BagozzaApp.select3DSize('52')" class="size-pill w-10 h-10 text-xs">52</button>
+                <button data-3d-size="54" onclick="BagozzaApp.select3DSize('54')" class="size-pill w-10 h-10 text-xs">54</button>
+                <button data-3d-size="56" onclick="BagozzaApp.select3DSize('56')" class="size-pill w-10 h-10 text-xs">56</button>
               </div>
             </div>
           </div>
+
+          <button onclick="BagozzaApp.add3DSuitToBag()" class="btn-motion w-full py-4 rounded-xl bg-black text-white text-xs font-bold tracking-[0.2em] uppercase hover:bg-neutral-800 shadow-lg flex items-center justify-center gap-2.5">
+            <span>🛍</span>
+            <span data-i18n="s3d_add_btn">Bu 3D Kostümü Pakete Ekle</span>
+          </button>
         </div>
 
       </div>
-
     </div>
   </section>
 
-  <!-- 360° VIRTUAL BOUTIQUE TOUR (LIVE GOOGLE STREET VIEW EMBEDDED) -->
-  <section id="boutique360" class="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-obsidian-950 via-obsidian-900 to-obsidian-950 border-t border-gold-500/20 relative">
+  <!-- ======================================================================
+       SECTION 3: MAISON VELL RUNWAY VIRTUAL DRESSING ROOM
+       (Real Model Mix-and-Match: Any Suit + Any Trouser + Any Shoe + Body Types + Turn)
+       ====================================================================== -->
+  <section id="runwaySection" class="scroll-mt-24 pt-20 pb-14 sm:pt-24 sm:pb-16 px-4 sm:px-8 bg-white border-b border-neutral-200/80">
     <div class="max-w-7xl mx-auto">
-      
-      <div class="text-center max-w-3xl mx-auto mb-14">
-        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs uppercase tracking-widest mb-3">
-          <span>🏛️</span>
-          <span data-tr="ŞİŞLİ SHOWROOM CANLI SANAL TUR" data-en="ŞİŞLİ SHOWROOM LIVE VIRTUAL TOUR">ŞİŞLİ SHOWROOM CANLI SANAL TUR</span>
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <span class="text-[11px] font-bold tracking-[0.26em] uppercase text-neutral-400 block mb-1.5" data-i18n="rw_eyebrow">MAISON RUNWAY • SANAL GİYİNME ODASI</span>
+          <h2 class="font-brand text-2xl sm:text-4xl font-bold tracking-wider text-black" data-i18n="rw_title">CANLI MODEL ÜZERİNDE KOMBİN YAP</h2>
         </div>
-        <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mb-4">
-          MAĞAZAMIZI <span class="gold-gradient-text">360° GEZİN</span>
-        </h2>
-        <p class="text-stone-400 text-sm sm:text-base" data-tr="Hrant Dink Sokağı'ndaki iki katlı tarihi butiğimizin önüne sanal olarak adım atın. Vitrinlerimizi, mimarimizi ve sokağımızı doğrudan tarayıcınızdan keşfedin." data-en="Step right in front of our two-story flagship boutique on Hrant Dink Street. Explore our store windows, architectural facade, and street vibe directly from your screen.">
-          Hrant Dink Sokağı'ndaki iki katlı tarihi butiğimizin önüne sanal olarak adım atın. Vitrinlerimizi, mimarimizi ve sokağımızı doğrudan tarayıcınızdan keşfedin.
+        <p class="text-xs sm:text-sm text-neutral-500 max-w-md" data-i18n="rw_desc">
+          Vücut tipinizi seçin, 20 takım elbise, 20 pantolon ve 20 ayakkabıdan dilediğinizi gerçek modele giydirip açıları döndürün.
         </p>
       </div>
 
-      <!-- Embedded Google Maps Street View 360 Photosphere Frame -->
-      <div class="relative rounded-2xl overflow-hidden glass-luxury gold-border-glow shadow-2xl">
-        <div class="aspect-w-16 aspect-h-9 w-full h-[520px]">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!4v1795541558944!6m8!1m7!1sCAoSF0NJSE0wb2dLRUlDQWdJQ081dENCaHdF!2m2!1d41.05664298811396!2d28.98727526392956!3f120!4f10!5f0.7820865974627469" 
-            width="100%" 
-            height="100%" 
-            style="border:0;" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="strict-origin-when-cross-origin"
-            class="w-full h-full">
-          </iframe>
-        </div>
+      <!-- Maison Vell Two-Column Runway Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
 
-        <!-- 360 Tour Floating Control Bar -->
-        <div class="p-4 sm:p-6 bg-obsidian-950/90 border-t border-gold-500/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-          <div class="flex items-center space-x-3 text-stone-300">
-            <span class="text-gold-400 text-base">📍</span>
-            <span><strong>Bagozza Şişli:</strong> 19 Mayıs Mah., Hrant Dink Sok. No:39, Osmanbey / İstanbul</span>
+        <!-- Left 7 Cols: Pure-White Depth Runway Stage -->
+        <div class="lg:col-span-7 runway-canvas rounded-3xl border border-neutral-200/90 p-5 sm:p-6 flex flex-col justify-between gap-5">
+
+          <!-- Top Runway Controls: Body Type Switcher + Look Stepper -->
+          <div class="flex flex-wrap items-center justify-between gap-3 relative z-20">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <button data-rw-body="athletic" onclick="BagozzaApp.setRunwayBody('athletic')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="body_athletic">Atletik / Keng Yelka</button>
+              <button data-rw-body="classic" onclick="BagozzaApp.setRunwayBody('classic')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="body_classic">Klasik / Slim</button>
+              <button data-rw-body="comfort" onclick="BagozzaApp.setRunwayBody('comfort')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="body_comfort">Katta Gavda / Comfort</button>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button onclick="BagozzaApp.stepRunwayLook(-1)" aria-label="Önceki Look" class="btn-motion w-8 h-8 rounded-full border border-neutral-200 bg-white hover:border-black flex items-center justify-center text-xs">←</button>
+              <span id="rwLookNumber" class="font-mono text-xs font-bold tracking-widest px-2 text-black">LOOK 01</span>
+              <button onclick="BagozzaApp.stepRunwayLook(1)" aria-label="Sonraki Look" class="btn-motion w-8 h-8 rounded-full border border-neutral-200 bg-white hover:border-black flex items-center justify-center text-xs">→</button>
+            </div>
           </div>
-          <div class="flex items-center space-x-4">
-            <a href="https://maps.app.goo.gl/U2z7qZpVpbjofQgu7" target="_blank" class="px-4 py-2 rounded bg-obsidian-800 border border-gold-500/40 text-gold-300 hover:bg-gold-500 hover:text-black font-semibold transition" data-tr="Google Haritalar'da Aç" data-en="Open in Google Maps">Google Haritalar'da Aç ↗</a>
-            <a href="#booking" class="px-4 py-2 rounded bg-gradient-to-r from-gold-400 to-gold-600 text-black font-bold hover:brightness-110 transition" data-tr="Özel Prova Randevusu Al" data-en="Book Private Fitting">Özel Prova Randevusu Al</a>
-          </div>
-        </div>
-      </div>
 
-    </div>
-  </section>
+          <!-- Center Depth-of-Field Runway Showcase (Exact Maison Vell Vibe!) -->
+          <div class="relative flex items-center justify-center py-2 min-h-[460px] sm:min-h-[530px] runway-turn-stage select-none">
 
-  <!-- BESPOKE TAILORING APPOINTMENT & CONTACT -->
-  <section id="booking" class="py-24 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/20 relative">
-    <div class="max-w-7xl mx-auto">
-      
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        
-        <!-- Left: Boutique Atmosphere Photos -->
-        <div class="lg:col-span-5 space-y-6">
-          <div class="rounded-2xl overflow-hidden glass-luxury border border-gold-500/30">
-            <img src="assets/marble_showroom.jpg" alt="Bagozza Marble Interior" class="w-full h-72 object-cover filter brightness-95" />
-            <div class="p-6">
-              <h3 class="font-serif text-xl font-bold text-white mb-2" data-tr="Şişli Atölyemizde VIP Ağırlama" data-en="VIP Hospitality in Şişli Atelier">Şişli Atölyemizde VIP Ağırlama</h3>
-              <p class="text-xs text-stone-400 leading-relaxed" data-tr="Özel dikim seanslarımızda kahvenizi yudumlarken, İtalyan terzilik ustalarımız eşliğinde kumaş, düğme, astar ve kalıp seçimlerinizi yapabilirsiniz." data-en="Enjoy an espresso while our master tailors guide you through fabrics, buttons, linings, and bespoke silhouettes.">
-                Özel dikim seanslarımızda kahvenizi yudumlarken, İtalyan terzilik ustalarımız eşliğinde kumaş, düğme, astar ve kalıp seçimlerinizi yapabilirsiniz.
-              </p>
-              
-              <div class="mt-6 space-y-2 text-xs text-stone-300">
-                <div class="flex items-center space-x-2">
-                  <span class="text-gold-400 font-bold">✓</span>
-                  <span data-tr="Loro Piana & Cerruti Kumaş Kartelası" data-en="Loro Piana & Cerruti Fabric Swatches">Loro Piana & Cerruti Kumaş Kartelası</span>
+            <!-- Far Receding Ghost Look (Left Depth) -->
+            <img id="rwGhost2" src="assets/suits/suit_03_model.jpg" alt="" aria-hidden="true" class="hidden sm:block runway-ghost runway-ghost-far absolute left-3 bottom-12 w-36 h-56 object-cover object-top rounded-2xl pointer-events-none" />
+            <!-- Near Receding Ghost Look (Left-Mid Depth) -->
+            <img id="rwGhost1" src="assets/suits/suit_02_model.jpg" alt="" aria-hidden="true" class="hidden sm:block runway-ghost absolute left-16 bottom-8 w-44 h-72 object-cover object-top rounded-2xl pointer-events-none" />
+
+            <!-- Active Real Model with Interactive Hotspots & Angle Turn -->
+            <div id="rwActiveFigureWrap" class="runway-active-figure body-classic relative z-10 flex items-end justify-center">
+              <div id="rwTurnCard" class="runway-turn-card angle-front relative h-[430px] sm:h-[510px] w-[285px] sm:w-[345px] rounded-2xl overflow-hidden shadow-[0_30px_70px_-20px_rgba(0,0,0,0.22)] bg-white border border-neutral-200/80 cursor-grab active:cursor-grabbing">
+                <img id="rwMainModelImg" src="assets/suits/suit_01_model.jpg" alt="Bagozza Model" class="w-full h-full object-cover object-top pointer-events-none" />
+
+                <!-- Bluemint-Style Interactive Hotspots Pinned Cleanly on Garments (never over face!) -->
+                <!-- Hotspot 1: Jacket/Suit -->
+                <div class="absolute top-[42%] left-[44%] z-20 flex items-center gap-2 group">
+                  <button onclick="BagozzaApp.setRunwayTab('suits')" aria-label="Takım Elbise" class="hotspot-dot"></button>
+                  <div class="hotspot-tag px-2.5 py-1 rounded-lg text-[10px] font-semibold text-black whitespace-nowrap">
+                    <span id="hsSuitLabel">MILANO BLACK-TIE • 42.000₺</span>
+                  </div>
                 </div>
-                <div class="flex items-center space-x-2">
-                  <span class="text-gold-400 font-bold">✓</span>
-                  <span data-tr="Bireysel Vücut Anatomisi Analizi" data-en="Individual Body Geometry Analysis">Bireysel Vücut Anatomisi Analizi</span>
+
+                <!-- Hotspot 2: Trousers -->
+                <div class="absolute top-[68%] left-[22%] z-20 flex items-center gap-2">
+                  <button onclick="BagozzaApp.setRunwayTab('trousers')" aria-label="Pantolon" class="hotspot-dot"></button>
+                  <div class="hotspot-tag px-2.5 py-1 rounded-lg text-[10px] font-semibold text-black whitespace-nowrap">
+                    <span id="hsTrouserLabel">NOIR SATIN SMOKIN • 11.400₺</span>
+                  </div>
                 </div>
-                <div class="flex items-center space-x-2">
-                  <span class="text-gold-400 font-bold">✓</span>
-                  <span data-tr="3 Prova Sonrası Kusursuz Teslimat" data-en="Flawless Handover after 3 Fittings">3 Prova Sonrası Kusursuz Teslimat</span>
+
+                <!-- Hotspot 3: Shoes -->
+                <div class="absolute bottom-[6%] left-[28%] z-20 flex items-center gap-2">
+                  <button onclick="BagozzaApp.setRunwayTab('shoes')" aria-label="Ayakkabı" class="hotspot-dot"></button>
+                  <div class="hotspot-tag px-2.5 py-1 rounded-lg text-[10px] font-semibold text-black whitespace-nowrap">
+                    <span id="hsShoeLabel">BAGOZZA OPERA • 13.900₺</span>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <!-- Soft Grounded Floor Shadow -->
+            <div class="runway-floor-shadow absolute bottom-1 w-72 h-8 rounded-full pointer-events-none"></div>
           </div>
-        </div>
 
-        <!-- Right: Instant Appointment Booking Form -->
-        <div class="lg:col-span-7">
-          <div class="p-8 sm:p-10 rounded-2xl glass-luxury gold-border-glow">
-            
-            <span class="text-gold-400 text-xs font-semibold tracking-[0.3em] uppercase block mb-2" data-tr="KİŞİYE ÖZEL DİKİM & PROVA" data-en="BESPOKE FITTING & APPOINTMENT">KİŞİYE ÖZEL DİKİM & PROVA</span>
-            <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white mb-6">
-              RANDEVU <span class="gold-gradient-text">OLUŞTURUN</span>
-            </h2>
+          <!-- Angle Rotation Bar + Equipped 3-Piece Outfit Strip -->
+          <div class="space-y-4 relative z-20">
+            <!-- Turn Angle Buttons -->
+            <div class="flex items-center justify-center gap-1.5 flex-wrap">
+              <button data-rw-angle="front" onclick="BagozzaApp.setRunwayAngle('front')" class="btn-motion px-2.5 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="ang_front">Ön (0°)</button>
+              <button data-rw-angle="side" onclick="BagozzaApp.setRunwayAngle('side')" class="btn-motion px-2.5 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="ang_side">Yan (45°)</button>
+              <button data-rw-angle="back" onclick="BagozzaApp.setRunwayAngle('back')" class="btn-motion px-2.5 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="ang_back">Arka (180°)</button>
+              <button data-rw-angle="detail" onclick="BagozzaApp.setRunwayAngle('detail')" class="btn-motion px-2.5 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="ang_detail">Yakın Detay</button>
+            </div>
 
-            <form id="appointmentForm" onsubmit="submitAppointment(event)" class="space-y-4">
-              
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-xs uppercase tracking-wider text-stone-400 mb-1" data-tr="Adınız ve Soyadınız *" data-en="Full Name *">Adınız ve Soyadınız *</label>
-                  <input type="text" id="custName" required placeholder="Ahmet Yılmaz" class="w-full px-4 py-3 rounded bg-obsidian-900 border border-stone-800 text-white placeholder-stone-600 focus:border-gold-500 focus:outline-none text-sm transition">
+            <!-- Live 3-Piece Equipped Outfit Strip + Add Complete Look -->
+            <div class="bg-white rounded-2xl border border-neutral-200 p-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div class="grid grid-cols-3 gap-2 w-full sm:w-auto flex-1">
+                <div onclick="BagozzaApp.setRunwayTab('suits')" class="flex items-center gap-2 p-1.5 rounded-xl bg-neutral-50 border border-neutral-200/80 cursor-pointer hover:border-black transition">
+                  <img id="eqSuitImg" src="assets/suits/suit_01_card.jpg" alt="Takım" class="w-9 h-11 rounded object-cover shrink-0" />
+                  <div class="min-w-0">
+                    <div id="eqSuitName" class="text-[10px] font-bold text-black truncate">MILANO</div>
+                    <div id="eqSuitPrice" class="text-[10px] text-neutral-500">42.000₺</div>
+                  </div>
                 </div>
-                <div>
-                  <label class="block text-xs uppercase tracking-wider text-stone-400 mb-1" data-tr="Telefon Numaranız *" data-en="Phone Number *">Telefon Numaranız *</label>
-                  <input type="tel" id="custPhone" required placeholder="+90 5XX XXX XX XX" class="w-full px-4 py-3 rounded bg-obsidian-900 border border-stone-800 text-white placeholder-stone-600 focus:border-gold-500 focus:outline-none text-sm transition">
+                <div onclick="BagozzaApp.setRunwayTab('trousers')" class="flex items-center gap-2 p-1.5 rounded-xl bg-neutral-50 border border-neutral-200/80 cursor-pointer hover:border-black transition">
+                  <img id="eqTrouserImg" src="assets/trousers/tr_01_card.jpg" alt="Pantolon" class="w-9 h-11 rounded object-cover shrink-0" />
+                  <div class="min-w-0">
+                    <div id="eqTrouserName" class="text-[10px] font-bold text-black truncate">NOIR</div>
+                    <div id="eqTrouserPrice" class="text-[10px] text-neutral-500">11.400₺</div>
+                  </div>
                 </div>
-              </div>
-
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-xs uppercase tracking-wider text-stone-400 mb-1" data-tr="İlgi Duyduğunuz Kategori *" data-en="Service Category *">İlgi Duyduğunuz Kategori *</label>
-                  <select id="custCategory" class="w-full px-4 py-3 rounded bg-obsidian-900 border border-stone-800 text-white focus:border-gold-500 focus:outline-none text-sm transition">
-                    <option value="Özel Dikim Takım Elbise">Özel Dikim Takım Elbise (Bespoke Suit)</option>
-                    <option value="Smokin & Damatlık">Smokin & Damatlık (Black Tie Tuxedo)</option>
-                    <option value="Lüks Kaşmir Palto">Lüks Kaşmir Palto (Cashmere Coat)</option>
-                    <option value="Blazer & Casual Giyim">Blazer & Smart Casual</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-xs uppercase tracking-wider text-stone-400 mb-1" data-tr="Tercih Edilen Tarih & Saat" data-en="Preferred Date & Time">Tercih Edilen Tarih & Saat</label>
-                  <input type="datetime-local" id="custDate" class="w-full px-4 py-3 rounded bg-obsidian-900 border border-stone-800 text-white focus:border-gold-500 focus:outline-none text-sm transition">
+                <div onclick="BagozzaApp.setRunwayTab('shoes')" class="flex items-center gap-2 p-1.5 rounded-xl bg-neutral-50 border border-neutral-200/80 cursor-pointer hover:border-black transition">
+                  <img id="eqShoeImg" src="assets/shoes/sh_01_card.jpg" alt="Ayakkabı" class="w-9 h-11 rounded object-cover shrink-0" />
+                  <div class="min-w-0">
+                    <div id="eqShoeName" class="text-[10px] font-bold text-black truncate">OPERA</div>
+                    <div id="eqShoePrice" class="text-[10px] text-neutral-500">13.900₺</div>
+                  </div>
                 </div>
               </div>
 
-              <div>
-                <label class="block text-xs uppercase tracking-wider text-stone-400 mb-1" data-tr="Özel İstekleriniz / Beden Ölçüleri" data-en="Special Requirements / Fitting Notes">Özel İstekleriniz / Beden Ölçüleri</label>
-                <textarea id="custNotes" rows="3" placeholder="Örn: Düğünüm için lacivert smokin provası talep ediyorum..." class="w-full px-4 py-3 rounded bg-obsidian-900 border border-stone-800 text-white placeholder-stone-600 focus:border-gold-500 focus:outline-none text-sm transition"></textarea>
-              </div>
-
-              <button type="submit" class="w-full py-4 rounded-sm bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 text-black font-serif font-bold text-sm uppercase tracking-widest hover:brightness-110 shadow-[0_0_25px_rgba(212,175,55,0.4)] transition">
-                <span data-tr="Randevuyu Onayla & WhatsApp ile Gönder" data-en="Confirm Booking & Dispatch via WhatsApp">Randevuyu Onayla & WhatsApp ile Gönder</span>
+              <button onclick="BagozzaApp.addFullRunwayOutfitToBag()" class="btn-motion w-full sm:w-auto px-4 py-3 rounded-xl bg-black text-white text-[11px] font-bold tracking-wider uppercase shrink-0 flex items-center justify-center gap-2">
+                <span data-i18n="rw_add_all">Kombini Pakete Ekle</span>
+                <span id="rwOutfitTotal" class="px-2 py-0.5 rounded bg-white/15 text-white">67.300₺</span>
               </button>
-
-              <div id="bookingSuccessMsg" class="hidden p-4 rounded bg-emerald-950/80 border border-emerald-500 text-emerald-300 text-xs text-center font-medium">
-                ✅ Randevunuz kaydedildi! WhatsApp üzerinden terzimiz ile eşleştiriliyorsunuz...
-              </div>
-
-            </form>
-
+            </div>
           </div>
+
+        </div>
+
+        <!-- Right 5 Cols: Maison Vell Vertical Mix-and-Match Wardrobe Picker -->
+        <div class="lg:col-span-5 bg-white rounded-3xl border border-neutral-200/90 flex flex-col overflow-hidden max-h-[730px]">
+          <div class="px-4 pt-3 border-b border-neutral-200 flex items-center">
+            <button data-rw-tab="suits" onclick="BagozzaApp.setRunwayTab('suits')" class="btn-motion flex-1 py-2.5 text-[11px] font-semibold tracking-wider uppercase border-b-2">Takım (20)</button>
+            <button data-rw-tab="trousers" onclick="BagozzaApp.setRunwayTab('trousers')" class="btn-motion flex-1 py-2.5 text-[11px] font-semibold tracking-wider uppercase border-b-2">Pantolon (20)</button>
+            <button data-rw-tab="shoes" onclick="BagozzaApp.setRunwayTab('shoes')" class="btn-motion flex-1 py-2.5 text-[11px] font-semibold tracking-wider uppercase border-b-2">Ayakkabı (20)</button>
+          </div>
+
+          <div id="rwPickerList" class="p-3.5 overflow-y-auto space-y-2.5 flex-1"></div>
         </div>
 
       </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SECTION 4: COMPACT TABBED 60-ITEM BLUEMINT CATALOG
+       (20 Suits • 20 Trousers • 20 Shoes — Hover-to-Model + Quick Size Bar)
+       ====================================================================== -->
+  <section id="catalogSection" class="scroll-mt-24 pt-20 pb-14 sm:pt-24 sm:pb-16 px-4 sm:px-8 bg-white">
+    <div class="max-w-7xl mx-auto">
+
+      <!-- Catalog Header & Compact Filter Bar -->
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-5 pb-6 border-b border-neutral-200">
+        <div>
+          <span class="text-[11px] font-bold tracking-[0.26em] uppercase text-neutral-400 block mb-1.5" data-i18n="cat_eyebrow">BAGOZZA ŞİŞLİ • 60 PARÇA ÖZEL ARŞİV</span>
+          <h2 class="font-brand text-2xl sm:text-4xl font-bold tracking-wider text-black" data-i18n="cat_title">KOLEKSİYON</h2>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <button data-cat-tab="suits" onclick="BagozzaApp.setCatalogCategory('suits')" class="btn-motion px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase border">
+            <span data-i18n="cat_suits">Takım Elbise</span> (<span class="js-cat-count">20</span>)
+          </button>
+          <button data-cat-tab="trousers" onclick="BagozzaApp.setCatalogCategory('trousers')" class="btn-motion px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase border">
+            <span data-i18n="cat_trousers">Pantolon</span> (<span class="js-cat-count">20</span>)
+          </button>
+          <button data-cat-tab="shoes" onclick="BagozzaApp.setCatalogCategory('shoes')" class="btn-motion px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase border">
+            <span data-i18n="cat_shoes">Ayakkabı</span> (<span class="js-cat-count">20</span>)
+          </button>
+          <button data-cat-tab="all" onclick="BagozzaApp.setCatalogCategory('all')" class="btn-motion px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase border">
+            <span data-i18n="cat_all">Tümü</span> (<span class="js-cat-count">60</span>)
+          </button>
+        </div>
+      </div>
+
+      <!-- Sub-toolbar: Body Type Filter + View Switcher + Live Search -->
+      <div class="py-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 mr-1">Gavda:</span>
+          <button data-cat-body="all" onclick="BagozzaApp.setCatalogBodyFilter('all')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border">Tümü</button>
+          <button data-cat-body="athletic" onclick="BagozzaApp.setCatalogBodyFilter('athletic')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="body_athletic">Atletik</button>
+          <button data-cat-body="classic" onclick="BagozzaApp.setCatalogBodyFilter('classic')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="body_classic">Klasik / Slim</button>
+          <button data-cat-body="comfort" onclick="BagozzaApp.setCatalogBodyFilter('comfort')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="body_comfort">Katta Beden</button>
+        </div>
+
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <!-- Toggle Default Card View vs Worn Model View -->
+          <div class="inline-flex rounded-full border border-neutral-200 p-0.5 bg-neutral-50">
+            <button id="btnViewFlat" onclick="BagozzaApp.toggleForceModelView(false)" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-semibold bg-black text-white" data-i18n="view_product">Ürün Gör</button>
+            <button id="btnViewModel" onclick="BagozzaApp.toggleForceModelView(true)" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-semibold text-neutral-700" data-i18n="view_model">Modelde Gör</button>
+          </div>
+
+          <input type="search" oninput="BagozzaApp.setCatalogSearch(this.value)" placeholder="Model veya renk ara..." class="px-4 py-2 rounded-full border border-neutral-200 text-xs bg-white focus:border-black focus:outline-none w-full sm:w-52" />
+        </div>
+      </div>
+
+      <!-- 4-Column Pure-White Bluemint Product Grid (Compact 8-per-page!) -->
+      <div id="catalogGrid" class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8 sm:gap-x-6 sm:gap-y-10 mt-2"></div>
+
+      <!-- Compact Pagination Bar -->
+      <div id="catalogPagination" class="flex items-center justify-center gap-2 mt-10"></div>
 
     </div>
   </section>
 
-  <!-- STORE LOCATION & VISITING HOURS -->
-  <section id="location" class="py-16 px-4 sm:px-6 lg:px-8 bg-obsidian-900 border-t border-gold-500/20">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center sm:text-left">
-      
-      <!-- Column 1 -->
-      <div class="p-6 rounded-xl bg-obsidian-950/60 border border-gold-500/20">
-        <div class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 mb-4 mx-auto sm:mx-0">
-          📍
-        </div>
-        <h4 class="font-serif font-bold text-white text-base mb-2" data-tr="Şişli Merkez Mağazamız" data-en="Şişli Central Boutique">Şişli Merkez Mağazamız</h4>
-        <p class="text-xs text-stone-400 leading-relaxed">
-          19 Mayıs Mahallesi, Hrant Dink Sokak No:39<br>
-          34363 Şişli / İstanbul, Türkiye<br>
-          <span class="text-stone-500 text-[11px]">(Osmanbey Metro İstasyonu 3 dk yürüme mesafesinde)</span>
-        </p>
-      </div>
-
-      <!-- Column 2 -->
-      <div class="p-6 rounded-xl bg-obsidian-950/60 border border-gold-500/20">
-        <div class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 mb-4 mx-auto sm:mx-0">
-          🕒
-        </div>
-        <h4 class="font-serif font-bold text-white text-base mb-2" data-tr="Çalışma Saatleri" data-en="Visiting Hours">Çalışma Saatleri</h4>
-        <div class="text-xs text-stone-400 space-y-1">
-          <div class="flex justify-between">
-            <span data-tr="Pazartesi - Cuma:" data-en="Mon - Fri:">Pazartesi - Cuma:</span>
-            <span class="text-stone-200 font-semibold">09:00 – 18:45</span>
-          </div>
-          <div class="flex justify-between">
-            <span data-tr="Cumartesi:" data-en="Saturday:">Cumartesi:</span>
-            <span class="text-stone-200 font-semibold">09:00 – 18:45</span>
-          </div>
-          <div class="flex justify-between text-rose-400">
-            <span data-tr="Pazar:" data-en="Sunday:">Pazar:</span>
-            <span data-tr="Kapalı (Özel Randevulu)" data-en="Closed (Private Appt.)">Kapalı (Özel Randevulu)</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Column 3 -->
-      <div class="p-6 rounded-xl bg-obsidian-950/60 border border-gold-500/20">
-        <div class="w-10 h-10 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 mb-4 mx-auto sm:mx-0">
-          📞
-        </div>
-        <h4 class="font-serif font-bold text-white text-base mb-2" data-tr="Doğrudan İletişim" data-en="Direct Inquiries">Doğrudan İletişim</h4>
-        <div class="text-xs text-stone-400 space-y-2">
-          <div>
-            <span class="block text-stone-500 text-[10px] uppercase">Telefon:</span>
-            <a href="tel:+902122347088" class="text-gold-400 font-serif font-bold text-sm hover:underline">+90 212 234 70 88</a>
-          </div>
-          <div>
-            <span class="block text-stone-500 text-[10px] uppercase">WhatsApp VIP Hattı:</span>
-            <a href="https://wa.me/902122347088" target="_blank" class="text-emerald-400 font-semibold hover:underline">+90 212 234 70 88</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Luxury Footer -->
-  <footer class="py-12 px-4 sm:px-6 lg:px-8 bg-obsidian-950 border-t border-gold-500/30 text-center">
+  <!-- ======================================================================
+       COMPACT LUXURY FOOTER + DIRECT GOOGLE MAPS LOGO BUTTON (NO GIANT MAP)
+       ====================================================================== -->
+  <footer class="py-10 px-4 sm:px-8 bg-[#fafaf8] border-t border-neutral-200">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-      
-      <div class="flex items-center space-x-3">
-        <span class="font-serif text-xl font-bold tracking-[0.2em] text-white">BAGOZZA</span>
-        <span class="text-xs text-stone-500">&bull;</span>
-        <span class="text-xs text-stone-400 uppercase tracking-widest">Sartorial Luxury Since 1970</span>
+
+      <!-- Brand & Address -->
+      <div class="text-center md:text-left">
+        <div class="font-brand text-xl font-bold tracking-[0.26em] text-black">BAGOZZA</div>
+        <p id="footerAddressText" class="text-xs text-neutral-500 mt-1">19 Mayıs Mah., Hrant Dink Sok. No:39, 34363 Şişli/İstanbul</p>
+        <p class="text-[11px] text-neutral-400 mt-0.5">Pzt–Cmt: 09:00–18:45 • +90 212 234 70 88</p>
       </div>
 
-      <div class="text-xs text-stone-500">
-        &copy; 2026 Bagozza Erkek Giyim San. ve Tic. Ltd. Şti. Tüm hakları saklıdır.
-      </div>
+      <!-- Compact Official Google Maps Logo Card (Directly Opens Google Maps!) -->
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <a href="https://maps.app.goo.gl/U2z7qZpVpbjofQgu7" target="_blank" rel="noopener" onclick="BagozzaAudio.play('tap')" class="js-maps-link btn-motion inline-flex items-center gap-3 px-5 py-3 rounded-full bg-white border border-neutral-200 hover:border-black shadow-sm">
+          <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#EA4335" d="M12 2C8.13 2 5 5.13 5 9c0 1.74.5 3.37 1.41 4.84.95 1.54 2.2 2.86 3.16 4.4.47.75.81 1.45 1.17 2.26.26.55.47 1.5 1.26 1.5s1-.95 1.26-1.5c.36-.81.7-1.51 1.17-2.26.96-1.54 2.21-2.86 3.16-4.4C18.5 12.37 19 10.74 19 9c0-3.87-3.13-7-7-7z"/>
+            <path fill="#4285F4" d="M12 2v7l4.95-4.95C15.68 2.78 13.93 2 12 2z"/>
+            <path fill="#FBBC05" d="M7.05 4.05L12 9V2c-1.93 0-3.68.78-4.95 2.05z"/>
+            <path fill="#34A853" d="M12 9l4.95-4.95C18.22 5.32 19 7.07 19 9c0 1.74-.5 3.37-1.41 4.84L12 9z"/>
+            <circle cx="12" cy="9" r="3" fill="#ffffff"/>
+          </svg>
+          <div class="text-left">
+            <div class="text-xs font-bold text-black leading-none">Google Maps</div>
+            <div class="text-[10px] text-neutral-500 mt-0.5" data-i18n="maps_cta">Google Maps'te Aç →</div>
+          </div>
+        </a>
 
-      <div class="flex items-center space-x-4 text-xs text-stone-400">
-        <a href="#hero" class="hover:text-gold-400 transition" data-tr="Yukarı Çık ↑" data-en="Back to Top ↑">Yukarı Çık ↑</a>
-        <span>&bull;</span>
-        <button onclick="openAdminModal()" class="text-stone-400 hover:text-gold-400 transition" data-tr="Yönetici Girişi" data-en="Admin Portal">Yönetici Girişi</button>
+        <button onclick="BagozzaApp.openSettings()" class="btn-motion px-4 py-3 rounded-full bg-white border border-neutral-200 hover:border-black text-xs font-semibold text-neutral-800">
+          ⚙ Ayarlar
+        </button>
+
+        <button onclick="BagozzaApp.openAdmin()" class="btn-motion px-4 py-3 rounded-full bg-black text-white text-xs font-semibold">
+          🔒 Yönetici Paneli
+        </button>
       </div>
 
     </div>
   </footer>
 
-  <!-- INTEGRATED STORE MANAGER ADMIN MODAL (CRM) -->
-  <div id="adminModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="bg-obsidian-900 border border-gold-500/40 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden shadow-[0_0_50px_rgba(212,175,55,0.2)]">
-      
-      <div class="p-6 border-b border-gold-500/20 flex items-center justify-between bg-obsidian-950">
-        <div class="flex items-center space-x-3">
-          <div class="w-8 h-8 rounded-full bg-gold-500/20 border border-gold-500/50 flex items-center justify-center text-gold-400 font-serif font-bold">
-            BG
+  <!-- ======================================================================
+       MODAL 1: EXACT BLUEMINT PRODUCT DETAIL MODAL (PDP)
+       (Carousel + 360° Angle Turn + Body Type + 5 Color Swatches + Sizes + Beden Tablosu)
+       ====================================================================== -->
+  <div id="pdpModal" class="drawer-backdrop fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6" onclick="if(event.target===this) BagozzaApp.closePDP()">
+    <div class="modal-card bg-white rounded-3xl w-full max-w-5xl max-h-[92vh] overflow-y-auto shadow-2xl border border-neutral-200 relative">
+
+      <button onclick="BagozzaApp.closePDP()" aria-label="Kapat" class="btn-motion absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/95 border border-neutral-200 hover:border-black flex items-center justify-center text-sm font-bold">✕</button>
+
+      <div class="grid grid-cols-1 md:grid-cols-12">
+        <!-- Left 6 Cols: Bluemint Clean Gallery + Angle Turn -->
+        <div class="md:col-span-6 bg-[#f7f7f5] p-6 sm:p-8 flex flex-col justify-between items-center relative min-h-[420px]">
+          <div class="w-full flex items-center justify-between gap-2 z-10">
+            <div class="flex items-center gap-1.5">
+              <button onclick="BagozzaApp.setPDPSlide(0)" class="btn-motion px-2.5 py-1 rounded-full bg-white border border-neutral-200 text-[10px] font-semibold">Ürün</button>
+              <button onclick="BagozzaApp.setPDPSlide(1)" class="btn-motion px-2.5 py-1 rounded-full bg-white border border-neutral-200 text-[10px] font-semibold">Modelde</button>
+              <button onclick="BagozzaApp.turnPDPAngle(16)" class="btn-motion px-2.5 py-1 rounded-full bg-white border border-neutral-200 text-[10px] font-semibold">⟳ Döndür</button>
+            </div>
+          </div>
+
+          <!-- Image + Carousel Arrows -->
+          <div class="relative w-full flex items-center justify-center my-4">
+            <button onclick="BagozzaApp.stepPDPSlide(-1)" aria-label="Önceki" class="btn-motion absolute left-0 z-10 w-10 h-10 rounded-full bg-white/90 border border-neutral-200 hover:border-black flex items-center justify-center text-lg">‹</button>
+            <img id="pdpMainImg" src="assets/suits/suit_01_card.jpg" alt="Bagozza" class="max-h-[430px] w-auto rounded-2xl object-cover shadow-md transition-transform duration-500" />
+            <button onclick="BagozzaApp.stepPDPSlide(1)" aria-label="Sonraki" class="btn-motion absolute right-0 z-10 w-10 h-10 rounded-full bg-white/90 border border-neutral-200 hover:border-black flex items-center justify-center text-lg">›</button>
+          </div>
+
+          <div id="pdpDots" class="flex items-center gap-1.5"></div>
+        </div>
+
+        <!-- Right 6 Cols: Exact Bluemint Specification Column -->
+        <div class="md:col-span-6 p-6 sm:p-9 space-y-5">
+          <div id="pdpBreadcrumb" class="text-[10px] tracking-[0.16em] uppercase text-neutral-400">ANA SAYFA • ERKEK • TAKIM ELBİSE</div>
+
+          <div>
+            <h3 id="pdpTitle" class="text-2xl sm:text-3xl font-bold tracking-wide text-black">MILANO BLACK-TIE</h3>
+            <div id="pdpColorName" class="text-xs font-semibold tracking-widest uppercase text-neutral-500 mt-1">GECE SİYAHI</div>
+            <div id="pdpSubtitle" class="text-sm text-neutral-600 mt-0.5">Saten Şal Yaka Smokin</div>
+          </div>
+
+          <div class="flex items-baseline gap-3">
+            <span id="pdpOldPrice" class="text-base text-neutral-400 line-through">49.500₺</span>
+            <span id="pdpPrice" class="text-xl font-bold text-[#c62828]">42.000₺</span>
+          </div>
+
+          <!-- 5 Bluemint Circular Color Swatches -->
+          <div>
+            <div class="text-[11px] font-bold uppercase tracking-widest text-neutral-400 mb-2">Renk Seçeneği</div>
+            <div id="pdpColors" class="flex items-center gap-2.5"></div>
+          </div>
+
+          <!-- Body Type Selector -->
+          <div>
+            <div class="text-[11px] font-bold uppercase tracking-widest text-neutral-400 mb-2">Model Vücut Tipi (Gavda)</div>
+            <div class="flex flex-wrap gap-2">
+              <button data-pdp-body="athletic" onclick="BagozzaApp.setPDPBody('athletic')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border">Atletik</button>
+              <button data-pdp-body="classic" onclick="BagozzaApp.setPDPBody('classic')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border">Klasik / Slim</button>
+              <button data-pdp-body="comfort" onclick="BagozzaApp.setPDPBody('comfort')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border">Katta Beden</button>
+            </div>
+          </div>
+
+          <!-- Size Selector + Beden Tablosu -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-bold uppercase tracking-widest text-neutral-400">Beden</span>
+              <button onclick="BagozzaApp.toggleSizeGuide()" class="text-[11px] font-semibold tracking-wider uppercase text-black underline underline-offset-4 hover:opacity-70" data-i18n="size_guide">BEDEN TABLOSU</button>
+            </div>
+            <div id="pdpSizes" class="flex items-center gap-2 flex-wrap"></div>
+
+            <!-- Collapsible Size Guide Table -->
+            <div id="sizeGuideBox" class="hidden mt-3 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-[11px] text-neutral-700">
+              <div class="font-bold text-black mb-1.5">İtalyan Kalıp Beden Rehberi (cm / kg)</div>
+              <div class="grid grid-cols-3 gap-1.5">
+                <div><strong>46 (S):</strong> 62–70 kg</div>
+                <div><strong>48 (M):</strong> 71–78 kg</div>
+                <div><strong>50 (L):</strong> 79–86 kg</div>
+                <div><strong>52 (XL):</strong> 87–94 kg</div>
+                <div><strong>54 (2XL):</strong> 95–104 kg</div>
+                <div><strong>56 (3XL):</strong> 105+ kg</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Full-Width Black PAKETE EKLE CTA (Exact Bluemint Style) -->
+          <button onclick="BagozzaApp.addPDPToBag()" class="btn-motion w-full py-4 rounded-sm bg-black text-white text-xs font-bold tracking-[0.22em] uppercase hover:bg-neutral-800 shadow-md">
+            <span data-i18n="add_to_bag">PAKETE EKLE</span>
+          </button>
+
+          <!-- Fabric & Craft Specs -->
+          <div class="pt-3 border-t border-neutral-200 space-y-2 text-xs text-neutral-600 leading-relaxed">
+            <p>• <strong class="text-black">Kumaş:</strong> <span id="pdpFabric"></span></p>
+            <p>• <strong class="text-black">Terzilik:</strong> Bagozza Şişli atölyesinde ücretsiz kişisel boy ve kol uyarlaması.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       DRAWER 2: PAKET (SHOPPING BAG) -> WHATSAPP ORDER CHECKOUT
+       ====================================================================== -->
+  <div id="cartDrawer" class="drawer-backdrop fixed inset-0 z-50 flex justify-end" onclick="if(event.target===this) BagozzaApp.closeCart()">
+    <div class="drawer-panel bg-white w-full max-w-md h-full flex flex-col shadow-2xl border-l border-neutral-200">
+
+      <div class="p-5 border-b border-neutral-200 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <h3 class="font-brand text-lg font-bold tracking-wider text-black" data-i18n="paket">PAKET</h3>
+          <span class="js-cart-count px-2 py-0.5 rounded-full bg-black text-white text-[10px] font-bold">0</span>
+        </div>
+        <button onclick="BagozzaApp.closeCart()" aria-label="Kapat" class="btn-motion w-9 h-9 rounded-full border border-neutral-200 hover:border-black flex items-center justify-center text-xs font-bold">✕</button>
+      </div>
+
+      <!-- Bag Items -->
+      <div id="cartItemsList" class="p-4 overflow-y-auto flex-1 space-y-3"></div>
+
+      <!-- Checkout Footer -> WhatsApp -->
+      <div id="cartCheckoutWrap" class="p-5 border-t border-neutral-200 bg-[#fafaf8] space-y-3">
+        <div class="grid grid-cols-1 gap-2">
+          <input type="text" id="cartCustName" placeholder="Adınız Soyadınız (Opsiyonel)" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 bg-white text-xs focus:border-black focus:outline-none" />
+          <select id="cartDeliveryMode" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-200 bg-white text-xs focus:border-black focus:outline-none">
+            <option value="Şişli Mağaza Özel Prova & Teslim">Şişli Mağaza Özel Prova & Teslim</option>
+            <option value="İstanbul Aynı Gün VIP Kurye">İstanbul Aynı Gün VIP Kurye</option>
+            <option value="Yurt İçi / Yurt Dışı Kargo">Yurt İçi / Yurt Dışı Kargo</option>
+          </select>
+        </div>
+
+        <div class="flex items-center justify-between pt-1">
+          <span class="text-xs font-semibold uppercase tracking-wider text-neutral-500" data-i18n="total_label">Toplam Tutar</span>
+          <span id="cartTotalAmount" class="text-lg font-bold text-black">0₺</span>
+        </div>
+
+        <button onclick="BagozzaApp.checkoutWhatsApp()" class="btn-motion w-full py-4 rounded-xl bg-[#128c7e] hover:bg-[#0e7266] text-white text-xs font-bold tracking-[0.16em] uppercase shadow-lg flex items-center justify-center gap-2">
+          <span>💬</span>
+          <span data-i18n="checkout_wa">WHATSAPP İLE SİPARİŞ VER</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       MODAL 3: SETTINGS ("AYARLAR / NASTROYKA")
+       ====================================================================== -->
+  <div id="settingsModal" class="drawer-backdrop fixed inset-0 z-50 flex items-center justify-center p-4" onclick="if(event.target===this) BagozzaApp.closeSettings()">
+    <div class="modal-card bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border border-neutral-200">
+      <div class="p-5 border-b border-neutral-200 flex items-center justify-between">
+        <h3 class="font-brand text-base font-bold tracking-wider text-black" data-i18n="settings_title">Ayarlar & Tercihler</h3>
+        <button onclick="BagozzaApp.closeSettings()" aria-label="Kapat" class="btn-motion w-9 h-9 rounded-full border border-neutral-200 hover:border-black flex items-center justify-center text-xs font-bold">✕</button>
+      </div>
+
+      <div class="p-5 space-y-4 text-xs">
+        <label class="flex items-center justify-between p-3 rounded-xl bg-neutral-50 border border-neutral-200 cursor-pointer">
+          <div>
+            <div class="font-bold text-black">Tıklama & Kumaş Sesleri</div>
+            <div class="text-[11px] text-neutral-500">Tugma bosilganda hashamatli tovush effekti</div>
+          </div>
+          <input type="checkbox" id="setSoundToggle" onchange="BagozzaApp.saveUserSettings()" class="w-5 h-5 accent-black" checked />
+        </label>
+
+        <label class="flex items-center justify-between p-3 rounded-xl bg-neutral-50 border border-neutral-200 cursor-pointer">
+          <div>
+            <div class="font-bold text-black">Sakin Hareket Modu (Reduced Motion)</div>
+            <div class="text-[11px] text-neutral-500">Animatsiyalarni yengillashtirish</div>
+          </div>
+          <input type="checkbox" id="setMotionToggle" onchange="BagozzaApp.saveUserSettings()" class="w-5 h-5 accent-black" />
+        </label>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-400 mb-1">Dil / Language</label>
+            <select id="setLangSelect" onchange="BagozzaApp.saveUserSettings()" class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 bg-white font-semibold">
+              <option value="tr">Türkçe (TR)</option>
+              <option value="en">English (EN)</option>
+            </select>
           </div>
           <div>
-            <h3 class="font-serif text-lg font-bold text-white">Bagozza Yönetici & Sipariş Paneli</h3>
-            <p class="text-[11px] text-stone-400">Gelen özel dikim randevuları ve müşteri anketleri</p>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-neutral-400 mb-1">Varsayılan Gavda</label>
+            <select id="setDefaultBody" onchange="BagozzaApp.saveUserSettings()" class="w-full px-3 py-2.5 rounded-xl border border-neutral-200 bg-white font-semibold">
+              <option value="athletic">Atletik</option>
+              <option value="classic">Klasik / Slim</option>
+              <option value="comfort">Katta Beden</option>
+            </select>
           </div>
         </div>
-        <button onclick="closeAdminModal()" class="w-8 h-8 rounded-full bg-obsidian-800 text-stone-400 hover:text-white flex items-center justify-center text-sm font-bold">✕</button>
-      </div>
 
-      <div class="p-6 overflow-y-auto space-y-4 flex-1">
-        <div class="flex items-center justify-between">
-          <span class="text-xs text-stone-400 uppercase tracking-wider font-semibold">Kayıtlı Randevular (<span id="totalBookingsCount">0</span>)</span>
-          <button onclick="clearDemoBookings()" class="text-[11px] text-rose-400 hover:underline">Listeyi Temizle</button>
+        <div class="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] uppercase text-neutral-400 font-bold">Aktif WhatsApp Hattı</div>
+            <div id="setWaPreview" class="font-mono font-bold text-black mt-0.5">+902122347088</div>
+          </div>
+          <a href="https://maps.app.goo.gl/U2z7qZpVpbjofQgu7" target="_blank" rel="noopener" class="js-maps-link px-3 py-1.5 rounded-full bg-white border border-neutral-300 font-semibold text-black hover:border-black">Google Maps ↗</a>
         </div>
 
-        <div id="bookingsList" class="space-y-3">
-          <!-- Dynamically populated or empty state -->
+        <button onclick="BagozzaApp.openAdmin()" class="btn-motion w-full py-3.5 rounded-xl bg-black text-white font-bold tracking-wider uppercase">
+          🔒 Mağaza Yönetici Paneli (Admin)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       MODAL 4: PHONE-NUMBER LOCKED ADMIN CMS PANEL
+       (Store Phone Authentication -> Upload/Remove Photos, Edit All Prices, Add/Delete Products)
+       ====================================================================== -->
+  <div id="adminModal" class="drawer-backdrop fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6" onclick="if(event.target===this) BagozzaApp.closeAdmin()">
+    <div class="modal-card bg-white rounded-3xl w-full max-w-5xl max-h-[92vh] flex flex-col overflow-hidden shadow-2xl border border-neutral-200">
+
+      <!-- Admin Header -->
+      <div class="p-5 border-b border-neutral-200 flex items-center justify-between bg-[#fafaf8]">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-black text-white font-brand font-bold text-xs flex items-center justify-center">BG</div>
+          <div>
+            <h3 class="font-brand text-base font-bold tracking-wider text-black" data-i18n="admin_title">Mağaza Yönetici Paneli</h3>
+            <p class="text-[11px] text-neutral-500">Fotoğraf Yükle / Kaldır • Tüm Fiyatları Güncelle • Sipariş Takibi</p>
+          </div>
         </div>
+        <button onclick="BagozzaApp.closeAdmin()" aria-label="Kapat" class="btn-motion w-9 h-9 rounded-full border border-neutral-200 bg-white hover:border-black flex items-center justify-center text-xs font-bold">✕</button>
       </div>
 
-      <div class="p-4 bg-obsidian-950 border-t border-gold-500/20 text-right">
-        <button onclick="closeAdminModal()" class="px-5 py-2 rounded bg-gold-500 text-black font-semibold text-xs tracking-wider uppercase hover:bg-gold-400 transition">Kapat</button>
+      <!-- STEP A: PHONE AUTHENTICATION SCREEN -->
+      <div id="adminLoginView" class="p-8 sm:p-12 text-center max-w-md mx-auto space-y-5">
+        <div class="w-14 h-14 mx-auto rounded-full bg-neutral-100 border border-neutral-200 flex items-center justify-center text-2xl">🔐</div>
+        <div>
+          <h4 class="font-brand text-xl font-bold text-black">Mağaza Yetkili Girişi</h4>
+          <p class="text-xs text-neutral-500 mt-1.5">Yönetici paneline yalnızca <strong>Bagozza mağazasının kayıtlı telefon numarası</strong> ile giriş yapılabilir.</p>
+        </div>
+
+        <form onsubmit="BagozzaApp.submitAdminLogin(event)" class="space-y-3">
+          <input type="tel" id="adminPhoneInput" required placeholder="+90 212 234 70 88" class="w-full px-4 py-3.5 rounded-xl border border-neutral-300 text-center font-mono text-sm font-bold tracking-wider focus:border-black focus:outline-none" />
+          <div id="adminLoginErr" class="hidden text-xs font-semibold text-red-600 bg-red-50 border border-red-200 rounded-lg py-2 px-3">
+            ✕ Hatalı telefon numarası! Yalnızca yetkili mağaza numarası ile giriş yapılabilir.
+          </div>
+          <button type="submit" class="btn-motion w-full py-3.5 rounded-xl bg-black text-white text-xs font-bold tracking-[0.2em] uppercase">
+            Panele Giriş Yap
+          </button>
+        </form>
+      </div>
+
+      <!-- STEP B: UNLOCKED FULL ADMIN CMS DASHBOARD -->
+      <div id="adminDashView" class="hidden flex-1 flex flex-col overflow-hidden">
+        <!-- Admin Sub-Navigation -->
+        <div class="px-5 py-3 border-b border-neutral-200 flex items-center justify-between gap-2 flex-wrap bg-white">
+          <div class="flex items-center gap-2 flex-wrap">
+            <button data-adm-tab="products" onclick="BagozzaApp.setAdminTab('products')" class="btn-motion px-4 py-2 rounded-full text-xs font-semibold border">Ürünler & Fiyatlar</button>
+            <button data-adm-tab="add" onclick="BagozzaApp.setAdminTab('add')" class="btn-motion px-4 py-2 rounded-full text-xs font-semibold border">+ Yeni Ürün Ekle</button>
+            <button data-adm-tab="orders" onclick="BagozzaApp.setAdminTab('orders')" class="btn-motion px-4 py-2 rounded-full text-xs font-semibold border">Siparişler</button>
+            <button data-adm-tab="config" onclick="BagozzaApp.setAdminTab('config')" class="btn-motion px-4 py-2 rounded-full text-xs font-semibold border">WhatsApp & Ayarlar</button>
+          </div>
+          <button onclick="BagozzaApp.logoutAdmin()" class="text-xs font-semibold text-neutral-500 hover:text-red-600">Çıkış Yap</button>
+        </div>
+
+        <!-- Admin Scrollable Body -->
+        <div class="p-5 overflow-y-auto flex-1">
+
+          <!-- PANE 1: PRODUCTS, PRICES & PHOTO UPLOAD/DELETE -->
+          <div id="admPane_products" class="space-y-4">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
+              <div class="flex items-center gap-2 flex-1">
+                <input type="search" oninput="BagozzaApp.setAdminSearch(this.value)" placeholder="Ürün adı ara..." class="flex-1 px-3.5 py-2 rounded-xl border border-neutral-200 text-xs focus:border-black focus:outline-none" />
+                <select onchange="BagozzaApp.setAdminCatFilter(this.value)" class="px-3 py-2 rounded-xl border border-neutral-200 text-xs font-semibold bg-white">
+                  <option value="all">Tüm Kategoriler</option>
+                  <option value="suits">Takım Elbise</option>
+                  <option value="trousers">Pantolon</option>
+                  <option value="shoes">Ayakkabı</option>
+                </select>
+              </div>
+              <span id="adminProdCount" class="text-xs font-bold text-neutral-500">60 Ürün</span>
+            </div>
+            <p class="text-[11px] text-neutral-500">İpucu: Yeni fotoğraf yüklemek için ürün veya model küçük resminin üzerine tıklayın. Fiyat değişikliği için rakamı yazıp <strong>Kaydet</strong>'e basın.</p>
+            <div id="adminProductsList" class="space-y-2.5"></div>
+          </div>
+
+          <!-- PANE 2: ADD NEW PRODUCT WITH CUSTOM PHOTO UPLOAD -->
+          <div id="admPane_add" class="hidden max-w-2xl mx-auto">
+            <form onsubmit="BagozzaApp.submitNewProduct(event)" class="space-y-4 text-xs">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[10px] font-bold uppercase text-neutral-400 mb-1">Ürün Adı *</label>
+                  <input type="text" id="newProdName" required placeholder="Örn: MILANO ROYAL SMOKİN" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 font-semibold focus:border-black focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold uppercase text-neutral-400 mb-1">Kategori *</label>
+                  <select id="newProdCat" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 bg-white font-semibold">
+                    <option value="suits">Takım Elbise</option>
+                    <option value="trousers">Pantolon</option>
+                    <option value="shoes">Ayakkabı</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label class="block text-[10px] font-bold uppercase text-neutral-400 mb-1">Satış Fiyatı (₺) *</label>
+                  <input type="number" id="newProdPrice" required placeholder="38000" class="w-full px-3.5 py-2.5 rounded-xl border border-black font-bold focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold uppercase text-neutral-400 mb-1">Eski Fiyat (₺)</label>
+                  <input type="number" id="newProdOldPrice" placeholder="44000" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:border-black focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold uppercase text-neutral-400 mb-1">Kalıp / Gavda</label>
+                  <select id="newProdBody" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 bg-white font-semibold">
+                    <option value="classic">Klasik / Slim</option>
+                    <option value="athletic">Atletik</option>
+                    <option value="comfort">Katta Beden</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[10px] font-bold uppercase text-neutral-400 mb-1">Alt Açıklama</label>
+                  <input type="text" id="newProdSub" placeholder="İtalyan Kesim Özel Dikim" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:border-black focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold uppercase text-neutral-400 mb-1">Kumaş Bilgisi</label>
+                  <input type="text" id="newProdFabric" placeholder="%100 Super 150s İtalyan Yünü" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:border-black focus:outline-none" />
+                </div>
+              </div>
+
+              <!-- Upload Studio & Model Photos -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                <label class="p-4 rounded-2xl border-2 border-dashed border-neutral-300 hover:border-black cursor-pointer text-center block space-y-2">
+                  <div class="font-bold text-black">📸 Ürün Fotoğrafı Yükle</div>
+                  <div class="text-[10px] text-neutral-400">JPG / PNG — Cihazınızdan seçin</div>
+                  <input type="file" accept="image/*" class="hidden" onchange="BagozzaApp.handleNewProdFile('card', this)" />
+                  <img id="newProdCardPreview" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="hidden mx-auto h-32 rounded-xl object-cover mt-2" alt="Önizleme" />
+                </label>
+                <label class="p-4 rounded-2xl border-2 border-dashed border-neutral-300 hover:border-black cursor-pointer text-center block space-y-2">
+                  <div class="font-bold text-black">👔 Model Üzerinde Fotoğraf</div>
+                  <div class="text-[10px] text-neutral-400">Hover & Stilist görünümü için</div>
+                  <input type="file" accept="image/*" class="hidden" onchange="BagozzaApp.handleNewProdFile('model', this)" />
+                  <img id="newProdModelPreview" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="hidden mx-auto h-32 rounded-xl object-cover mt-2" alt="Önizleme" />
+                </label>
+              </div>
+
+              <button type="submit" class="btn-motion w-full py-4 rounded-xl bg-black text-white font-bold tracking-[0.18em] uppercase">
+                + Yeni Ürünü Vitrine Ekle
+              </button>
+            </form>
+          </div>
+
+          <!-- PANE 3: ORDERS -->
+          <div id="admPane_orders" class="hidden space-y-3">
+            <div id="adminOrdersList" class="space-y-3"></div>
+          </div>
+
+          <!-- PANE 4: STORE & WHATSAPP SETTINGS -->
+          <div id="admPane_config" class="hidden max-w-xl mx-auto space-y-5 text-xs">
+            <form onsubmit="BagozzaApp.saveAdminConfig(event)" class="space-y-3.5">
+              <div>
+                <label class="block text-[10px] font-bold uppercase text-neutral-400 mb-1">Sipariş WhatsApp Numarası</label>
+                <input type="tel" id="cfgWaPhone" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 font-mono font-bold focus:border-black focus:outline-none" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold uppercase text-neutral-400 mb-1">Admin Giriş Telefon Numarası</label>
+                <input type="tel" id="cfgAdminPhone" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 font-mono font-bold focus:border-black focus:outline-none" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold uppercase text-neutral-400 mb-1">Mağaza Adresi</label>
+                <input type="text" id="cfgAddress" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:border-black focus:outline-none" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold uppercase text-neutral-400 mb-1">Google Maps Konum Linki</label>
+                <input type="url" id="cfgMapsUrl" class="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:border-black focus:outline-none" />
+              </div>
+              <button type="submit" class="btn-motion w-full py-3.5 rounded-xl bg-black text-white font-bold tracking-wider uppercase">
+                Ayarları Kaydet
+              </button>
+            </form>
+
+            <div class="pt-4 border-t border-neutral-200 flex items-center justify-between">
+              <span class="text-neutral-500">Orijinal 60 parçalık kataloğu geri yükle:</span>
+              <button onclick="BagozzaApp.resetDefaultCatalog()" class="btn-motion px-4 py-2 rounded-xl border border-red-200 bg-red-50 text-red-700 font-bold hover:bg-red-600 hover:text-white">
+                ↺ Fabrika Ayarlarına Dön
+              </button>
+            </div>
+          </div>
+
+        </div>
       </div>
 
     </div>
   </div>
 
-  <!-- INTERACTIVE APPLICATION SCRIPT -->
-  <script>
-    // State management
-    let currentLang = 'tr';
-    let currentOutfit = 'purple_tuxedo';
-    let currentAngle = 'front';
+  <!-- LUXURY TOAST NOTIFICATION -->
+  <div id="luxuryToast" class="luxury-toast fixed bottom-5 z-[60] px-5 py-3 rounded-full bg-black text-white text-xs font-semibold tracking-wide shadow-2xl flex items-center gap-2.5 whitespace-nowrap">
+    <span id="toastIcon">✓</span>
+    <span id="toastText">Pakete eklendi</span>
+  </div>
 
-    const outfits = {
-      purple_tuxedo: {
-        title_tr: 'Milano Black-Tie Smokin',
-        title_en: 'Milano Black-Tie Tuxedo',
-        price: '₺45,000',
-        fabric_tr: 'İtalyan İpek & Saten Yaka (Loro Piana)',
-        fabric_en: 'Italian Silk & Satin Lapel (Loro Piana)',
-        img_front: 'assets/model_purple_tuxedo.jpg',
-        img_showroom: 'assets/marble_showroom.jpg',
-        badge: 'Milano Black-Tie Smokin'
-      },
-      blue_suit: {
-        title_tr: 'Napoli Royal Navy 3-Piece',
-        title_en: 'Napoli Royal Navy 3-Piece',
-        price: '₺38,500',
-        fabric_tr: 'Super 150s Saf Yün, Yelekli Kesim',
-        fabric_en: 'Super 150s Pure Virgin Wool, 3-Piece',
-        img_front: 'assets/model_blue_suit.jpg',
-        img_showroom: 'assets/grand_marble_hall.jpg',
-        badge: 'Napoli Royal Navy 3-Piece'
-      },
-      grey_suit: {
-        title_tr: 'Roma Glen Plaid Kruvaze',
-        title_en: 'Roma Glen Plaid Double-Breasted',
-        price: '₺32,000',
-        fabric_tr: 'Ekose Saf Yün & Çift Sıra Düğme',
-        fabric_en: 'Glen Plaid Pure Wool, Double-Breasted',
-        img_front: 'assets/model_grey_suit.jpg',
-        img_showroom: 'assets/shelves_interior.jpg',
-        badge: 'Roma Glen Plaid Kruvaze'
-      },
-      fur_coat: {
-        title_tr: 'Firenze Lüks Kaşmir Palto',
-        title_en: 'Firenze Luxury Cashmere Overcoat',
-        price: '₺42,000',
-        fabric_tr: '%100 Saf Kaşmir & Doğal Kürk Yaka',
-        fabric_en: '100% Pure Cashmere & Natural Fur Collar',
-        img_front: 'assets/model_fur_coat.jpg',
-        img_showroom: 'assets/facade_straight.jpg',
-        badge: 'Firenze Lüks Kaşmir Palto'
-      }
-    };
-
-    function selectOutfit(key) {
-      playLuxurySound('click');
-      currentOutfit = key;
-      const data = outfits[key];
-
-      // Update active cards
-      document.querySelectorAll('.outfit-card').forEach(el => {
-        el.classList.remove('border-gold-400', 'bg-gold-500/10');
-        el.classList.add('border-stone-800', 'bg-obsidian-900/60');
-      });
-      const activeCard = document.getElementById('opt-' + key);
-      if (activeCard) {
-        activeCard.classList.remove('border-stone-800', 'bg-obsidian-900/60');
-        activeCard.classList.add('border-gold-400', 'bg-gold-500/10');
-      }
-
-      // Update mannequin display
-      const img = document.getElementById('mannequinImg');
-      img.style.opacity = '0';
-      setTimeout(() => {
-        img.src = currentAngle === 'front' ? data.img_front : data.img_showroom;
-        img.style.opacity = '1';
-      }, 200);
-
-      document.getElementById('activeStyleBadge').innerText = data.badge;
-      document.getElementById('fabricSpec').innerText = currentLang === 'tr' ? data.fabric_tr : data.fabric_en;
-      document.getElementById('priceSpec').innerText = data.price;
-    }
-
-    function setOutfitAngle(angle) {
-      playLuxurySound('click');
-      currentAngle = angle;
-      const data = outfits[currentOutfit];
-      const img = document.getElementById('mannequinImg');
-      img.style.opacity = '0';
-      setTimeout(() => {
-        img.src = angle === 'front' ? data.img_front : data.img_showroom;
-        img.style.opacity = '1';
-      }, 200);
-    }
-
-    function orderActiveOutfit() {
-      playLuxurySound('chime');
-      const data = outfits[currentOutfit];
-      const title = currentLang === 'tr' ? data.title_tr : data.title_en;
-      const text = `Merhabalar, Bagozza Şişli sanal stilistinizde "${title}" (${data.price}) modelinizi seçtim. Ölçü ve özel prova randevusu oluşturmak istiyorum.`;
-      window.open(`https://wa.me/902122347088?text=${encodeURIComponent(text)}`, '_blank');
-    }
-
-    // Appointment Submission
-    function submitAppointment(e) {
-      e.preventDefault();
-      playLuxurySound('chime');
-
-      const name = document.getElementById('custName').value;
-      const phone = document.getElementById('custPhone').value;
-      const category = document.getElementById('custCategory').value;
-      const date = document.getElementById('custDate').value;
-      const notes = document.getElementById('custNotes').value;
-
-      const record = {
-        name, phone, category, date, notes,
-        time: new Date().toLocaleString()
-      };
-
-      // Save to LocalStorage CRM
-      const existing = JSON.parse(localStorage.getItem('bagozza_bookings') || '[]');
-      existing.unshift(record);
-      localStorage.setItem('bagozza_bookings', JSON.stringify(existing));
-
-      // Show success msg
-      const msg = document.getElementById('bookingSuccessMsg');
-      msg.classList.remove('hidden');
-
-      // WhatsApp redirect
-      const waText = `*BAGOZZA ÖZEL DİKİM RANDEVU TALEBİ*\n👤 İsim: ${name}\n📞 Telefon: ${phone}\n👔 Kategori: ${category}\n📅 Tarih: ${date || 'Belirtilmedi'}\n📝 Not: ${notes || 'Yok'}`;
-      setTimeout(() => {
-        window.open(`https://wa.me/902122347088?text=${encodeURIComponent(waText)}`, '_blank');
-      }, 800);
-    }
-
-    // Admin Modal Logic
-    function openAdminModal() {
-      playLuxurySound('click');
-      document.getElementById('adminModal').classList.remove('hidden');
-      renderBookings();
-    }
-
-    function closeAdminModal() {
-      document.getElementById('adminModal').classList.add('hidden');
-    }
-
-    function renderBookings() {
-      const existing = JSON.parse(localStorage.getItem('bagozza_bookings') || '[]');
-      document.getElementById('totalBookingsCount').innerText = existing.length;
-      const list = document.getElementById('bookingsList');
-      
-      if (existing.length === 0) {
-        list.innerHTML = `
-          <div class="p-8 text-center text-stone-500 text-xs border border-dashed border-stone-800 rounded-xl">
-            Henüz yeni randevu bulunmuyor. Web sitesi üzerinden gelen randevular anında buraya listelenir.
-          </div>
-        `;
-        return;
-      }
-
-      list.innerHTML = existing.map((item, idx) => `
-        <div class="p-4 rounded-xl bg-obsidian-950 border border-gold-500/20 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div>
-            <div class="font-serif font-bold text-white text-sm">${item.name} &bull; <span class="text-gold-400">${item.category}</span></div>
-            <div class="text-stone-400 mt-0.5">📞 ${item.phone} &bull; 📅 ${item.date || 'Tarih belirtilmedi'}</div>
-            ${item.notes ? `<div class="text-stone-500 mt-1 italic">"${item.notes}"</div>` : ''}
-          </div>
-          <a href="https://wa.me/${item.phone.replace(/[^0-9]/g, '')}" target="_blank" class="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-center transition shrink-0">
-            WhatsApp Mesaj
-          </a>
-        </div>
-      `).join('');
-    }
-
-    function clearDemoBookings() {
-      if (confirm('Tüm kayıtları silmek istediğinize emin misiniz?')) {
-        localStorage.removeItem('bagozza_bookings');
-        renderBookings();
-      }
-    }
-
-    // Language Toggle (TR / EN)
-    function toggleLang() {
-      playLuxurySound('click');
-      currentLang = currentLang === 'tr' ? 'en' : 'tr';
-      document.getElementById('langLabel').innerText = currentLang === 'tr' ? 'EN' : 'TR';
-      
-      document.querySelectorAll('[data-' + currentLang + ']').forEach(el => {
-        el.innerText = el.getAttribute('data-' + currentLang);
-      });
-
-      // Update active outfit labels
-      const data = outfits[currentOutfit];
-      document.getElementById('fabricSpec').innerText = currentLang === 'tr' ? data.fabric_tr : data.fabric_en;
-    }
-  </script>
-
+  <!-- MODULAR SCRIPTS (Zero inline bloat, 100% locally bundled Three.js) -->
+  <script src="js/three.min.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/catalog-data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/suit3d.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

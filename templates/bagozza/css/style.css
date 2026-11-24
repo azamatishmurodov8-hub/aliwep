@@ -1,0 +1,488 @@
+/* ==========================================================================
+   BAGOZZA MILANO & ISTANBUL — PURE WHITE EDITORIAL LUXURY & 3D MOTION CSS
+   ========================================================================== */
+
+:root {
+  --bg-pure: #ffffff;
+  --bg-studio: #f7f7f5;
+  --bg-alabaster: #f2f1ed;
+  --ink-primary: #0a0a0a;
+  --ink-secondary: #555555;
+  --ink-muted: #8a8a86;
+  --line-hairline: #e8e7e3;
+  --accent-crimson: #c62828;
+  --accent-champagne: #b5945b;
+  --accent-emerald: #128c7e;
+  --ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-pure);
+  color: var(--ink-primary);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-pure);
+  color: var(--ink-primary);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-brand {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+}
+
+/* Custom Hairline Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #fafafa; }
+::-webkit-scrollbar-thumb { background: #d4d3ce; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #0a0a0a; }
+
+/* ==========================================================================
+   TACTILE MOTION BUTTONS (Spring physics + subtle sheen)
+   ========================================================================== */
+.btn-motion {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.24s var(--ease-spring), background-color 0.25s var(--ease-luxury), color 0.25s var(--ease-luxury), border-color 0.25s var(--ease-luxury), box-shadow 0.3s var(--ease-luxury);
+  will-change: transform;
+}
+
+.btn-motion:hover {
+  transform: translateY(-1.5px);
+}
+
+.btn-motion:active {
+  transform: scale(0.955) translateY(0);
+}
+
+.btn-motion::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.28) 50%, transparent 70%);
+  transform: translateX(-130%);
+  transition: transform 0.65s var(--ease-luxury);
+  pointer-events: none;
+}
+
+.btn-motion:hover::after {
+  transform: translateX(130%);
+}
+
+body.reduced-motion .btn-motion,
+body.reduced-motion .product-card img,
+body.reduced-motion .reel-frame {
+  transition-duration: 0.05s !important;
+  animation: none !important;
+}
+
+/* ==========================================================================
+   FLOATING PILL NAVBAR (Aether Lane inspired — Pure White Luxury Edition)
+   ========================================================================== */
+.pill-nav {
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid rgba(10, 10, 10, 0.09);
+  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.08), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  transition: box-shadow 0.35s var(--ease-luxury), background 0.35s var(--ease-luxury);
+}
+
+.pill-nav.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 18px 48px -12px rgba(0, 0, 0, 0.13);
+}
+
+.nav-link {
+  position: relative;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #333;
+  transition: color 0.25s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 1.5px;
+  background: #0a0a0a;
+  transition: width 0.3s var(--ease-luxury);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #0a0a0a;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* ==========================================================================
+   HERO GIANT TYPOGRAPHY & 5-SECOND CINEMATIC MOTION REEL
+   ========================================================================== */
+.hero-giant-title {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-size: clamp(3.6rem, 13.8vw, 13.2rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 0.86;
+  color: #0a0a0a;
+  user-select: none;
+  pointer-events: none;
+}
+
+.hero-giant-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.25px rgba(10, 10, 10, 0.22);
+}
+
+.reel-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 14%;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 0.95s var(--ease-luxury), transform 5.2s linear;
+  will-change: opacity, transform;
+}
+
+.reel-frame.active {
+  opacity: 1;
+  transform: scale(1.0);
+  z-index: 2;
+}
+
+@keyframes reelProgress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.reel-progress-bar {
+  transform-origin: left center;
+  animation: reelProgress 5s linear infinite;
+}
+
+.reel-progress-bar.paused {
+  animation-play-state: paused;
+}
+
+/* ==========================================================================
+   3D STUDIO STAGE (Carrara Marble + WebGL Canvas)
+   ========================================================================== */
+.stage-3d-shell {
+  background: radial-gradient(ellipse at 50% 35%, #ffffff 0%, #f5f4f0 58%, #eae8e1 100%);
+  border: 1px solid var(--line-hairline);
+}
+
+#suit3dCanvasWrap {
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+#suit3dCanvasWrap:active {
+  cursor: grabbing;
+}
+
+/* ==========================================================================
+   MAISON VELL RUNWAY VIRTUAL DRESSING ROOM
+   ========================================================================== */
+.runway-canvas {
+  background: linear-gradient(180deg, #fafafa 0%, #ffffff 48%, #f4f3ef 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.runway-floor-shadow {
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0.04) 48%, transparent 72%);
+}
+
+.runway-ghost {
+  filter: blur(2.2px) saturate(0.75);
+  opacity: 0.42;
+  transform-origin: bottom center;
+  transition: all 0.55s var(--ease-luxury);
+}
+
+.runway-ghost-far {
+  filter: blur(5px) saturate(0.6);
+  opacity: 0.22;
+}
+
+/* Body Type Anatomical Proportions Visual Feedback */
+.runway-active-figure {
+  transition: transform 0.55s var(--ease-luxury), filter 0.45s var(--ease-luxury);
+  transform-origin: center bottom;
+}
+
+.runway-active-figure.body-athletic {
+  transform: scaleX(1.045) scaleY(1.01);
+}
+
+.runway-active-figure.body-classic {
+  transform: scaleX(1) scaleY(1);
+}
+
+.runway-active-figure.body-comfort {
+  transform: scaleX(1.11) scaleY(0.99);
+}
+
+/* 360 Angle Turn Effects on Runway Model */
+.runway-turn-stage {
+  perspective: 1100px;
+}
+
+.runway-turn-card {
+  transition: transform 0.6s var(--ease-luxury);
+  transform-style: preserve-3d;
+}
+
+.runway-turn-card.angle-front { transform: rotateY(0deg); }
+.runway-turn-card.angle-side  { transform: rotateY(-14deg) scale(1.02); }
+.runway-turn-card.angle-back  { transform: rotateY(14deg) scale(1.01); }
+.runway-turn-card.angle-detail { transform: scale(1.16) translateY(5%); }
+
+/* Bluemint Interactive Hotspots on Model */
+.hotspot-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 2px solid #0a0a0a;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.6), 0 4px 12px rgba(0, 0, 0, 0.22);
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.25s var(--ease-spring);
+}
+
+.hotspot-dot::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  animation: hotspotPulse 2.2s infinite;
+}
+
+.hotspot-dot:hover {
+  transform: scale(1.3);
+}
+
+@keyframes hotspotPulse {
+  0% { transform: scale(0.85); opacity: 0.9; }
+  100% { transform: scale(1.85); opacity: 0; }
+}
+
+.hotspot-tag {
+  background: rgba(255, 255, 255, 0.93);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(10, 10, 10, 0.12);
+  box-shadow: 0 10px 26px -8px rgba(0, 0, 0, 0.16);
+  transition: all 0.25s var(--ease-luxury);
+}
+
+/* ==========================================================================
+   BLUEMINT PRODUCT CARD (Hover-to-Model + Quick Size Bar)
+   ========================================================================== */
+.product-card {
+  position: relative;
+  background: #ffffff;
+  transition: transform 0.35s var(--ease-luxury);
+}
+
+.product-media {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: var(--bg-studio);
+  overflow: hidden;
+}
+
+.product-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 16%;
+  transition: opacity 0.45s var(--ease-luxury), transform 0.7s var(--ease-luxury);
+}
+
+.product-media .img-worn {
+  opacity: 0;
+  transform: scale(1.04);
+}
+
+.product-card:hover .product-media .img-worn,
+.product-card.force-worn .product-media .img-worn {
+  opacity: 1;
+  transform: scale(1.0);
+}
+
+.product-card:hover .product-media .img-flat,
+.product-card.force-worn .product-media .img-flat {
+  opacity: 0;
+}
+
+.product-card.force-worn:hover .product-media .img-worn {
+  opacity: 0;
+}
+
+.product-card.force-worn:hover .product-media .img-flat {
+  opacity: 1;
+}
+
+/* Bluemint Quick Size Pill Strip on Hover */
+.quick-size-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 10px 8px;
+  transform: translateY(102%);
+  opacity: 0;
+  transition: transform 0.32s var(--ease-luxury), opacity 0.28s ease;
+  z-index: 5;
+}
+
+.product-card:hover .quick-size-bar,
+.product-card:focus-within .quick-size-bar {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.size-pill {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid #d9d9d5;
+  background: #ffffff;
+  color: #111;
+  font-size: 11px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-spring);
+}
+
+.size-pill:hover,
+.size-pill.active {
+  background: #0a0a0a;
+  color: #ffffff;
+  border-color: #0a0a0a;
+  transform: scale(1.08);
+}
+
+/* Color Swatch Circle (Bluemint PDP exact style) */
+.color-swatch {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  padding: 3px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: transform 0.22s var(--ease-spring), border-color 0.22s ease;
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+}
+
+.color-swatch.active {
+  border-color: #0a0a0a;
+}
+
+.color-swatch-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================================
+   MODALS & DRAWERS (Slide-over Paket Cart, PDP, Settings, Admin CMS)
+   ========================================================================== */
+.drawer-backdrop {
+  background: rgba(10, 10, 10, 0.42);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.32s var(--ease-luxury);
+}
+
+.drawer-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer-panel {
+  transform: translateX(100%);
+  transition: transform 0.4s var(--ease-luxury);
+}
+
+.drawer-backdrop.open .drawer-panel {
+  transform: translateX(0);
+}
+
+.modal-card {
+  transform: translateY(18px) scale(0.98);
+  opacity: 0;
+  transition: transform 0.36s var(--ease-luxury), opacity 0.3s ease;
+}
+
+.drawer-backdrop.open .modal-card {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Toast Notification */
+.luxury-toast {
+  left: 50%;
+  transform: translate(-50%, 24px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s var(--ease-luxury), opacity 0.3s ease;
+  max-width: calc(100vw - 24px);
+}
+
+.luxury-toast.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+/* Touch screens: show subtle quick-size hint */
+@media (hover: none) {
+  .quick-size-bar {
+    position: static;
+    transform: none;
+    opacity: 1;
+    padding: 8px 4px;
+  }
+}
