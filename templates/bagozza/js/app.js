@@ -47,8 +47,8 @@ window.BagozzaApp = (function () {
       admin_title: 'Mağaza Yönetici Paneli',
       maps_cta: 'Google Maps\'te Aç',
       ang_front: 'Ön (0°)',
-      ang_side: 'Yan (45°)',
-      ang_back: 'Arka (180°)',
+      ang_side: '3/4 Sol',
+      ang_back: '3/4 Sağ',
       ang_detail: 'Yakın Detay'
     },
     en: {
@@ -94,9 +94,9 @@ window.BagozzaApp = (function () {
       admin_title: 'Boutique Admin Panel',
       maps_cta: 'Open in Google Maps',
       ang_front: 'Front (0°)',
-      ang_side: 'Side (45°)',
-      ang_back: 'Back (180°)',
-      ang_detail: 'Fabric Close-Up'
+      ang_side: '3/4 Left',
+      ang_back: '3/4 Right',
+      ang_detail: 'Close-Up'
     }
   };
 
@@ -198,11 +198,10 @@ window.BagozzaApp = (function () {
      2. 3D BESPOKE SUIT HERO STAGE BINDINGS
      ======================================================================== */
   function init3DSection() {
-    const ok = BagozzaSuit3D.init('suit3dCanvasWrap');
-    const fallback = document.getElementById('suit3dFallback');
-    if (!ok && fallback) {
-      fallback.classList.remove('hidden');
-    }
+    BagozzaSuit3D.init('suit3dCanvasWrap', () => {
+      render3DFabricButtons();
+      update3DInfoPanel();
+    });
     render3DFabricButtons();
     update3DInfoPanel();
   }
@@ -211,17 +210,10 @@ window.BagozzaApp = (function () {
     const wrap = document.getElementById('suit3dPresets');
     if (!wrap) return;
     const active = BagozzaSuit3D.getActivePreset().id;
-    const swatches = [
-      { id: 'tuxedo', hex: '#121316', label: 'Smokin' },
-      { id: 'navy', hex: '#17243e', label: 'Navy' },
-      { id: 'ivory', hex: '#f1ece1', label: 'Ivory' },
-      { id: 'pinstripe', hex: '#1e3052', label: 'Çizgili' },
-      { id: 'charcoal', hex: '#3a3d42', label: 'Antrasit' },
-      { id: 'burgundy', hex: '#52172a', label: 'Kadife' }
-    ];
+    const swatches = BagozzaSuit3D.ORDER.map((id) => BagozzaSuit3D.PRESETS[id]);
     wrap.innerHTML = swatches.map((sw) => `
-      <button onclick="BagozzaApp.select3DPreset('${sw.id}')" class="btn-motion flex items-center gap-2 px-3 py-2 rounded-full border text-xs font-medium ${active === sw.id ? 'border-black bg-black text-white shadow-md' : 'border-neutral-200 bg-white text-neutral-800 hover:border-black'}">
-        <span class="w-4 h-4 rounded-full border border-black/20 shrink-0" style="background:${sw.hex}"></span>
+      <button onclick="BagozzaApp.select3DPreset('${sw.id}')" class="btn-motion flex items-center gap-2 px-3 py-1.5 rounded-full border text-[11px] font-medium ${active === sw.id ? 'border-black bg-black text-white shadow-md' : 'border-neutral-200 bg-white text-neutral-800 hover:border-black'}">
+        <span class="w-3.5 h-3.5 rounded-full border border-black/20 shrink-0" style="background:${sw.hex}"></span>
         <span>${sw.label}</span>
       </button>
     `).join('');
@@ -295,7 +287,7 @@ window.BagozzaApp = (function () {
   async function add3DSuitToBag() {
     const p = BagozzaSuit3D.getActivePreset();
     const l = lang();
-    const matched = BagozzaStore.getProducts().find((x) => x.preset3d === p.id) || BagozzaStore.getProducts()[0];
+    const matched = BagozzaStore.getProductById(p.suitId) || BagozzaStore.getProducts()[0];
     await BagozzaStore.addToCart({
       productId: matched ? matched.id : 'suit_01',
       name: l === 'en' ? p.name_en : p.name_tr,
@@ -303,7 +295,7 @@ window.BagozzaApp = (function () {
       size: ui.suit3dSize,
       color: l === 'en' ? p.name_en : p.name_tr,
       bodyType: BagozzaSuit3D.getActiveBody(),
-      img: matched ? matched.imgModel : 'assets/suits/suit_01_model.jpg',
+      img: matched ? matched.imgCard : p.img,
       qty: 1
     });
     BagozzaAudio.play('bag');
@@ -343,48 +335,38 @@ window.BagozzaApp = (function () {
       b.className = `btn-motion px-2.5 py-1.5 rounded-full text-[11px] font-medium border ${active ? 'bg-black text-white border-black' : 'bg-white/90 text-neutral-700 border-neutral-200 hover:border-black'}`;
     });
 
-    // Determine main model photo by selected angle
-    let mainImg = suit.imgModel;
-    if (ui.runwayAngle === 'side') mainImg = suit.imgAlt || suit.imgModel;
-    else if (ui.runwayAngle === 'back') mainImg = suit.imgAlt || suit.imgCard;
-    else if (ui.runwayAngle === 'detail') mainImg = suit.imgCard;
-
-    // Ghost depth-of-field adjacent looks (Maison Vell signature visual!)
+    // Use pure-white transparent cutout full-body real model (exact Maison Vell aesthetic!)
+    const mainCutout = suit.imgCutout || suit.imgModel;
     const sIdx = Math.max(0, suits.findIndex((x) => x.id === suit.id));
     const prev1 = suits[(sIdx + 1) % suits.length];
     const prev2 = suits[(sIdx + 2) % suits.length];
 
     const g1 = document.getElementById('rwGhost1');
     const g2 = document.getElementById('rwGhost2');
-    if (g1 && prev1) g1.src = prev1.imgModel;
-    if (g2 && prev2) g2.src = prev2.imgModel;
+    if (g1 && prev1) g1.src = prev1.imgCutout || prev1.imgModel;
+    if (g2 && prev2) g2.src = prev2.imgCutout || prev2.imgModel;
 
     const mainEl = document.getElementById('rwMainModelImg');
     if (mainEl) {
-      mainEl.src = mainImg;
+      mainEl.src = ui.runwayAngle === 'detail' ? suit.imgCard : mainCutout;
       mainEl.alt = suit.name;
+      mainEl.className = ui.runwayAngle === 'detail'
+        ? 'h-[420px] sm:h-[490px] w-[310px] sm:w-[360px] rounded-2xl object-cover object-top shadow-2xl border border-neutral-200 pointer-events-none'
+        : 'h-[420px] sm:h-[490px] w-auto max-w-full object-contain object-bottom drop-shadow-[0_24px_28px_rgba(0,0,0,0.16)] pointer-events-none';
     }
 
     const figureWrap = document.getElementById('rwActiveFigureWrap');
     if (figureWrap) {
-      figureWrap.className = `runway-active-figure body-${ui.runwayBody} relative z-10 h-full flex items-end justify-center`;
+      figureWrap.className = `runway-active-figure body-${ui.runwayBody} relative z-10 flex items-end justify-center`;
     }
     const turnCard = document.getElementById('rwTurnCard');
     if (turnCard) {
-      turnCard.className = `runway-turn-card angle-${ui.runwayAngle} relative h-[430px] sm:h-[510px] w-[285px] sm:w-[345px] rounded-2xl overflow-hidden shadow-[0_30px_70px_-20px_rgba(0,0,0,0.22)] bg-white border border-neutral-200/80`;
+      turnCard.className = `runway-turn-card angle-${ui.runwayAngle} relative flex items-end justify-center cursor-grab active:cursor-grabbing`;
     }
 
     // Look number label (Maison Vell "LOOK 01")
     const lookNum = document.getElementById('rwLookNumber');
     if (lookNum) lookNum.textContent = `LOOK ${String(sIdx + 1).padStart(2, '0')}`;
-
-    // Bluemint Hotspots on Model
-    const hsSuit = document.getElementById('hsSuitLabel');
-    const hsTrouser = document.getElementById('hsTrouserLabel');
-    const hsShoe = document.getElementById('hsShoeLabel');
-    if (hsSuit) hsSuit.textContent = `${suit.name} • ${fmtPrice(suit.price)}`;
-    if (hsTrouser && trouser) hsTrouser.textContent = `${trouser.name} • ${fmtPrice(trouser.price)}`;
-    if (hsShoe && shoe) hsShoe.textContent = `${shoe.name} • ${fmtPrice(shoe.price)}`;
 
     // Equipped 3-piece summary strip under/next to model
     const eqSuitImg = document.getElementById('eqSuitImg');

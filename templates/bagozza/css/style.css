@@ -260,9 +260,9 @@ body.reduced-motion .reel-frame {
 }
 
 .runway-turn-card.angle-front { transform: rotateY(0deg); }
-.runway-turn-card.angle-side  { transform: rotateY(-14deg) scale(1.02); }
-.runway-turn-card.angle-back  { transform: rotateY(14deg) scale(1.01); }
-.runway-turn-card.angle-detail { transform: scale(1.16) translateY(5%); }
+.runway-turn-card.angle-side  { transform: rotateY(-20deg) scale(1.03); }
+.runway-turn-card.angle-back  { transform: rotateY(20deg) scale(1.03); }
+.runway-turn-card.angle-detail { transform: scale(1.18) translateY(-2%); }
 
 /* Bluemint Interactive Hotspots on Model */
 .hotspot-dot {

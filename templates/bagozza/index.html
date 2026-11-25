@@ -88,7 +88,7 @@
        SECTION 1: MONUMENTAL PURE-WHITE HERO + GIANT 360° MOTION 3D SUIT
        (Giant Designer BAGOZZA Logo + Massive Seamless 3D Rotating Suit — ZERO Video Box!)
        ====================================================================== -->
-  <section id="hero" class="relative pt-24 pb-10 sm:pt-26 sm:pb-14 px-4 sm:px-8 bg-white overflow-hidden border-b border-neutral-200/80">
+  <section id="hero" class="relative pt-20 pb-8 sm:pt-22 sm:pb-10 px-4 sm:px-8 bg-white overflow-hidden border-b border-neutral-200/80">
     <!-- Subtle Architectural Background Radial Glow -->
     <div class="pointer-events-none absolute inset-x-0 top-16 h-[640px] bg-[radial-gradient(ellipse_at_center,rgba(208,174,110,0.08)_0%,rgba(255,255,255,0)_66%)]"></div>
 
@@ -137,30 +137,22 @@
           </div>
         </div>
 
-        <!-- CENTER 6 COLS: GIGANTIC, SEAMLESS 360° MOTION-ROTATING 3D SUIT ON CARRARA MARBLE -->
+        <!-- CENTER 6 COLS: GIGANTIC, REAL PHOTOREALISTIC 360° MOTION-ROTATING SUIT ON PURE WHITE -->
         <div class="lg:col-span-6 order-1 lg:order-2 relative flex flex-col items-center justify-center">
-          <!-- Subtle Architectural Golden Halo Arch Behind the Giant 3D Suit -->
-          <div class="pointer-events-none absolute top-8 w-[300px] sm:w-[410px] h-[380px] sm:h-[490px] rounded-t-full border border-[#d0ae6e]/40 bg-gradient-to-b from-[#faf9f5]/70 via-white/30 to-transparent"></div>
-
           <!-- Top-Right Subtle Zoom Controls -->
-          <div class="absolute top-3 right-2 sm:right-6 z-20 flex items-center gap-1.5">
+          <div class="absolute top-3 right-2 sm:right-6 z-30 flex items-center gap-1.5">
             <button onclick="BagozzaApp.zoom3D(-0.45)" aria-label="Yakınlaştır" class="btn-motion w-9 h-9 rounded-full bg-white/95 border border-neutral-200 hover:border-black text-black font-bold text-sm flex items-center justify-center shadow-sm">+</button>
             <button onclick="BagozzaApp.zoom3D(0.45)" aria-label="Uzaklaştır" class="btn-motion w-9 h-9 rounded-full bg-white/95 border border-neutral-200 hover:border-black text-black font-bold text-sm flex items-center justify-center shadow-sm">−</button>
           </div>
 
-          <!-- GIGANTIC Transparent Three.js WebGL Canvas Mount -->
-          <div id="suit3dCanvasWrap" class="relative z-10 w-full h-[480px] sm:h-[600px]"></div>
-
-          <!-- Fallback if WebGL disabled -->
-          <div id="suit3dFallback" class="hidden absolute inset-0 flex items-center justify-center p-6">
-            <img src="assets/suits/suit_01_model.jpg" alt="Bagozza 3D Suit" class="h-full max-h-[520px] object-contain rounded-2xl shadow-xl" />
-          </div>
+          <!-- GIGANTIC 3D Photorealistic Turntable Mount (Pure White Seamless!) -->
+          <div id="suit3dCanvasWrap" class="relative z-10 w-full h-[440px] sm:h-[515px]"></div>
 
           <!-- Sleek Floating 360° Motion Orbit Bar -->
-          <div class="relative z-20 -mt-3 flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap bg-white/95 backdrop-blur-md px-3 py-2 rounded-full border border-neutral-200 shadow-sm">
+          <div class="relative z-30 mt-1 flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap bg-white/95 backdrop-blur-md px-3 py-2 rounded-full border border-neutral-200 shadow-sm">
             <button onclick="BagozzaApp.rotate3D(0)" class="btn-motion px-3 py-1.5 rounded-full bg-white border border-neutral-200 text-[11px] font-semibold text-black hover:bg-black hover:text-white">Ön 0°</button>
-            <button onclick="BagozzaApp.rotate3D(90)" class="btn-motion px-3 py-1.5 rounded-full bg-white border border-neutral-200 text-[11px] font-semibold text-black hover:bg-black hover:text-white">Yan 90°</button>
-            <button onclick="BagozzaApp.rotate3D(180)" class="btn-motion px-3 py-1.5 rounded-full bg-white border border-neutral-200 text-[11px] font-semibold text-black hover:bg-black hover:text-white">Arka 180°</button>
+            <button onclick="BagozzaApp.rotate3D(90)" class="btn-motion px-3 py-1.5 rounded-full bg-white border border-neutral-200 text-[11px] font-semibold text-black hover:bg-black hover:text-white">3/4 Açı</button>
+            <button onclick="BagozzaApp.rotate3D(180)" class="btn-motion px-3 py-1.5 rounded-full bg-white border border-neutral-200 text-[11px] font-semibold text-black hover:bg-black hover:text-white">Sonraki →</button>
             <button id="s3dAutoBtn" onclick="BagozzaApp.toggle3DAuto()" class="btn-motion px-3.5 py-1.5 rounded-full bg-black text-white border border-black text-[11px] font-semibold">⟳ 360° Motion</button>
           </div>
         </div>
@@ -245,58 +237,33 @@
             </div>
           </div>
 
-          <!-- Center Depth-of-Field Runway Showcase (Exact Maison Vell Vibe!) -->
-          <div class="relative flex items-center justify-center py-2 min-h-[460px] sm:min-h-[530px] runway-turn-stage select-none">
+          <!-- Center Depth-of-Field Runway Showcase (EXACT Maison Vell Pure-White Transparent Cutouts!) -->
+          <div class="relative flex items-end justify-center pt-4 pb-6 min-h-[450px] sm:min-h-[520px] runway-turn-stage select-none overflow-hidden">
 
-            <!-- Far Receding Ghost Look (Left Depth) -->
-            <img id="rwGhost2" src="assets/suits/suit_03_model.jpg" alt="" aria-hidden="true" class="hidden sm:block runway-ghost runway-ghost-far absolute left-3 bottom-12 w-36 h-56 object-cover object-top rounded-2xl pointer-events-none" />
-            <!-- Near Receding Ghost Look (Left-Mid Depth) -->
-            <img id="rwGhost1" src="assets/suits/suit_02_model.jpg" alt="" aria-hidden="true" class="hidden sm:block runway-ghost absolute left-16 bottom-8 w-44 h-72 object-cover object-top rounded-2xl pointer-events-none" />
+            <!-- Far Receding Transparent Cutout Model (Left Depth — exact Maison Vell!) -->
+            <img id="rwGhost2" src="assets/cutouts/cut_03.png" alt="" aria-hidden="true" class="hidden sm:block runway-ghost runway-ghost-far absolute left-2 bottom-10 h-[270px] w-auto object-contain object-bottom pointer-events-none" />
+            <!-- Near Receding Transparent Cutout Model (Left-Mid Depth — exact Maison Vell!) -->
+            <img id="rwGhost1" src="assets/cutouts/cut_02.png" alt="" aria-hidden="true" class="hidden sm:block runway-ghost absolute left-20 bottom-8 h-[355px] w-auto object-contain object-bottom pointer-events-none" />
 
-            <!-- Active Real Model with Interactive Hotspots & Angle Turn -->
+            <!-- Active Real Full-Body Transparent Cutout Model (Clean Pure White, ZERO Stickers over Jacket!) -->
             <div id="rwActiveFigureWrap" class="runway-active-figure body-classic relative z-10 flex items-end justify-center">
-              <div id="rwTurnCard" class="runway-turn-card angle-front relative h-[430px] sm:h-[510px] w-[285px] sm:w-[345px] rounded-2xl overflow-hidden shadow-[0_30px_70px_-20px_rgba(0,0,0,0.22)] bg-white border border-neutral-200/80 cursor-grab active:cursor-grabbing">
-                <img id="rwMainModelImg" src="assets/suits/suit_01_model.jpg" alt="Bagozza Model" class="w-full h-full object-cover object-top pointer-events-none" />
-
-                <!-- Bluemint-Style Interactive Hotspots Pinned Cleanly on Garments (never over face!) -->
-                <!-- Hotspot 1: Jacket/Suit -->
-                <div class="absolute top-[42%] left-[44%] z-20 flex items-center gap-2 group">
-                  <button onclick="BagozzaApp.setRunwayTab('suits')" aria-label="Takım Elbise" class="hotspot-dot"></button>
-                  <div class="hotspot-tag px-2.5 py-1 rounded-lg text-[10px] font-semibold text-black whitespace-nowrap">
-                    <span id="hsSuitLabel">MILANO BLACK-TIE • 42.000₺</span>
-                  </div>
-                </div>
-
-                <!-- Hotspot 2: Trousers -->
-                <div class="absolute top-[68%] left-[22%] z-20 flex items-center gap-2">
-                  <button onclick="BagozzaApp.setRunwayTab('trousers')" aria-label="Pantolon" class="hotspot-dot"></button>
-                  <div class="hotspot-tag px-2.5 py-1 rounded-lg text-[10px] font-semibold text-black whitespace-nowrap">
-                    <span id="hsTrouserLabel">NOIR SATIN SMOKIN • 11.400₺</span>
-                  </div>
-                </div>
-
-                <!-- Hotspot 3: Shoes -->
-                <div class="absolute bottom-[6%] left-[28%] z-20 flex items-center gap-2">
-                  <button onclick="BagozzaApp.setRunwayTab('shoes')" aria-label="Ayakkabı" class="hotspot-dot"></button>
-                  <div class="hotspot-tag px-2.5 py-1 rounded-lg text-[10px] font-semibold text-black whitespace-nowrap">
-                    <span id="hsShoeLabel">BAGOZZA OPERA • 13.900₺</span>
-                  </div>
-                </div>
+              <div id="rwTurnCard" class="runway-turn-card angle-front relative flex items-end justify-center cursor-grab active:cursor-grabbing">
+                <img id="rwMainModelImg" src="assets/cutouts/cut_01.png" alt="Bagozza Model" draggable="false" class="h-[420px] sm:h-[490px] w-auto max-w-full object-contain object-bottom drop-shadow-[0_24px_28px_rgba(0,0,0,0.16)] pointer-events-none" />
               </div>
             </div>
 
-            <!-- Soft Grounded Floor Shadow -->
-            <div class="runway-floor-shadow absolute bottom-1 w-72 h-8 rounded-full pointer-events-none"></div>
+            <!-- Soft Grounded Runway Floor Shadow under Shoes -->
+            <div class="runway-floor-shadow absolute bottom-2 w-60 h-7 rounded-full pointer-events-none"></div>
           </div>
 
-          <!-- Angle Rotation Bar + Equipped 3-Piece Outfit Strip -->
-          <div class="space-y-4 relative z-20">
+          <!-- Angle Rotation Bar + Equipped 3-Piece Outfit Strip (Cleanly Below Runway, ZERO Overlap!) -->
+          <div class="space-y-4 relative z-20 pt-2">
             <!-- Turn Angle Buttons -->
             <div class="flex items-center justify-center gap-1.5 flex-wrap">
-              <button data-rw-angle="front" onclick="BagozzaApp.setRunwayAngle('front')" class="btn-motion px-2.5 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="ang_front">Ön (0°)</button>
-              <button data-rw-angle="side" onclick="BagozzaApp.setRunwayAngle('side')" class="btn-motion px-2.5 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="ang_side">Yan (45°)</button>
-              <button data-rw-angle="back" onclick="BagozzaApp.setRunwayAngle('back')" class="btn-motion px-2.5 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="ang_back">Arka (180°)</button>
-              <button data-rw-angle="detail" onclick="BagozzaApp.setRunwayAngle('detail')" class="btn-motion px-2.5 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="ang_detail">Yakın Detay</button>
+              <button data-rw-angle="front" onclick="BagozzaApp.setRunwayAngle('front')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="ang_front">Ön (0°)</button>
+              <button data-rw-angle="side" onclick="BagozzaApp.setRunwayAngle('side')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="ang_side">3/4 Sol</button>
+              <button data-rw-angle="back" onclick="BagozzaApp.setRunwayAngle('back')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="ang_back">3/4 Sağ</button>
+              <button data-rw-angle="detail" onclick="BagozzaApp.setRunwayAngle('detail')" class="btn-motion px-3 py-1.5 rounded-full text-[11px] font-medium border" data-i18n="ang_detail">Yakın Detay</button>
             </div>
 
             <!-- Live 3-Piece Equipped Outfit Strip + Add Complete Look -->
@@ -841,12 +808,11 @@
     <span id="toastText">Pakete eklendi</span>
   </div>
 
-  <!-- MODULAR SCRIPTS (Zero inline bloat, 100% locally bundled Three.js) -->
-  <script src="js/three.min.js"></script>
-  <script src="js/audio.js"></script>
-  <script src="js/catalog-data.js"></script>
-  <script src="js/store.js"></script>
-  <script src="js/suit3d.js"></script>
-  <script src="js/app.js"></script>
+  <!-- MODULAR SCRIPTS (v4 — Ultra-fast, zero bloat, pure photorealistic 3D engine) -->
+  <script src="js/audio.js?v=4"></script>
+  <script src="js/catalog-data.js?v=4"></script>
+  <script src="js/store.js?v=4"></script>
+  <script src="js/suit3d.js?v=4"></script>
+  <script src="js/app.js?v=4"></script>
 </body>
 </html>

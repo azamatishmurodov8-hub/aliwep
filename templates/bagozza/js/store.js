@@ -4,9 +4,9 @@
  * shopping bag (Paket), orders, settings, and phone-number Admin authentication.
  */
 window.BagozzaStore = (function () {
-  const DB_NAME = 'bagozza_atelier_db_v1';
+  const DB_NAME = 'bagozza_atelier_db_v4';
   const STORE_NAME = 'kv';
-  const LS_PREFIX = 'bagozza_v1_';
+  const LS_PREFIX = 'bagozza_v4_';
 
   const DEFAULT_SETTINGS = {
     lang: 'tr',

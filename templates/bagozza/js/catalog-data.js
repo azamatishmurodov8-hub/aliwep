@@ -128,7 +128,8 @@ window.BAGOZZA_DEFAULT_CATALOG = (function () {
       fabric_en: s[11],
       imgCard: `assets/suits/suit_${num}_card.jpg`,
       imgModel: `assets/suits/suit_${num}_model.jpg`,
-      imgAlt: `assets/suits/suit_${num}_alt.jpg`
+      imgAlt: `assets/suits/suit_${num}_alt.jpg`,
+      imgCutout: `assets/cutouts/cut_${num}.png`
     });
   });
 
